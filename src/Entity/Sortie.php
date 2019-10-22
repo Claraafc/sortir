@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,11 +48,6 @@ class Sortie
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $etatSortie;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $urlPhoto;
@@ -77,20 +73,11 @@ class Sortie
     private $user;
 
     /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sortie")
-     * @ORM\JoinColumn(name="inscription_id", referencedColumnName="inscription_id")
+     * @var User[]
+     * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     *
      */
-    private $inscriptions;
-
-    /**
-     * Sortie constructor.
-     */
-    public function __construct()
-    {
-        $this->inscriptions = [];
-    }
-
+    private $users;
 
     public function getId(): ?int
     {
@@ -169,18 +156,6 @@ class Sortie
         return $this;
     }
 
-    public function getEtatSortie(): ?int
-    {
-        return $this->etatSortie;
-    }
-
-    public function setEtatSortie(int $etatSortie): self
-    {
-        $this->etatSortie = $etatSortie;
-
-        return $this;
-    }
-
     public function getUrlPhoto(): ?string
     {
         return $this->urlPhoto;
@@ -192,4 +167,85 @@ class Sortie
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param mixed $etat
+     */
+    public function setEtat($etat): void
+    {
+        $this->etat = $etat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
+    }
+
+    /**
+     * @param mixed $lieu
+     */
+    public function setLieu($lieu): void
+    {
+        $this->lieu = $lieu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site): void
+    {
+        $this->site = $site;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getUsers(): array
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param User[] $users
+     */
+    public function setUsers(array $users): void
+    {
+        $this->users = $users;
+    }
+
 }

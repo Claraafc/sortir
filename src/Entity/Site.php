@@ -6,9 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\EtatRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SitesRepository")
  */
-class Etat
+class Site
 {
     /**
      * @ORM\Id()
@@ -18,21 +18,28 @@ class Etat
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=100)
      */
-    private $libelle;
+    private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="etat")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="site")
+     */
+    private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="site")
      */
     private $sorties;
 
     /**
-     * Etat constructor.
+     * Site constructor.
      */
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
 
@@ -41,16 +48,32 @@ class Etat
         return $this->id;
     }
 
-    public function getLibelle(): ?string
+    public function getName(): ?string
     {
-        return $this->libelle;
+        return $this->name;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setName(string $name): self
     {
-        $this->libelle = $libelle;
+        $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param ArrayCollection $users
+     */
+    public function setUsers(ArrayCollection $users): void
+    {
+        $this->users = $users;
     }
 
     /**
@@ -68,6 +91,5 @@ class Etat
     {
         $this->sorties = $sorties;
     }
-
 
 }

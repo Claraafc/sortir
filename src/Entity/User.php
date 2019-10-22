@@ -58,6 +58,18 @@ class User implements UserInterface
      */
     private $urlPhoto;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="users")
+     */
+    private $site;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="user")
+     */
+    private $sortie;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -190,4 +202,37 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site): void
+    {
+        $this->site = $site;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSortie()
+    {
+        return $this->sortie;
+    }
+
+    /**
+     * @param mixed $sortie
+     */
+    public function setSortie($sortie): void
+    {
+        $this->sortie = $sortie;
+    }
+
 }
