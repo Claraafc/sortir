@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
-class UserController extends Controller
+class ProfileModificationController extends Controller
 {
     /**
      * @Route("/user/update/{id}", name="user_update", requirements={"id":"\d+"})
