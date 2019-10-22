@@ -67,7 +67,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="user")
      */
-    private $sortie;
+    private $sorties;
 
 
     public function getId(): ?int

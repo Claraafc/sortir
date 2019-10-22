@@ -35,7 +35,7 @@ class Lieu
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $lattitude;
+    private $latitude;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="lieux")
@@ -97,14 +97,14 @@ class Lieu
         return $this;
     }
 
-    public function getLattitude(): ?float
+    public function getLatitude(): ?float
     {
-        return $this->lattitude;
+        return $this->latitude;
     }
 
-    public function setLattitude(?float $lattitude): self
+    public function setLatitude(?float $latitude): self
     {
-        $this->lattitude = $lattitude;
+        $this->latitude = $latitude;
 
         return $this;
     }
