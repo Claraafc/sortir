@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SortiesRepository")
  */
-class Sorties
+class Sortie
 {
     /**
      * @ORM\Id()
@@ -55,6 +55,42 @@ class Sorties
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $urlPhoto;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties")
+     */
+    private $etat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
+     */
+    private $lieu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sorties")
+     */
+    private $site;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sorties")
+     */
+    private $user;
+
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sortie")
+     * @ORM\JoinColumn(name="inscription_id", referencedColumnName="inscription_id")
+     */
+    private $inscriptions;
+
+    /**
+     * Sortie constructor.
+     */
+    public function __construct()
+    {
+        $this->inscriptions = [];
+    }
+
 
     public function getId(): ?int
     {
