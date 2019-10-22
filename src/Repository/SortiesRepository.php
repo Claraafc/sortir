@@ -19,6 +19,16 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
+    public function getName($name){
+        $qb = $this->createQueryBuilder('s')
+            ->andWhere('s.name = $name');
+
+         $query = $qb->getQuery();
+         $resultat = $query->getResult();
+
+         return $resultat;
+    }
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */
