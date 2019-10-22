@@ -29,6 +29,11 @@ class SortiesRepository extends ServiceEntityRepository
          return $resultat;
     }
 
+    public function selectAll(){
+        $rqt = $this->createQueryBuilder('a');
+        $rqt->orderBy('a.dateDebut = ');
+    }
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */

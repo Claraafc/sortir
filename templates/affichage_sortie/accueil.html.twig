@@ -5,14 +5,16 @@
 {% block body %}
     <form>
         <h3>Filtrer les sorties</h3>
+
      <div>
          <label>Site: </label>
         <select>
              <option></option>
         </select><br>
          <label>Le nom de la sortie contient: </label>
-         <input type="search" aria-label="Search through site content"><br>
+         <input type="search" aria-label="Search through site content" ><br>
      </div>
+
      <div>
         <label>Entre </label>
         <input type="date">
@@ -20,17 +22,11 @@
         <input type="date"><br>
      </div>
     <div>
-        <input type="checkbox" id="sortie_organisateur" value="sortie_organisateur">
-        <label for="sortie_organisateur">Sorties dont je suis l'organisateur/trice</label><br>
+        <label> <input type="checkbox" name="sortie_organisateur">Sorties dont je suis l'organisateur/trice</label><br>
+        <label><input type="checkbox" name="sortie_inscrit">Sorties auxquelles je suis inscrit/e</label><br>
+        <label><input type="checkbox" name="non_inscrit">Sorties auxquelles je ne suis pas inscrit/e</label><br>
+        <label><input type="checkbox" name="sortie_passee">Sorties passées</label><br>
 
-        <input type="checkbox" id="sortie_inscrit" value="sortie_inscrit">
-        <label for="sortie_inscrit">Sorties auxquelles je suis inscrit/e</label><br>
-
-        <input type="checkbox" id="non_inscrit" value="non_inscrit">
-        <label for="non_inscrit">Sorties auxquelles je ne suis pas inscrit/e</label><br>
-
-        <input type="checkbox" id="sortie_passe" value="sortie_passee">
-        <label for="sortie_passe">Sorties passées</label><br>
         <button type="submit"> Rechercher</button>
     </div>
     <table  style="width: 100%"  border="1">
