@@ -31,7 +31,7 @@ class UserFixtures extends Fixture
          $user->setNom('Admin');
          $user->setPrenom('strateur');
          $user->setTelephone('0666547889');
-         $user->setUrlPhoto('/photos/conan.jpg');
+         $user->setUrlPhoto('photos/conan.jpg');
          $user->setRoles(['ROLE_ADMIN']);
 
          $password = $this->encoder->encodePassword($user, 'pass_administrateur');
@@ -44,7 +44,7 @@ class UserFixtures extends Fixture
         $user->setNom('Toto');
         $user->setPrenom('Guizmo');
         $user->setTelephone('0698745632');
-        $user->setUrlPhoto('/photos/guizmo.jpg');
+        $user->setUrlPhoto('photos/guizmo.jpg');
         $user->setRoles(['ROLE_USER']);
 
         $password = $this->encoder->encodePassword($user, 'pass_guizmo');
