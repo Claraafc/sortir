@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    <img src="{{app.request.basepath}}/{{ user.urlPhoto }}" style="float: left; width: 185px">
+    <div class="container">
+        <h1>{{ user.username }}</h1>
+        <div class="row">
+            <div class="col">Prénom : </div>
+            <div class="col">{{ user.prenom }}</div>
+        </div>
+        <div class="row">
+            <div class="col">Nom :</div>
+            <div class="col">{{ user.nom }}</div>
+        </div>
+        <div class="row">
+            <div class="col">Téléphone :</div>
+            <div class="col">{{ user.telephone }}</div>
+        </div>
+        <div class="row">
+            <div class="col">Prénom :</div>
+            <div class="col">{{ user.prenom }}</div>
+        </div>
+        <div class="row">
+            <div class="col">Ville de rattachement :</div>
+            <div class="col">{{ user.site }}</div>
+        </div>
+    </div>
+{% endblock %}
