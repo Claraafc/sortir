@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Etat;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class EtatFixtures extends Fixture
 {
@@ -17,18 +17,9 @@ class EtatFixtures extends Fixture
     public const ETAT_PASSEE = 'etat-passee';
     public const ETAT_ANNULEE = 'etat-annulee';
 
-    private $encoder;
-
     /**
-     * EtatFixtures constructor.
-     * @param $encoder
-     */
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
-    /**
+     * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)

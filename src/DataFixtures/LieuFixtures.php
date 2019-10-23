@@ -4,26 +4,18 @@ namespace App\DataFixtures;
 
 use App\Entity\Lieu;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class LieuFixtures extends Fixture
+
+class LieuFixtures extends Fixture implements DependentFixtureInterface
 {
-
     public const LIEU_TAPEO = 'lieu-tapeo';
     public const LIEU_BRASSEES = 'lieu-brassees';
-    private $encoder;
 
     /**
-     * LieuFixtures constructor.
-     * @param $encoder
-     */
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
-    /**
+     * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -31,8 +23,8 @@ class LieuFixtures extends Fixture
          $lieu1 = new Lieu();
          $lieu1->setNom('tapeo');
          $lieu1->setRue('rue de la faim');
-         $lieu1->setLongitude('18.55445554478');
-         $lieu1->setLatitude('685.587646376987');
+         $lieu1->setLongitude('18.478');
+         $lieu1->setLatitude('68.5987');
          $ville = $this->getReference(VilleFixtures::VILLE_RENNES);
          $lieu1->setVille($ville);
 
@@ -41,8 +33,8 @@ class LieuFixtures extends Fixture
         $lieu2 = new Lieu();
         $lieu2->setNom('brassees');
         $lieu2->setRue('rue de la soif');
-        $lieu2->setLongitude('24.55445554478');
-        $lieu2->setLatitude('12.587646376987');
+        $lieu2->setLongitude('24.554');
+        $lieu2->setLatitude('12.587');
         $ville = $this->getReference(VilleFixtures::VILLE_QUIMPER);
         $lieu2->setVille($ville);
 

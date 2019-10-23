@@ -5,24 +5,15 @@ namespace App\DataFixtures;
 use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class VilleFixtures extends Fixture
 {
     public const VILLE_RENNES = 'ville-rennes';
     public const VILLE_QUIMPER = 'ville-quimper';
-    private $encoder;
 
     /**
-     * VilleFixtures constructor.
-     * @param $encoder
-     */
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
-    /**
+     * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)

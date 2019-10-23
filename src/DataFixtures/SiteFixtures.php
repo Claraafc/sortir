@@ -12,18 +12,10 @@ class SiteFixtures extends Fixture
 
     public const SITE_RENNES = 'site-rennes';
     public const SITE_QUIMPER = 'site-quimper';
-    private $encoder;
 
     /**
-     * SiteFixtures constructor.
-     * @param $encoder
-     */
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
-    /**
+     * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -40,4 +32,5 @@ class SiteFixtures extends Fixture
         $this->addReference(self::SITE_RENNES, $site1);
         $this->addReference(self::SITE_QUIMPER, $site2);
     }
+
 }

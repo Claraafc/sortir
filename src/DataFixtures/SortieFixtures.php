@@ -4,23 +4,17 @@ namespace App\DataFixtures;
 
 use App\Entity\Sortie;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class SortieFixtures extends Fixture
+
+
+class SortieFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $encoder;
 
     /**
-     * SortieFixtures constructor.
-     * @param $encoder
-     */
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
-    /**
+     * Load data fixtures with the passed EntityManager
+     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -29,7 +23,7 @@ class SortieFixtures extends Fixture
          $sortie1->setName('tapas');
          $sortie1->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
          $sortie1->setDuree('120');
-         $sortie1->setDateCloture(new \Date('2020-01-09'));
+         $sortie1->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
          $sortie1->setNbInscriptionsMax('15');
          $sortie1->setDescription('Tapas, tapas, tapas !!!!');
          $sortie1->setUrlPhoto('photos/tapas.jpg');
@@ -38,9 +32,9 @@ class SortieFixtures extends Fixture
          $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
          $sortie1->setLieu($lieu1);
          $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
-         $sortie1->seSite($site1);
+         $sortie1->setSite($site1);
          $user1 = $this->getReference(UserFixtures::USER_ADMIN);
-         $sortie1->setUser($user1);
+         $sortie1->setOrganisateur($user1);
 
          $manager->persist($sortie1);
 
@@ -48,7 +42,7 @@ class SortieFixtures extends Fixture
         $sortie2->setName('tapas');
         $sortie2->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
         $sortie2->setDuree('120');
-        $sortie2->setDateCloture(new \Date('2020-01-09'));
+        $sortie2->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
         $sortie2->setNbInscriptionsMax('15');
         $sortie2->setDescription('A boire, à boire, à boire !!!!');
         $sortie2->setUrlPhoto('photos/bieres.jpg');
@@ -57,9 +51,9 @@ class SortieFixtures extends Fixture
         $lieu1 = $this->getReference(LieuFixtures::LIEU_BRASSEES);
         $sortie2->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_RENNES);
-        $sortie2->seSite($site1);
+        $sortie2->setSite($site1);
         $user1 = $this->getReference(UserFixtures::USER_TOTO);
-        $sortie2->setUser($user1);
+        $sortie2->setOrganisateur($user1);
 
         $manager->persist($sortie2);
 
@@ -67,7 +61,7 @@ class SortieFixtures extends Fixture
         $sortie3->setName('tapas');
         $sortie3->setDateDebut(new \DateTime('2019-10-25 05:20:30'));
         $sortie3->setDuree('120');
-        $sortie3->setDateCloture(new \Date('2019-10-12'));
+        $sortie3->setDateCloture(new \DateTime('2019-10-12 05:20:30'));
         $sortie3->setNbInscriptionsMax('15');
         $sortie3->setDescription('Tapas, tapas, tapas !!!!');
         $sortie3->setUrlPhoto('photos/tapas.jpg');
@@ -76,9 +70,9 @@ class SortieFixtures extends Fixture
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
         $sortie3->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
-        $sortie3->seSite($site1);
+        $sortie3->setSite($site1);
         $user1 = $this->getReference(UserFixtures::USER_ADMIN);
-        $sortie3->setUser($user1);
+        $sortie3->setOrganisateur($user1);
 
         $manager->persist($sortie3);
 
@@ -86,7 +80,7 @@ class SortieFixtures extends Fixture
         $sortie4->setName('tapas');
         $sortie4->setDateDebut(new \DateTime('2019-10-23 05:20:30'));
         $sortie4->setDuree('12000');
-        $sortie4->setDateCloture(new \Date('2019-10-12'));
+        $sortie4->setDateCloture(new \DateTime('2019-10-12 05:20:30'));
         $sortie4->setNbInscriptionsMax('15');
         $sortie4->setDescription('Tapas, tapas, tapas !!!!');
         $sortie4->setUrlPhoto('photos/tapas.jpg');
@@ -95,9 +89,9 @@ class SortieFixtures extends Fixture
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
         $sortie4->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
-        $sortie4->seSite($site1);
+        $sortie4->setSite($site1);
         $user1 = $this->getReference(UserFixtures::USER_ADMIN);
-        $sortie4->setUser($user1);
+        $sortie4->setOrganisateur($user1);
 
         $manager->persist($sortie4);
 
@@ -105,7 +99,7 @@ class SortieFixtures extends Fixture
         $sortie5->setName('tapas');
         $sortie5->setDateDebut(new \DateTime('2018-01-09 05:20:30'));
         $sortie5->setDuree('120');
-        $sortie5->setDateCloture(new \Date('2018-01-09'));
+        $sortie5->setDateCloture(new \DateTime('2018-01-09 05:20:30'));
         $sortie5->setNbInscriptionsMax('15');
         $sortie5->setDescription('Tapas, tapas, tapas !!!!');
         $sortie5->setUrlPhoto('photos/tapas.jpg');
@@ -114,9 +108,9 @@ class SortieFixtures extends Fixture
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
         $sortie5->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
-        $sortie5->seSite($site1);
+        $sortie5->setSite($site1);
         $user1 = $this->getReference(UserFixtures::USER_ADMIN);
-        $sortie5->setUser($user1);
+        $sortie5->setOrganisateur($user1);
 
         $manager->persist($sortie5);
 
@@ -124,7 +118,7 @@ class SortieFixtures extends Fixture
         $sortie6->setName('tapas');
         $sortie6->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
         $sortie6->setDuree('120');
-        $sortie6->setDateCloture(new \Date('2020-01-09'));
+        $sortie6->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
         $sortie6->setNbInscriptionsMax('15');
         $sortie6->setDescription('Tapas, tapas, tapas !!!!');
         $sortie6->setUrlPhoto('photos/tapas.jpg');
@@ -133,9 +127,9 @@ class SortieFixtures extends Fixture
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
         $sortie6->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
-        $sortie6->seSite($site1);
+        $sortie6->setSite($site1);
         $user1 = $this->getReference(UserFixtures::USER_ADMIN);
-        $sortie6->setUser($user1);
+        $sortie6->setOrganisateur($user1);
 
         $manager->persist($sortie6);
 
