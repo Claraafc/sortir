@@ -40,6 +40,34 @@ class ProfileModificationController extends Controller
     }
 
     /**
+     * @Route("/user/file/{id}", name="user_file")
+     */
+    public function fichier(User $user){
+
+        //$dir = $this->getParameter('path_dir').'download/';
+        $dir = $this->getParameter('download_dir');
+
+        if(strlen(trim($user->getFile())) > 0 && file_exists($dir . $user->getFile())) {
+
+            $filename = $user->getTitle();
+            // this is needed to safely include the file name as part of the URL
+            $safeFilename = \transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $filename);
+
+            $f = explode('.', $user->getFile());
+            $extension = strtolower($f[count($f) - 1]);
+
+            $nameFile = $safeFilename.'.'.$extension;
+
+            $file = new File($dir . $user->getFile());
+
+            return $this->file($file, $nameFile);
+        }
+        else{
+            throw $this->createNotFoundException("File not found");
+        }
+    }
+
+    /**
      * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $authUtils)

@@ -19,12 +19,20 @@ class ProfileModificationType extends AbstractType
                 "label" => "Votre pseudo",
                 "disabled" => true
             ])
-            ->add('roles')
-            ->add('password')
-            ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
-            ->add('email')
+            //->add('roles')
+            ->add('nom', null, [
+                "label" => "Votre nom",
+                "disabled" => false
+            ])
+            ->add('prenom', null, [
+                "label" => "Votre prenom",
+                "disabled" => false
+            ])
+            ->add('telephone', null, [
+                "label" => "Votre telephone",
+                "disabled" => false
+            ])
+            //->add('email')
             ->add('urlPhoto')
             ->add('site', EntityType::class,  array(
 
@@ -37,8 +45,8 @@ class ProfileModificationType extends AbstractType
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC');
                 }
-
             ))
+            ->add('password')
         ;
     }
 
