@@ -11,12 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class ProfileModificationController extends Controller
 {
     /**
      * @Route("/user/update/{id}", name="user_update", requirements={"id":"\d+"})
+     *
      */
     public function update(User $user, Request $request, EntityManagerInterface $em, int $id, ObjectManager $manager)
     {
@@ -39,7 +41,8 @@ class ProfileModificationController extends Controller
 
         return $this->render('user/update.html.twig', [
             'userForm' => $form->createView(),
-            'user' => $user
+            'user' => $user,
+            'id' => $id
         ]);
     }
 

@@ -7,7 +7,11 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -33,21 +37,29 @@ class ProfileModificationType extends AbstractType
                 "label" => "Votre telephone",
                 "disabled" => false
             ])
-            //->add('email')
-            ->add('urlPhoto')
+            ->add('email', EmailType::class)
             ->add('site', EntityType::class,  array(
 
                 'class' => Site::class,
                 //Attribut utilisé pour l'affichage
                 'choice_label' => 'name',
-
+                'label' => 'Ville de rattachement',
                 //Fait une requête particulière
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC');
                 }
             ))
-            ->add('password')
+
+            ->add('password', RepeatedType::class, [
+                'label' => ' ',
+                "type" => PasswordType::class,
+                "first_options" => ['label' => "Mot de passe"],
+                "second_options" => ["label" => "Répéter"],
+                "mapped" => false
+            ])
+            ->add('urlPhoto',FileType::class,array('data_class'=> null, 'label' => 'Ma photo'))
+            ->add('Enregistrer', SubmitType::class)
         ;
     }
 
