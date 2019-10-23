@@ -2,20 +2,21 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Sortie;
+use App\Entity\Lieu;
+use App\Entity\Site;
+use App\Entity\Etat;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFixtures extends Fixture
+class SortieFixtures extends Fixture
 {
-
-    public const USER_SPORT = 'cat-sport';
-    public const CAT_TRAVEL = 'cat-travel';
     private $encoder;
 
     /**
-     * UserFixtures constructor.
+     * SortieFixtures constructor.
      * @param $encoder
      */
     public function __construct(UserPasswordEncoderInterface $encoder)
@@ -28,7 +29,19 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-         $user = new User();
+         $sortie = new Sortie();
+         $sortie->setName('tapas');
+         $sortie->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
+         $sortie->setDuree('120');
+         $sortie->setDateCloture(new \Date('2020-01-09'));
+         $sortie->setNbInscriptionsMax('15');
+         $sortie->setDescription('Tapas, tapas, tapas !!!!');
+         $sortie->setUrlPhoto('photos/tapas.jpg');
+         $user = $this->getReference(UserFixtures::CAT_SPORT);
+
+
+
+
          $user->setUsername('admin');
          $user->setEmail("admin@mail.fr");
          $user->setNom('Admin');
