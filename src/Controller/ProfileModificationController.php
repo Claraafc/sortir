@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ProfileModificationType;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +18,14 @@ class ProfileModificationController extends Controller
     /**
      * @Route("/user/update/{id}", name="user_update", requirements={"id":"\d+"})
      */
-    public function update(User $user, Request $request, EntityManagerInterface $em)
+    public function update(User $user, Request $request, EntityManagerInterface $em, int $id, ObjectManager $manager)
     {
 
         $form = $this->createForm(ProfileModificationType::class,$user);
 
         $form->handleRequest($request);
+        $repo = $manager->getRepository(User::class);
+        $user = $repo->find($id);
 
         if($form->isSubmitted() && $form->isValid()){
 
@@ -35,7 +38,8 @@ class ProfileModificationController extends Controller
 
 
         return $this->render('user/update.html.twig', [
-            'categoryForm' => $form->createView()
+            'userForm' => $form->createView(),
+            'user' => $user
         ]);
     }
 
@@ -67,22 +71,4 @@ class ProfileModificationController extends Controller
         }
     }
 
-    /**
-     * @Route("/login", name="login")
-     */
-    public function login(AuthenticationUtils $authUtils)
-    {
-        $error = $authUtils->getLastAuthenticationError();
-        $lastUsername = $authUtils->getLastUsername();
-
-        return $this->render('user/login.html.twig', array(
-            'last_username' => $lastUsername,
-            'error'         => $error,
-        ));
-    }
-
-    /**
-     * @Route("/logout", name="logout")
-     */
-    public function logout(){}
 }
