@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreationSortieController!{% endblock %}
+
+{% block body %}
+    <main>
+    <h1>Créer une sortie</h1>
+
+        {{ form_start(formSortie) }}
+        {{ form_label(formSortie.site) }}
+        {{ form_widget(formSortie.site) }}
+        {{ form_end(formSortie) }}
+    </main>
+{% endblock %}
