@@ -22,56 +22,80 @@ class CreationSortieController extends Controller
     public function creerSortie(Request $request, ObjectManager $manager)
     {
         $sortie = new Sortie();
-        $userID = new User();
+       // $siteID = new User();
         //$userID->getId();
-        $repoSite = $manager->getRepository(Site::class);
+        //$repoSite = $manager->getRepository(Site::class);
 
+//Getting the user to be able to display his informations
+        $user = $this->getUser();
 
+        //Creation of a form
         $sortieForm = $this->createForm(SortieType::class, $sortie);
+
+        // Getting the cities
         $repoVille = $this->getDoctrine()->getRepository(Ville::class);
         $villes = $repoVille->findAll();
 
-        $site = $this->getDoctrine()->getRepository(Site::class);
-        $site->findAll();
-        //recuperation user pour affichage du site
-        $user = $this->getUser();
-        $userID->setSite();
+        // Getting the locations
+        $repoLieux = $this->getDoctrine()->getRepository(Lieu::class);
+        $lieux = $repoLieux->findAll();
+
+        //Getting the school
+       $repoSite = $this->getDoctrine()->getRepository(Site::class);
+        $site = $repoSite->find($user->getSite());
+
+
+
 
         //recuperation ID user pour remplir le champ Organisateur
-        $sortie->setOrganisateur($this->getUser());
-        $sortieForm->handleRequest($request);
+       /* $sortie->setOrganisateur($this->getUser());
+        $sortieForm->handleRequest($request);*/
 
-       $organisateur = $this->getUser();
+        //$siteID->setSite($site);
+
+
+
+
+        //récuperation site user
+       /* $idUser = $this->getUser();
+        $repoUser = $this->getDoctrine()->getRepository(User::class);
+        $userC = $repoUser->find($idUser);
+        $siteUser = $userC->getSite();
+
+        //récuperation site
+        $repoSite = $this->getDoctrine()->getRepository(Site::class);
+        $site = $repoSite->find($siteUser);
+        $siteName = $site->getName();*/
+
+
+
+        $organisateur = $this->getUser();
         $sortie->setOrganisateur($organisateur);
 
 
 
-        $site = $repoSite->find($idSite);
+         if($sortieForm->isSubmitted() && $sortieForm->isValid()  && $request->request->get('_enregistrer') ) {
 
-
-       /* if($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            $site = $organisateur->getSite();
-            $sortie->setSite($site);
-
-            //etat par defaut 'ouverte'
-           /* $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(2);
-            $sortie->setEtat($etat);
-           $manager = $this->getDoctrine()->getManager();
-           $sortie->setEtat('En creation');
-           $sortie->setSite($this->getUser()->getSite());
-                 $manager->persist($sortie);
+             //etat par defaut 'ouverte'
+            /* $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(2);
+             $sortie->setEtat($etat);*/
+            $manager = $this->getDoctrine()->getManager();
+            $sortie->setEtat(16);
+            $sortie->setSite($this->getUser()->getSite());
+            $manager->persist($sortie);
             $manager->flush();
 
-           $this->addFlash("success", "Sortie créée");
-           return $this->redirectToRoute('sortie_creation');
-        }*/
+            $this->addFlash("success", "Sortie créée");
+            return $this->redirectToRoute('sortie_creation');
+         }
 
 
         return $this->render('sortie_creation/sortiecreation.html.twig', [
             'sortieForm' => $sortieForm->createView(),
             'villes' => $villes,
             'user' => $user,
-            'site' => $site->getId()
+            'lieux' => $lieux,
+            "site" => $site
         ]);
     }
 }
