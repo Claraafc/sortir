@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,31 +19,56 @@ class Sortie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez entre un nom pour la sortie")
+     * @Assert\Length(
+     *     min="5",
+     *     max="150",
+     *     minMessage="{{ limit }} caractères minimum !",
+     *     maxMessage="{{ limit }} caractères maximum !"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Veuillez entrer une date de sortie")
+     * @Assert\DateTime(message="This value is not valid!")
+     * @Assert\GreaterThanOrEqual("today", message="On ne peut pas créer une sortie avant la date du jour")
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Veuillez préciser combien de temps va durer la sortie")
+     * @Assert\Range(
+     *     min="60",
+     *     minMessage="{{ limit }} minutes minimum"
+     * )
      */
     private $duree;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Veuillez entrer une date limite pour clôturer les inscriptions")
+     * @Assert\GreaterThanOrEqual(propertyPath="dateDebut", message="Les inscriptions doivent se clôturer avant le début de la sortie")
      */
     private $dateCloture;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Veuillez préciser un nombre maximum de participants pour la sortie")
+     * @Assert\Range(
+     *     min="1",
+     *     minMessage="{{ limit }} participant minimum")
      */
     private $nbInscriptionsMax;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *     min="10",
+     *     minMessage="{{ limit }} caractères minimum !"
+     * )
      */
     private $description;
 
