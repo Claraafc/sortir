@@ -50,7 +50,6 @@ class ProfileModificationType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 }
             ))
-
             ->add('password', RepeatedType::class, [
                 'label' => ' ',
                 "type" => PasswordType::class,

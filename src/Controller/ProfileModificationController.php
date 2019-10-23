@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\ProfileModificationType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -24,25 +26,29 @@ class ProfileModificationController extends Controller
     {
 
         $form = $this->createForm(ProfileModificationType::class,$user);
+        $form2 = $this->createForm(ChangePasswordType::class);
 
         $form->handleRequest($request);
+        $form2->handleRequest($request);
         $repo = $manager->getRepository(User::class);
         $user = $repo->find($id);
+        $mdp = $user->getPassword();
 
-        if($form->isSubmitted() && $form->isValid()){
-
+        if($form->isSubmitted() && $form->isValid() && $form2->isSubmitted() && $form2->isValid()){
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Votre profil est bien modifie !');
+            $this->addFlash('success', 'Votre profil est bien modifié!');
             return $this->redirectToRoute('affichage_sortie');
         }
 
 
         return $this->render('user/update.html.twig', [
             'userForm' => $form->createView(),
+            'passForm' =>$form2->createView(),
             'user' => $user,
-            'id' => $id
+            'id' => $id,
+            'mdp' => $mdp
         ]);
     }
 
@@ -73,5 +79,6 @@ class ProfileModificationController extends Controller
             throw $this->createNotFoundException("File not found");
         }
     }
+
 
 }

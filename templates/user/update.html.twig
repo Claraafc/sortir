@@ -34,7 +34,7 @@
             <div class="col">{{ form_label(userForm.email) }}</div>
             <div class="col">{{ form_widget(userForm.email) }}</div>
         </div>
-        <div class="row">
+        <div class="row" hidden>
 
             <div class="col">{{ form_widget(userForm.password) }}</div>
         </div>
@@ -44,9 +44,6 @@
         </div>
     </div>
     {{ form_end(userForm) }}
-
-
-
 
 {% endblock %}
 {% endblock %}
