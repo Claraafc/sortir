@@ -70,7 +70,7 @@ class Sortie
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sorties")
      */
-    private $user;
+    private $organisateur;
 
     /**
      * @var User[]
@@ -219,33 +219,33 @@ class Sortie
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getOrganisateur()
     {
-        return $this->user;
+        return $this->organisateur;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $organisateur
      */
-    public function setUser($user): void
+    public function setOrganisateur($organisateur): void
     {
-        $this->user = $user;
+        $this->organisateur = $organisateur;
     }
 
     /**
      * @return User[]
      */
-    public function getUsers(): array
+    public function getParticipants(): array
     {
-        return $this->users;
+        return $this->participants;
     }
 
     /**
-     * @param User[] $users
+     * @param User[] $participants
      */
-    public function setUsers(array $users): void
+    public function setParticipants(array $participants): void
     {
-        $this->users = $users;
+        $this->participants = $participants;
     }
 
 }

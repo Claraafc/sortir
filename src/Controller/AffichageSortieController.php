@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AffichageSortieController extends Controller
 {
     /**
-     * @Route("/", name="affichage_sortie")
+     * @Route("/accueil", name="affichage_sortie")
      */
     public function home()
     {

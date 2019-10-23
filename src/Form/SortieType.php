@@ -56,7 +56,7 @@ class SortieType extends AbstractType
                     ]),
                 ],
                 'label' => "Nombre de places",
-                            ])
+            ])
             ->add('duree', ChoiceType::class, [
                 'constraints' => [
                     new NotBlank([
@@ -86,7 +86,7 @@ class SortieType extends AbstractType
             ])
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,
-               // 'choice_label' => 'nomVille',
+                // 'choice_label' => 'nomVille',
                 'mapped' => false,
             ])*/
             ->add('lieu', EntityType::class, [
@@ -106,7 +106,7 @@ class SortieType extends AbstractType
                         'message' => "Veuillez entrer une rue"
                     ])
                 ],
-               // 'class' => Lieu::class,
+                // 'class' => Lieu::class,
                 'mapped' => false,
             ])
             ->add('codePostal', TextType::class, [
