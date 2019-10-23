@@ -31,7 +31,9 @@ class SortiesRepository extends ServiceEntityRepository
 
     public function selectAll(){
         $rqt = $this->createQueryBuilder('a');
-        $rqt->orderBy('a.dateDebut = ');
+        $rqt->orderBy('a.dateDebut = DESC');
+
+
     }
 
     // /**

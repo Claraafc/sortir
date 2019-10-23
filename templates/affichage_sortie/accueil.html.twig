@@ -8,9 +8,19 @@
         <h3>Filtrer les sorties</h3>
        <div>
            <label>Site: </label>
-               <select>
-                     <option></option>
-               </select><br>
+               <select id="filtre_site" data-route="{{ path('site') }}" >
+                     <option value="">Tous les sites</option>
+                   {% for site in sites %}
+                       {%  set selected = '' %}
+                       {% if site.id == site %}
+                           {%  set selected = 'selected="selected"' %}
+                       {% endif %}
+
+                       <option value="{{ site.id }}" {{ selected }} >{{ site.name }}</option>
+                   {% endfor %}
+               </select>
+           <br>
+
            <label>Le nom de la sortie contient: </label>
            <input type="search" aria-label="Search through site content" ><br>
 
@@ -54,4 +64,10 @@
     <a href="{{ path('sortie_creation') }}"><button type="submit">Créer une sortie</button></a>
 
     </main>
+{% endblock %}
+
+{% block javascript %}
+
+<script src="{{ asset('js/script.js') }}"></script>
+
 {% endblock %}

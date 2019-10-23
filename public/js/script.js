@@ -65,10 +65,10 @@ $(function(){
     });
 
 
-    //Filtre par catégorie d'idée
-    $('#filtre_categorie').on('change', function () {
-        var cat = $(this).val();
-        document.location.href = $(this).data('route') + "" + cat;
+    //Filtre par site
+    $('#filtre_site').on('change', function () {
+        var site = $(this).val();
+        document.location.href = $(this).data('route') + "" + site;
     });
 
 });
