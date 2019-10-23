@@ -36,22 +36,31 @@ class SortiesRepository extends ServiceEntityRepository
 
     }
 
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Sortie[] Returns an array of Sortie objects
+      */
+
+    public function findByInscrits($value)
     {
+        $qb = $this->createQueryBuilder('s');
+        $qb->select( 's.id, count(u.id)' )
+            ->innerJoin('s.users', 'u');
+        return $qb->getQuery()->getScalarResult();
+
+
+     /*
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+
+            ->leftJoin()
+            ->andWhere('s.users = :val')
             ->setParameter('val', $value)
             ->orderBy('s.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
+        ;*/
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Sortie

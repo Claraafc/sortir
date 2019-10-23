@@ -7,18 +7,14 @@
     <form>
         <h3>Filtrer les sorties</h3>
        <div>
-           <label>Site: </label>
-               <select id="filtre_site" data-route="{{ path('site') }}" >
-                     <option value="">Tous les sites</option>
-                   {% for site in sites %}
-                       {%  set selected = '' %}
-                       {% if site.id == site %}
-                           {%  set selected = 'selected="selected"' %}
-                       {% endif %}
 
-                       <option value="{{ site.id }}" {{ selected }} >{{ site.name }}</option>
-                   {% endfor %}
-               </select>
+           <label for="site_nom">Site:</label>
+           <select name="site" id="site" class="form-control">
+               {% for site in sites %}
+                   <option value="{{ site.name }}">{{ site.name }}</option>
+               {% endfor %}
+           </select>
+
            <br>
 
            <label>Le nom de la sortie contient: </label>
@@ -50,24 +46,26 @@
             <th>Organisateur</th>
             <th>Actions</th>
         </tr>
+
+            {% for sortie in sorties %}
         <tr>
+            <td>{{ sortie.name }}</td>
+            <td>{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</td>
+            <td>{{ sortie.dateCloture|date('Y-m-d') }}</td>
+            {% for user in users %}
+            <td>{{ user.participants  }}</td>
+            {% endfor %}
             <td>a</td>
             <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
+            <td></td>
             <td>a</td>
         </tr>
+            {% endfor %}
+
     </table>
     <a href="{{ path('sortie_creation') }}"><button type="submit">Créer une sortie</button></a>
 
     </main>
 {% endblock %}
 
-{% block javascript %}
 
-<script src="{{ asset('js/script.js') }}"></script>
-
-{% endblock %}
