@@ -23,7 +23,7 @@
                 {{ form_row(sortieForm.dateCloture) }}
 
                     <label for="user_ville">Site organisateur :</label>
-                    <input class="form-control" id="disabledInput" type="text" name="site_id" {#placeholder="{{ user.getSite() }}"disabled#} >
+                    <input class="form-control" id="disabledInput" type="text" name="site_id" placeholder="{{ site }}"disabled >
 
 
                     <label for="lieu_nom">Ville :</label>
@@ -33,8 +33,15 @@
                         {% endfor %}
                     </select>
 
-                {{ form_row(sortieForm.lieu ) }}
-                <a href="{{ path('lieu') }}" class="btn btn-secondary">Ajouter lieu</a>
+
+        {{ form_row(sortieForm.lieu ) }}<a href="{{ path('lieu') }}" class="btn btn-success">+</a>
+
+        {# <button type="button" class="close red delete-item" aria-label="New" title="new place ?" data-placement="right"
+                 data-link="{{ path('lieu') }}">
+             <span aria-hidden="true">+</span>
+         </button>#}
+
+
 
 
        {#<a class="btn btn-outline-danger" href="{{ path('home') }}">Annuler</a>#}

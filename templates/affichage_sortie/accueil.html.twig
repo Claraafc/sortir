@@ -3,6 +3,7 @@
 {% block title %}{{parent()}}{% endblock %}
 
 {% block body %}
+    <main>
     <form>
         <h3>Filtrer les sorties</h3>
        <div>
@@ -26,6 +27,8 @@
 
              <button type="submit"> Rechercher</button>
     </div>
+    </form>
+
     <table  style="width: 100%"  border="1">
         <tr>
             <th>Nom de la sortie</th>
@@ -48,7 +51,7 @@
             <td>a</td>
         </tr>
     </table>
-        <input type="submit" value="Créer une sortie">
-    </form>
+    <a href="{{ path('sortie_creation') }}"><button type="submit">Créer une sortie</button></a>
 
+    </main>
 {% endblock %}

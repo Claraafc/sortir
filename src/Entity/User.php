@@ -60,6 +60,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="users")
+     * @ORM\JoinColumn(name="site_name", referencedColumnName="name")
      */
     private $site;
 
