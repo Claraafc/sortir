@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestBaseHtmlController extends Controller
 {
     /**
-     * @Route("/", name="test_base_html")
+     * @Route("/test", name="test_base_html")
      */
     public function index()
     {

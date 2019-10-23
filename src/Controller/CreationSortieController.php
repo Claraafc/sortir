@@ -27,6 +27,9 @@ class CreationSortieController extends Controller
        /* $organisateur = $this->getUser();
         $sortie->setUser($organisateur);*/
 
+      $villes =  $manager->getRepository(Ville::class);
+      $villes->findBy([],['name'=>'ASC']);
+
         if($formSortie->isSubmitted() && $formSortie->isValid()) {
            /* $site = $organisateur->getSite();
             $sortie->setSite($site);*/
@@ -45,7 +48,9 @@ class CreationSortieController extends Controller
 
 
         return $this->render('sortie_creation/sortiecreation.html.twig', [
-            'formSortie' => $formSortie->createView()
+            'formSortie' => $formSortie->createView(),
+            'villes' => $villes
+
         ]);
     }
 }

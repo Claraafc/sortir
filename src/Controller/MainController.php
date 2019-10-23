@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends Controller
 {
     /**
-     * @Route("/", name="affichage_sortie")
+     * @Route("/", name="main")
      */
     public function home()
     {
-        return $this->render("#");
+        return $this->redirectToRoute('app_login');
     }
 
 
