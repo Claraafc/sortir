@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use function Sodium\add;
 
 class SortieType extends AbstractType
 {
@@ -93,7 +94,9 @@ class SortieType extends AbstractType
                     new NotBlank([
                         'message' => "Veuillez entrer un nom de lieu"
                     ])
+
                 ],
+               'label' => 'Lieu :',
                 'class' => Lieu::class,
                 //'choice_label' => "nomLieu",
             ])
@@ -120,7 +123,24 @@ class SortieType extends AbstractType
             ->add('longitude', TextType::class, [
                 'mapped' => false,
             ])*/
-            ->add('Valider', SubmitType::class);
+            ->add('Enregistrer', SubmitType::class, [
+                'attr' => [
+                    'name' => "_enregistrer",
+                    'id' => "enregistrer",
+                ]
+           ])
+            ->add('Publier', SubmitType::class, [
+                'attr' => [
+                    'name' => "_publier",
+                    'id' => "publier",
+                ]
+            ])
+            ->add('Annuler', SubmitType::class, [
+                'attr' => [
+                    'name' => "_annuler",
+                    'id' => "annuler",
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
