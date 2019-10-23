@@ -21,7 +21,7 @@ class SecurityController extends Controller
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
          //if ($this->getUser()) {
-         //   $this->redirectToRoute('profile_detail');
+        //    $this->redirectToRoute('');
          //}
 
         // get the login error if there is one
