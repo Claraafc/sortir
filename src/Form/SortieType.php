@@ -89,7 +89,7 @@ class SortieType extends AbstractType
                 // 'choice_label' => 'nomVille',
                 'mapped' => false,
             ])*/
-            ->add('lieu', EntityType::class, [
+            /*->add('lieu', EntityType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => "Veuillez entrer un nom de lieu"
@@ -99,7 +99,7 @@ class SortieType extends AbstractType
                'label' => 'Lieu :',
                 'class' => Lieu::class,
                 //'choice_label' => "nomLieu",
-            ])
+            ])*/
            /* ->add('rue', TextType::class, [
                 'constraints' => [
                     new NotBlank([
