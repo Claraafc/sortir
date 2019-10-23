@@ -4,11 +4,42 @@
 
 {% block body %}
     <main>
-    <h1>Créer une sortie</h1>
+        {# read and display all flash messages #}
+        {% for label, messages in app.flashes(['danger', 'success']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <h3>Créer une sortie</h3>
+        {{ form_start(sortieForm) }}
 
-        {{ form_start(formSortie) }}
-        {{ form_label(formSortie.site) }}
-        {{ form_widget(formSortie.site) }}
-        {{ form_end(formSortie) }}
+                {{ form_row(sortieForm.name) }}
+                {{ form_row(sortieForm.nbInscriptionsMax ) }}
+                {{ form_row(sortieForm.duree ) }}
+                {{ form_row(sortieForm.description ) }}
+                {{ form_row(sortieForm.dateDebut ) }}
+                {{ form_row(sortieForm.dateCloture) }}
+
+                    <label for="user_ville">Site organisatrice :</label>
+                    <input class="form-control" id="disabledInput" type="text" name="site_id" {#placeholder="{{ user.getSite() }}"disabled#} >
+
+
+                    <label for="lieu_nom">Villes :</label>
+                    <select name="lieu" id="lieu" class="form-control">
+                        {% for ville in villes %}
+                            <option value="{{ ville.nom }}">{{ ville.nom }}</option>
+                        {% endfor %}
+                    </select>
+
+                {{ form_row(sortieForm.lieu ) }}
+                <a href="{{ path('lieu') }}" class="btn btn-secondary">Ajouter lieu</a>
+
+        <button type="submit"  name="publier" class="btn btn-primary" value="publier">Publier</button>
+        <button type="submit"  name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
+       {#<a class="btn btn-outline-danger" href="{{ path('home') }}">Annuler</a>#}
+        {{ form_end(sortieForm) }}
+
     </main>
 {% endblock %}

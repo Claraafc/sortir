@@ -78,7 +78,7 @@ class SortieType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
             ])
-            ->add('site', EntityType::class, [
+           /* ->add('site', EntityType::class, [
                 'class' => Sortie::class,
                 'choice_label' => 'siteVille',
                 'mapped' => false,
@@ -87,7 +87,7 @@ class SortieType extends AbstractType
                 'class' => Ville::class,
                // 'choice_label' => 'nomVille',
                 'mapped' => false,
-            ])
+            ])*/
             ->add('lieu', EntityType::class, [
                 'constraints' => [
                     new NotBlank([
@@ -97,7 +97,7 @@ class SortieType extends AbstractType
                 'class' => Lieu::class,
                 //'choice_label' => "nomLieu",
             ])
-            ->add('rue', TextType::class, [
+           /* ->add('rue', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => "Veuillez entrer une rue"
@@ -119,7 +119,7 @@ class SortieType extends AbstractType
             ])
             ->add('longitude', TextType::class, [
                 'mapped' => false,
-            ])
+            ])*/
             ->add('Valider', SubmitType::class);
     }
 
