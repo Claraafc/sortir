@@ -2,20 +2,20 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
+use App\Entity\Lieu;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFixtures extends Fixture
+class LieuFixtures extends Fixture
 {
 
-    public const USER_ADMIN = 'user-admin';
-    public const USER_TOTO = 'user-toto';
+    public const LIEU_TAPEO = 'lieu-tapeo';
+    public const LIEU_BRASSEES = 'lieu-brassees';
     private $encoder;
 
     /**
-     * UserFixtures constructor.
+     * LieuFixtures constructor.
      * @param $encoder
      */
     public function __construct(UserPasswordEncoderInterface $encoder)
@@ -28,18 +28,14 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-         $user1 = new User();
-         $user1->setUsername('admin');
-         $user1->setEmail("admin@mail.fr");
-         $user1->setNom('Admin');
-         $user1->setPrenom('strateur');
-         $user1->setTelephone('0666547889');
-         $user1->setUrlPhoto('photos/conan.jpg');
-         $user1->setRoles(['ROLE_ADMIN']);
+         $lieu1 = new Lieu();
+         $lieu1->setNom('tapeo');
+         $lieu1->setRue('rue de la faim');
+         $lieu1->setLongitude('18.55445554478');
+         $lieu1->setLatitude('685.587646376987');
 
-         $password = $this->encoder->encodePassword($user1, 'pass_administrateur');
-         $user1->setPassword($password);
-         $manager->persist($user1);
+
+         $manager->persist($lieu1);
 
         $user2 = new User();
         $user2->setUsername('Toto');
