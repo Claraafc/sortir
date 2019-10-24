@@ -47,18 +47,6 @@ class SortiesRepository extends ServiceEntityRepository
             ->innerJoin('s.users', 'u');
         return $qb->getQuery()->getScalarResult();
 
-
-     /*
-        return $this->createQueryBuilder('s')
-
-            ->leftJoin()
-            ->andWhere('s.users = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;*/
     }
 
 
