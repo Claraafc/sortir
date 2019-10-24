@@ -65,11 +65,6 @@ class User implements UserInterface
      */
     private $urlPhoto;
 
-
-
-
-
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="organisateur")
      */
