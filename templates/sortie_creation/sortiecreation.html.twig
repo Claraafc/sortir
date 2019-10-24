@@ -8,49 +8,44 @@
         <h3>Créer une sortie</h3>
         {{ form_start(sortieForm) }}
 
-                {{ form_row(sortieForm.name) }}
-                {{ form_row(sortieForm.nbInscriptionsMax ) }}
-                {{ form_row(sortieForm.duree ) }}
-                {{ form_row(sortieForm.description ) }}
-                {{ form_row(sortieForm.dateDebut ) }}
-                {{ form_row(sortieForm.dateCloture) }}
+        {{ form_row(sortieForm.name) }}
+        {{ form_row(sortieForm.nbInscriptionsMax ) }}
+        {{ form_row(sortieForm.duree ) }}
+        {{ form_row(sortieForm.description ) }}
+        {{ form_row(sortieForm.dateDebut ) }}
+        {{ form_row(sortieForm.dateCloture) }}
+
+
+        <label for="user_ville">Site organisateur :</label>
+        <input class="form-control" id="disabledInput" type="text" name="site_id" placeholder="{{ site.name }}"
+               disabled>
+
+        {{ form_row(sortieForm.ville) }}
+        {{ form_row(sortieForm.lieu) }} <a href="{{ path('lieu') }}" class="btn btn-success">+</a>
+
+        {# <label for="lieu_nom">Lieu :</label>
+         <select name="lieu" id="lieu" class="form-control">
+             {% for lieu in lieux %}
+                 <option value="{{ lieu.id }}">{{ lieu.nom }}</option>
+             {% endfor %}
+         </select>#}
 
 
 
-                    <label for="user_ville">Site organisateur :</label>
-                    <input class="form-control" id="disabledInput" type="text" name="site_id" placeholder="{{ site.name }}"disabled >
-        {#{{ form_row(sortieForm.ville) }}#}
-
-                    <label for="ville_nom">Ville :</label>
-                    <select name="ville" id="ville" class="form-control">
-                        {% for ville in villes %}
-                            <option value="{{ ville.name }}">{{ ville.name }}</option>
-                        {% endfor %}
-                    </select>
-        {{ form_row(sortieForm.lieu) }}
-
-       {# <label for="lieu_nom">Lieu :</label>
-        <select name="lieu" id="lieu" class="form-control">
-            {% for lieu in lieux %}
-                <option value="{{ lieu.id }}">{{ lieu.nom }}</option>
-            {% endfor %}
-        </select>#}
 
 
-
-        <a href="{{ path('lieu') }}" class="btn btn-success">+</a>
 
         {# <button type="button" class="close red delete-item" aria-label="New" title="new place ?" data-placement="right"
                  data-link="{{ path('lieu') }}">
              <span aria-hidden="true">+</span>
          </button>#}
 
-        <button type="submit"  name="publier" class="btn btn-primary" value="publier">Publier</button>
-        <button type="submit"  name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
+        <button type="submit" name="publier" class="btn btn-primary" value="publier">Publier</button>
+        <button type="submit" name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
         <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Annuler</a>
 
 
-       {#<a class="btn btn-outline-danger" href="{{ path('home') }}">Annuler</a>#}
+        {#<a class="btn btn-outline-danger" href="{{ path('home') }}">Annuler</a>#}
 
         {{ form_end(sortieForm) }}
 
