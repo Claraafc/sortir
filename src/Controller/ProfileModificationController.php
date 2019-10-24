@@ -81,14 +81,14 @@ class ProfileModificationController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("/user/update/password/{id}", name="change_password")
+     * @Route("/user/update/password/{id}", name="change_password", methods={"POST", "GET"})
      */
     public function changePassword(Request $request, int $id, ObjectManager $manager)
     {
         $em = $this->getDoctrine()->getManager();
 
         $repo = $manager->getRepository(User::class);
-        $user = $repo->find($id);
+        $user = $this->getUser();
         $id = $user->getId();
         $form = $this->createForm(ChangePasswordType::class, $user);
 
@@ -108,7 +108,9 @@ class ProfileModificationController extends Controller
 
                 $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
 
-                return $this->redirectToRoute('user_update');
+                return $this->redirectToRoute('user_update', [
+                    'id' => $id
+                ]);
             } else {
                 $form->addError(new FormError('Ancien mot de passe incorrect'));
             }
