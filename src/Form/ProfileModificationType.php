@@ -59,6 +59,10 @@ class ProfileModificationType extends AbstractType
             ])
             ->add('urlPhoto',FileType::class,array('data_class'=> null, 'label' => 'Ma photo'))
             ->add('Enregistrer', SubmitType::class)
+            ->add('Annuler', SubmitType::class, array(
+                'label' => 'Annuler',
+                'attr' => array('class' => 'btn btn-danger')))
+
         ;
     }
 

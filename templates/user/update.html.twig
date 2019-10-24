@@ -34,13 +34,22 @@
             <div class="col">{{ form_label(userForm.email) }}</div>
             <div class="col">{{ form_widget(userForm.email) }}</div>
         </div>
-        <div class="row" hidden>
+        <div class="row">
 
             <div class="col">{{ form_widget(userForm.password) }}</div>
         </div>
         <div class="row">
             <div class="col">{{ form_label(userForm.site) }}</div>
             <div class="col">{{ form_widget(userForm.site) }}</div>
+        </div>
+        <div class="row">
+            <label>Photo</label>
+            <div class="col">{{ form_widget(userForm.urlPhoto) }}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{ form_widget(userForm.Enregistrer) }}</div>
+            <div class="col">{{ form_widget(userForm.Annuler) }}</div>
+            <div class="col"><button><a href="{{ path('change_password') }}">Changer mot de passe</a></button></div>
         </div>
     </div>
     {{ form_end(userForm) }}

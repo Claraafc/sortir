@@ -8,6 +8,7 @@ use App\Form\ProfileModificationType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
@@ -80,5 +81,42 @@ class ProfileModificationController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/user/update/password", name="change_password")
+     */
+    public function editAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePasswordType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $passwordEncoder = $this->get('security.password_encoder');
+            $oldPassword = $request->request->get('etiquettebundle_user')['oldPassword'];
+
+            // Si l'ancien mot de passe est bon
+            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($newEncodedPassword);
+
+                $em->persist($user);
+                $em->flush();
+
+                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+
+                return $this->redirectToRoute('user_update');
+            } else {
+                $form->addError(new FormError('Ancien mot de passe incorrect'));
+            }
+        }
+
+        return $this->render('user/password.html.twig', array(
+            'passForm' => $form->createView(),
+        ));
+    }
 
 }
