@@ -9,6 +9,7 @@ use App\Entity\Ville;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -18,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use function Sodium\add;
 
@@ -31,9 +33,17 @@ class SortieType extends AbstractType
             ])
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie",
+                'years' => [2019, 2020, 2021, 2022, 2023],
+
+              /* 'attr' =>[
+                   'min' => (new DateTime()),
+
+               ]*/
+
             ])
             ->add('dateCloture', DateType::class, [
                 'label' => "Date limite d'inscription",
+                'years' => [2019, 2020, 2021, 2022, 2023],
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => "Nombre de places",

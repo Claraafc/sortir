@@ -52,7 +52,7 @@ class Sortie
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Veuillez entrer une date limite pour clôturer les inscriptions")
-     * @Assert\GreaterThanOrEqual(propertyPath="dateDebut", message="Les inscriptions doivent se clôturer avant le début de la sortie")
+     * @Assert\LessThanOrEqual(propertyPath="dateDebut", message="Les inscriptions doivent se clôturer avant le début de la sortie")
      */
     private $dateCloture;
 

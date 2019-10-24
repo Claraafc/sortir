@@ -27,7 +27,7 @@
                             <option value="{{ ville.name }}">{{ ville.name }}</option>
                         {% endfor %}
                     </select>
-        {{ form_row(sortieForm.lieu) }}
+        {{ form_row(sortieForm.lieu) }} <a href="{{ path('lieu') }}" class="btn btn-success">+</a>
 
        {# <label for="lieu_nom">Lieu :</label>
         <select name="lieu" id="lieu" class="form-control">
@@ -38,7 +38,8 @@
 
 
 
-        <a href="{{ path('lieu') }}" class="btn btn-success">+</a>
+
+
 
         {# <button type="button" class="close red delete-item" aria-label="New" title="new place ?" data-placement="right"
                  data-link="{{ path('lieu') }}">
