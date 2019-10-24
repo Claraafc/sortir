@@ -86,7 +86,7 @@ class ProfileModificationController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse|Response
-     * @Route("/user/update/password/{id}", name="change_password")
+     * @Route("/user/update/password/{id}", name="change_password", methods={"GET"})
      */
     public function changePassword(Request $request, int $id, ObjectManager $manager)
     {
