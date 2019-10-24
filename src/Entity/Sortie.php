@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -77,32 +79,41 @@ class Sortie
      */
     private $urlPhoto;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties")
-     */
-    private $etat;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
-     */
-    private $lieu;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sorties")
-     */
-    private $site;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
 
     /**
-     * @var User[]
      * @ORM\ManyToMany(targetEntity="App\Entity\User")
-     *
      */
     private $users;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $site;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lieu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $etat;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -193,84 +204,78 @@ class Sortie
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEtat()
-    {
-        return $this->etat;
-    }
-
-    /**
-     * @param mixed $etat
-     */
-    public function setEtat($etat): void
-    {
-        $this->etat = $etat;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLieu()
-    {
-        return $this->lieu;
-    }
-
-    /**
-     * @param mixed $lieu
-     */
-    public function setLieu($lieu): void
-    {
-        $this->lieu = $lieu;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSite()
-    {
-        return $this->site;
-    }
-
-    /**
-     * @param mixed $site
-     */
-    public function setSite($site): void
-    {
-        $this->site = $site;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrganisateur()
+    public function getOrganisateur(): ?User
     {
         return $this->organisateur;
     }
 
-    /**
-     * @param mixed $organisateur
-     */
-    public function setOrganisateur($organisateur): void
+    public function setOrganisateur(?User $organisateur): self
     {
         $this->organisateur = $organisateur;
+
+        return $this;
     }
 
     /**
-     * @return User[]
+     * @return Collection|User[]
      */
-    public function getParticipants(): array
+    public function getUsers(): Collection
     {
-        return $this->participants;
+        return $this->users;
     }
 
-    /**
-     * @param User[] $participants
-     */
-    public function setParticipants(array $participants): void
+    public function addUser(User $user): self
     {
-        $this->participants = $participants;
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+        }
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
+    {
+        return $this->site;
+    }
+
+    public function setSite(?Site $site): self
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): self
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getEtat(): ?Etat
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?Etat $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
     }
 
 }
