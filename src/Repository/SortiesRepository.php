@@ -19,37 +19,20 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    public function getName($name){
-        $qb = $this->createQueryBuilder('s')
-            ->andWhere('s.name = $name');
 
-         $query = $qb->getQuery();
-         $resultat = $query->getResult();
+     /**
+      * @return Sortie[] Returns an array of Sortie objects
+      */
 
-         return $resultat;
-    }
-
-    public function selectAll(){
-        $rqt = $this->createQueryBuilder('a');
-        $rqt->orderBy('a.dateDebut = ');
-    }
-
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByInscrits($value)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('s');
+        $qb->select( 's.id, count(u.id)' )
+            ->innerJoin('s.users', 'u');
+        return $qb->getQuery()->getScalarResult();
+
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Sortie

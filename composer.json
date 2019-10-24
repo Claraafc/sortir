@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "pugx/autocompleter-bundle": "^1.4",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "3.4.*",
         "symfony/console": "3.4.*",
