@@ -37,7 +37,7 @@ class ProfileModificationController extends Controller
         $form->handleRequest($request);
 
         $id = $user->getId();
-        $mdp = $user->getPassword();
+        $mdp = $form->get('password')->getData();
 
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($user);
@@ -86,7 +86,7 @@ class ProfileModificationController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse|Response
-     * @Route("/user/update/password/{id}", name="change_password", methods={"GET"})
+     * @Route("/user/update/password/{id}", name="change_password", methods={"GET", "POST"})
      */
     public function changePassword(Request $request, int $id, ObjectManager $manager)
     {
@@ -94,7 +94,6 @@ class ProfileModificationController extends Controller
 
         $repo = $manager->getRepository(User::class);
         $user = $this->getUser();
-        $id = $user->getId();
         $form = $this->createForm(ChangePasswordType::class, $user);
 
         $form->handleRequest($request);
@@ -105,7 +104,7 @@ class ProfileModificationController extends Controller
 
             // Si l'ancien mot de passe est bon
             if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $form->get('password')->getData());
                 $user->setPassword($newEncodedPassword);
                 $id = $user->getId();
                 $em->persist($user);
@@ -113,7 +112,7 @@ class ProfileModificationController extends Controller
 
                 $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
 
-                return $this->redirectToRoute('user_update');
+                return $this->redirectToRoute('change_password');
             } else {
                 $form->addError(new FormError('Ancien mot de passe incorrect'));
             }
