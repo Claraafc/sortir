@@ -7,15 +7,22 @@
     <form>
         <h3>Filtrer les sorties</h3>
        <div>
-           <label>Site: </label>
-               <select>
-                     <option></option>
-               </select><br>
+
+           <label for="site_nom">Site:</label>
+           <select name="site" id="site" class="form-control">
+               {% for site in sites %}
+                   <option value="{{ site.name }}">{{ site.name }}</option>
+               {% endfor %}
+           </select>
+
+           <br>
+
            <label>Le nom de la sortie contient: </label>
+
            <input type="search" aria-label="Search through site content" ><br>
 
              <label>Entre </label>
-             <input type="date">
+             <input type="date" value="now">
              <label> et </label>
              <input type="date"><br>
        </div>
@@ -40,18 +47,24 @@
             <th>Organisateur</th>
             <th>Actions</th>
         </tr>
+
+            {% for sortie in sorties %}
         <tr>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
+            <td>{{ sortie.name }}</td>
+            <td>{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</td>
+            <td>{{ sortie.dateCloture|date('Y-m-d') }}</td>
+            <td>{{ sortie.users.count }}/{{ sortie.nbInscriptionsMax }}</td>
+            <td>{{ sortie.etat.libelle }}</td>
+            <td> inscrit ?</td>
+            <td>{{ sortie.organisateur.nom}}</td>
+            <td><a href="#">lien</a></td>
         </tr>
+            {% endfor %}
+
     </table>
     <a href="{{ path('sortie_creation') }}"><button type="submit">Créer une sortie</button></a>
 
     </main>
 {% endblock %}
+
+
