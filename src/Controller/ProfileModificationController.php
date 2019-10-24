@@ -27,15 +27,14 @@ class ProfileModificationController extends Controller
     {
 
         $form = $this->createForm(ProfileModificationType::class,$user);
-        $form2 = $this->createForm(ChangePasswordType::class);
-
         $form->handleRequest($request);
-        $form2->handleRequest($request);
+
         $repo = $manager->getRepository(User::class);
         $user = $repo->find($id);
+        $id = $user->getId();
         $mdp = $user->getPassword();
 
-        if($form->isSubmitted() && $form->isValid() && $form2->isSubmitted() && $form2->isValid()){
+        if($form->isSubmitted() && $form->isValid()){
             $em->persist($user);
             $em->flush();
 
@@ -46,10 +45,8 @@ class ProfileModificationController extends Controller
 
         return $this->render('user/update.html.twig', [
             'userForm' => $form->createView(),
-            'passForm' =>$form2->createView(),
             'user' => $user,
             'id' => $id,
-            'mdp' => $mdp
         ]);
     }
 
@@ -84,19 +81,22 @@ class ProfileModificationController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("/user/update/password", name="change_password")
+     * @Route("/user/update/password/{id}", name="change_password")
      */
-    public function editAction(Request $request)
+    public function changePassword(Request $request, int $id, ObjectManager $manager)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
+
+        $repo = $manager->getRepository(User::class);
+        $user = $repo->find($id);
+        $id = $user->getId();
         $form = $this->createForm(ChangePasswordType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $passwordEncoder = $this->get('security.password_encoder');
-            $oldPassword = $request->request->get('etiquettebundle_user')['oldPassword'];
+            $oldPassword = $request->request->get($user->getPassword())['oldPassword'];
 
             // Si l'ancien mot de passe est bon
             if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
@@ -116,6 +116,8 @@ class ProfileModificationController extends Controller
 
         return $this->render('user/password.html.twig', array(
             'passForm' => $form->createView(),
+            'id' => $id,
+            'user' => $user
         ));
     }
 
