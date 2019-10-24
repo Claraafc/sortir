@@ -52,9 +52,7 @@
             <td>{{ sortie.name }}</td>
             <td>{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</td>
             <td>{{ sortie.dateCloture|date('Y-m-d') }}</td>
-            {% for user in users %}
-            <td>{{ user.participants  }}</td>
-            {% endfor %}
+            <td>{{ sortie.users }}</td>
             <td>a</td>
             <td>a</td>
             <td></td>

@@ -33,13 +33,12 @@ class AffichageSortieController extends Controller
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $repoSite->findAll();
 
-        $users = $repoSite->findByInscrits($sorties);
+
 
 
         return $this->render('affichage_sortie/accueil.html.twig', [
             "sorties"=> $sorties,
-            "sites" => $sites,
-            'users' => $users
+            "sites" => $sites
         ]);
     }
 }
