@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,13 +28,13 @@ class Etat
      */
     private $sorties;
 
-    /**
-     * Etat constructor.
-     */
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
     }
+
+
+
 
 
     public function getId(): ?int
@@ -63,20 +64,36 @@ class Etat
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection|Sortie[]
      */
-    public function getSorties(): ArrayCollection
+    public function getSorties(): Collection
     {
         return $this->sorties;
     }
 
-    /**
-     * @param ArrayCollection $sorties
-     */
-    public function setSorties(ArrayCollection $sorties): void
+    public function addSorty(Sortie $sorty): self
     {
-        $this->sorties = $sorties;
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setEtat($this);
+        }
+
+        return $this;
     }
+
+    public function removeSorty(Sortie $sorty): self
+    {
+        if ($this->sorties->contains($sorty)) {
+            $this->sorties->removeElement($sorty);
+            // set the owning side to null (unless already changed)
+            if ($sorty->getEtat() === $this) {
+                $sorty->setEtat(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
 }
