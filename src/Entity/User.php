@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -58,16 +60,26 @@ class User implements UserInterface
      */
     private $urlPhoto;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="users")
-     */
-    private $site;
+
+
+
 
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="organisateur")
      */
     private $sorties;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $site;
+
+    public function __construct()
+    {
+        $this->sorties = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -208,36 +220,51 @@ class User implements UserInterface
         return $this;
     }
 
+
+
     /**
-     * @return mixed
+     * @return Collection|Sortie[]
      */
-    public function getSite()
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
+
+    public function addSorty(Sortie $sorty): self
+    {
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSorty(Sortie $sorty): self
+    {
+        if ($this->sorties->contains($sorty)) {
+            $this->sorties->removeElement($sorty);
+            // set the owning side to null (unless already changed)
+            if ($sorty->getOrganisateur() === $this) {
+                $sorty->setOrganisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
     {
         return $this->site;
     }
 
-    /**
-     * @param mixed $site
-     */
-    public function setSite($site): void
+    public function setSite(?Site $site): self
     {
         $this->site = $site;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSortie()
-    {
-        return $this->sortie;
-    }
 
-    /**
-     * @param mixed $sortie
-     */
-    public function setSortie($sortie): void
-    {
-        $this->sortie = $sortie;
-    }
 
 }
