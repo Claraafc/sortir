@@ -87,7 +87,7 @@ class CreationSortieController extends Controller
            // 'villes' => $villes,
             'user' => $user,
             //'lieux' => $lieux,
-            "site" => $site
+            "site" => $site,
         ]);
     }
 }

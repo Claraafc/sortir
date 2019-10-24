@@ -110,17 +110,6 @@ class Sortie
      */
     private $etat;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="sorties")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $ville;
-
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -280,18 +269,6 @@ class Sortie
     public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
-
-        return $this;
-    }
-
-    public function getVille(): ?Ville
-    {
-        return $this->ville;
-    }
-
-    public function setVille(?Ville $ville): self
-    {
-        $this->ville = $ville;
 
         return $this;
     }

@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -63,7 +65,8 @@ class SortieType extends AbstractType
                 'choice_label' => 'name',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('v')->orderBy('v.name', 'ASC');
-                }
+                },
+                'mapped' => false
             ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
@@ -75,24 +78,6 @@ class SortieType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
             ]);
-            /*->add('Enregistrer', SubmitType::class, [
-                'attr' => [
-                    'name' => "_enregistrer",
-                    'id' => "enregistrer",
-                ]
-            ])->add('Publier', SubmitType::class, [
-                'attr' => [
-                    'name' => "publier",
-                    'id' => "publier",
-                ]
-            ])
-            ->add('Annuler', SubmitType::class, [
-                'attr' => [
-                    'name' => "_annuler",
-                    'id' => "annuler",
-                ]
-            ])
-        ;*/
     }
 
     public function configureOptions(OptionsResolver $resolver)

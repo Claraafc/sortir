@@ -19,14 +19,7 @@
         <label for="user_ville">Site organisateur :</label>
         <input class="form-control" id="disabledInput" type="text" name="site_id" placeholder="{{ site.name }}"
                disabled>
-        {#{{ form_row(sortieForm.ville) }}#}
 
-        {#<label for="ville_nom">Ville :</label>
-         <select name="ville" id="ville" class="form-control">
-             {% for ville in villes %}
-                 <option value="{{ ville.name }}">{{ ville.name }}</option>
-             {% endfor %}
-         </select>#}
         {{ form_row(sortieForm.ville) }}
         {{ form_row(sortieForm.lieu) }} <a href="{{ path('lieu') }}" class="btn btn-success">+</a>
 

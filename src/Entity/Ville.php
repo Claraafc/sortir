@@ -33,15 +33,9 @@ class Ville
      */
     private $lieux;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="ville")
-     */
-    private $sorties;
-
     public function __construct()
     {
         $this->lieux = new ArrayCollection();
-        $this->sorties = new ArrayCollection();
     }
 
 
@@ -101,37 +95,6 @@ class Ville
             // set the owning side to null (unless already changed)
             if ($lieux->getVille() === $this) {
                 $lieux->setVille(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Sortie[]
-     */
-    public function getSorties(): Collection
-    {
-        return $this->sorties;
-    }
-
-    public function addSorty(Sortie $sorty): self
-    {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties[] = $sorty;
-            $sorty->setVille($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSorty(Sortie $sorty): self
-    {
-        if ($this->sorties->contains($sorty)) {
-            $this->sorties->removeElement($sorty);
-            // set the owning side to null (unless already changed)
-            if ($sorty->getVille() === $this) {
-                $sorty->setVille(null);
             }
         }
 
