@@ -3,42 +3,55 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\ProfileModificationType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class ProfileModificationController extends Controller
 {
     /**
      * @Route("/user/update/{id}", name="user_update", requirements={"id":"\d+"})
+     * @param User $user
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param int $id
+     * @param ObjectManager $manager
+     * @return RedirectResponse|Response
      */
-    public function update(User $user, Request $request, EntityManagerInterface $em, int $id, ObjectManager $manager)
+    public function update(User $user, Request $request, EntityManagerInterface $em, ObjectManager $manager)
     {
 
         $form = $this->createForm(ProfileModificationType::class,$user);
-
         $form->handleRequest($request);
-        $repo = $manager->getRepository(User::class);
-        $user = $repo->find($id);
+
+        $id = $user->getId();
+        $mdp = $user->getPassword();
 
         if($form->isSubmitted() && $form->isValid()){
-
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Votre profil est bien modifie !');
+            $this->addFlash('success', 'Votre profil est bien modifié!');
             return $this->redirectToRoute('affichage_sortie');
         }
 
 
         return $this->render('user/update.html.twig', [
             'userForm' => $form->createView(),
-            'user' => $user
+            'user' => $user,
+            'id' => $id,
         ]);
     }
 
@@ -68,6 +81,49 @@ class ProfileModificationController extends Controller
         else{
             throw $this->createNotFoundException("File not found");
         }
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/user/update/password/{id}", name="change_password")
+     */
+    public function changePassword(Request $request, int $id, ObjectManager $manager)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $repo = $manager->getRepository(User::class);
+        $user = $repo->find($id);
+        $id = $user->getId();
+        $form = $this->createForm(ChangePasswordType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $passwordEncoder = $this->get('security.password_encoder');
+            $oldPassword = $request->request->get('change_password')['oldPassword'];
+
+            // Si l'ancien mot de passe est bon
+            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($newEncodedPassword);
+                $id = $user->getId();
+                $em->persist($user);
+                $em->flush();
+
+                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+
+                return $this->redirectToRoute('user_update');
+            } else {
+                $form->addError(new FormError('Ancien mot de passe incorrect'));
+            }
+        }
+
+        return $this->render('user/password.html.twig', array(
+            'passForm' => $form->createView(),
+            'id' => $id,
+            'user' => $user
+        ));
     }
 
 }

@@ -24,7 +24,7 @@ class InscriptionSortieController extends Controller
            if(count($tabUser) < $nbMaxParticipants )
             $sortie->setParticipants($tabUser);
 
-            ;
+
             if(!$user == null){
                 $manager->persist($sortie);
                 $manager->flush();

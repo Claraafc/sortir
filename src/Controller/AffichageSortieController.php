@@ -2,43 +2,35 @@
 
 namespace App\Controller;
 
-use App\Entity\Etat;
-use App\Entity\Lieu;
-use App\Entity\Site;
-use App\Entity\Sortie;
-use App\Entity\User;
-use App\Entity\Ville;
-use App\Form\SortieType;
+use App\Repository\SortiesRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AffichageSortieController extends Controller
 {
     /**
-     * @Route("/sortir/affichage", name="affichage_sortie")
+     * @Route("/accueil", name="affichage_sortie")
      */
-    public function afficherSortie(Request $request, ObjectManager $manager)
+    public function home()
     {
-      //  $sortie = new Sortie();
-        // $siteID = new User();
-        //$userID->getId();
-        //$repoSite = $manager->getRepository(Site::class);
-
-        // Getting the locations
-       $repoSite = $this->getDoctrine()->getRepository(Site::class);
-        $sites = $repoSite->findAll();
-
-        $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
-        $sorties = $repoSite->findAll();
-
-
-
-
         return $this->render('affichage_sortie/accueil.html.twig', [
-            "sorties"=> $sorties,
-            "sites" => $sites
+            'controller_name' => 'AffichageSortieController',
+
         ]);
+    }
+
+    public function listName(SortiesRepository $sortiesRepository){
+       //utilisation de la méthode getName() réalisé dans le SortiesRepository
+        $nameSortie= $sortiesRepository->getName();
+
+
+        return $this->render('affichage_sortie/accueil.html.twig',[
+            'nameSorties' => $nameSortie,
+
+
+        ]);
+
     }
 }
