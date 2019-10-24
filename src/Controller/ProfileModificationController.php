@@ -35,7 +35,7 @@ class ProfileModificationController extends Controller
 
         $form = $this->createForm(ProfileModificationType::class,$user);
         $form->handleRequest($request);
-
+        $user = $this->getUser();
         $id = $user->getId();
         $mdp = $form->get('password')->getData();
 
