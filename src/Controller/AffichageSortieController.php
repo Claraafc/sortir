@@ -25,8 +25,7 @@ class AffichageSortieController extends Controller
         $nameSortie= $sortiesRepository->getName();
 
         return $this->render('affichage_sortie/accueil.html.twig',[
-            'nameSorties' => $nameSortie
-
+            'nameSorties' => $nameSortie,
         ]);
 
     }
