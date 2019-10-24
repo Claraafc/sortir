@@ -9,6 +9,7 @@ use App\Entity\Ville;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -17,7 +18,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use function Sodium\add;
 
@@ -31,9 +35,13 @@ class SortieType extends AbstractType
             ])
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie",
+                'widget' => 'choice',
+                'years' => range(date('Y'), date('Y')+10),
             ])
             ->add('dateCloture', DateType::class, [
                 'label' => "Date limite d'inscription",
+                'widget' => 'choice',
+                'years' => range(date('Y'), date('Y')+10),
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => "Nombre de places",
@@ -52,13 +60,14 @@ class SortieType extends AbstractType
                     '>5h' => '3000',
                 ]
             ])
-           /* ->add('ville', EntityType::class, [
+        ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'name',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('v')->orderBy('v.name', 'ASC');
-                }
-            ])*/
+                },
+                'mapped' => false
+            ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom',
@@ -69,24 +78,6 @@ class SortieType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
             ]);
-            /*->add('Enregistrer', SubmitType::class, [
-                'attr' => [
-                    'name' => "_enregistrer",
-                    'id' => "enregistrer",
-                ]
-            ])->add('Publier', SubmitType::class, [
-                'attr' => [
-                    'name' => "publier",
-                    'id' => "publier",
-                ]
-            ])
-            ->add('Annuler', SubmitType::class, [
-                'attr' => [
-                    'name' => "_annuler",
-                    'id' => "annuler",
-                ]
-            ])
-        ;*/
     }
 
     public function configureOptions(OptionsResolver $resolver)
