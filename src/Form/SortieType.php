@@ -33,17 +33,13 @@ class SortieType extends AbstractType
             ])
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie",
-                'years' => [2019, 2020, 2021, 2022, 2023],
-
-              /* 'attr' =>[
-                   'min' => (new DateTime()),
-
-               ]*/
-
+                'widget' => 'choice',
+                'years' => range(date('Y'), date('Y')+10),
             ])
             ->add('dateCloture', DateType::class, [
                 'label' => "Date limite d'inscription",
-                'years' => [2019, 2020, 2021, 2022, 2023],
+                'widget' => 'choice',
+                'years' => range(date('Y'), date('Y')+10),
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => "Nombre de places",
@@ -62,13 +58,13 @@ class SortieType extends AbstractType
                     '>5h' => '3000',
                 ]
             ])
-           /* ->add('ville', EntityType::class, [
+        ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'name',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('v')->orderBy('v.name', 'ASC');
                 }
-            ])*/
+            ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom',

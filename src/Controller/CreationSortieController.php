@@ -33,8 +33,8 @@ class CreationSortieController extends Controller
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
         // Getting the cities
-        $repoVille = $this->getDoctrine()->getRepository(Ville::class);
-        $villes = $repoVille->findAll();
+       /* $repoVille = $this->getDoctrine()->getRepository(Ville::class);
+        $villes = $repoVille->findAll();*/
 
         // Getting the locations
         /* $repoLieux = $this->getDoctrine()->getRepository(Lieu::class);
@@ -50,9 +50,8 @@ class CreationSortieController extends Controller
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('enregistrer')) {
             //etat par defaut 'créée'
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(7);
+            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(31);
             $sortie->setEtat($etat);
-
 
             $sortie->setSite($this->getUser()->getSite());
             $sortie->setOrganisateur($organisateur);
@@ -67,7 +66,7 @@ class CreationSortieController extends Controller
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('publier')) {
             //etat par defaut 'ouverte'
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(8);
+            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(32);
             $sortie->setEtat($etat);
 
 
@@ -85,7 +84,7 @@ class CreationSortieController extends Controller
 
         return $this->render('sortie_creation/sortiecreation.html.twig', [
             'sortieForm' => $sortieForm->createView(),
-            'villes' => $villes,
+           // 'villes' => $villes,
             'user' => $user,
             //'lieux' => $lieux,
             "site" => $site

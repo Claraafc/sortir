@@ -29,6 +29,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
          $sortie1->setUrlPhoto('photos/tapas.jpg');
          $etat1 = $this->getReference(EtatFixtures::ETAT_CREE);
          $sortie1->setEtat($etat1);
+        $ville1 = $this->getReference(VilleFixtures::VILLE_QUIMPER);
+        $sortie1->setVille($ville1);
          $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
          $sortie1->setLieu($lieu1);
          $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
@@ -48,6 +50,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie2->setUrlPhoto('photos/bieres.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_OUVERTE);
         $sortie2->setEtat($etat1);
+        $ville2 = $this->getReference(VilleFixtures::VILLE_RENNES);
+        $sortie2->setVille($ville2);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_BRASSEES);
         $sortie2->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_RENNES);
@@ -67,6 +71,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie3->setUrlPhoto('photos/tapas.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_CLOTUREE);
         $sortie3->setEtat($etat1);
+        $ville3 = $this->getReference(VilleFixtures::VILLE_QUIMPER);
+        $sortie3->setVille($ville3);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
         $sortie3->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
@@ -86,6 +92,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie4->setUrlPhoto('photos/tapas.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_EN_COURS);
         $sortie4->setEtat($etat1);
+        $ville4 = $this->getReference(VilleFixtures::VILLE_RENNES);
+        $sortie4->setVille($ville4);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
         $sortie4->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
@@ -105,6 +113,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie5->setUrlPhoto('photos/tapas.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_PASSEE);
         $sortie5->setEtat($etat1);
+        $ville5 = $this->getReference(VilleFixtures::VILLE_QUIMPER);
+        $sortie5->setVille($ville5);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
         $sortie5->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
@@ -124,6 +134,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie6->setUrlPhoto('photos/tapas.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_ANNULEE);
         $sortie6->setEtat($etat1);
+        $ville6 = $this->getReference(VilleFixtures::VILLE_RENNES);
+        $sortie6->setVille($ville6);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
         $sortie6->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
@@ -149,7 +161,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
             UserFixtures::class,
             LieuFixtures::class,
             SiteFixtures::class,
-            EtatFixtures::class
+            EtatFixtures::class,
+            VilleFixtures::class
         ];
     }
 }
