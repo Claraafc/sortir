@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,10 +13,19 @@ class MainController extends Controller
     /**
      * @Route("/", name="main")
      */
-    public function home()
+    public function home(EntityManagerInterface $em, int $id)
     {
-        return $this->redirectToRoute('app_login');
+        $repo = $em->getRepository(User::class);
+        $user = $this->getUser();
+        $id = $user->getId();
+        $em->persist($user);
+        $em->flush();
+        return $this->render('base.html.twig', [
+            'user' => $user,
+            'id' => $id
+        ]);
     }
+
 
 
 
