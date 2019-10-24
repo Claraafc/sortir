@@ -6,6 +6,7 @@ use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -26,43 +27,18 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez entre un nom pour la sortie"
-                    ])
-                ],
                 'label' => "Nom de la sortie"
             ])
             ->add('dateDebut', DateTimeType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez entrer une date de sortie"
-                    ]),
-                ],
                 'label' => "Date et heure de la sortie",
             ])
             ->add('dateCloture', DateType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez entrer une date limite pour clôturer les inscriptions"
-                    ]),
-                ],
                 'label' => "Date limite d'inscription",
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez préciser un nombre maximum de participants pour la sortie",
-                    ]),
-                ],
                 'label' => "Nombre de places",
             ])
             ->add('duree', ChoiceType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez préciser combien de temps va durer la sortie",
-                    ])
-                ],
                 'label' => "Durée",
                 'choices' => [
                     '60 minutes' => '60',
@@ -76,62 +52,31 @@ class SortieType extends AbstractType
                     '>5h' => '3000',
                 ]
             ])
+           /* ->add('ville', EntityType::class, [
+                'class' => Ville::class,
+                'choice_label' => 'name',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')->orderBy('v.name', 'ASC');
+                }
+            ])*/
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
+                'choice_label' => 'nom',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('l')->orderBy('l.nom', 'ASC');
+                }
+            ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
-            ])
-           /* ->add('site', EntityType::class, [
-                'class' => Sortie::class,
-                'choice_label' => 'siteVille',
-                'mapped' => false,
-            ])
-            ->add('ville', EntityType::class, [
-                'class' => Ville::class,
-                // 'choice_label' => 'nomVille',
-                'mapped' => false,
-            ])*/
-            /*->add('lieu', EntityType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez entrer un nom de lieu"
-                    ])
-
-                ],
-               'label' => 'Lieu :',
-                'class' => Lieu::class,
-                //'choice_label' => "nomLieu",
-            ])*/
-           /* ->add('rue', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez entrer une rue"
-                    ])
-                ],
-                // 'class' => Lieu::class,
-                'mapped' => false,
-            ])
-            ->add('codePostal', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez rentre un code postal"
-                    ])
-                ],
-                'mapped' => false,
-            ])
-            ->add('latitude', TextType::class, [
-                'mapped' => false,
-            ])
-            ->add('longitude', TextType::class, [
-                'mapped' => false,
-            ])*/
-            ->add('Enregistrer', SubmitType::class, [
+            ]);
+            /*->add('Enregistrer', SubmitType::class, [
                 'attr' => [
                     'name' => "_enregistrer",
                     'id' => "enregistrer",
                 ]
-           ])
-            ->add('Publier', SubmitType::class, [
+            ])->add('Publier', SubmitType::class, [
                 'attr' => [
-                    'name' => "_publier",
+                    'name' => "publier",
                     'id' => "publier",
                 ]
             ])
@@ -140,13 +85,17 @@ class SortieType extends AbstractType
                     'name' => "_annuler",
                     'id' => "annuler",
                 ]
-            ]);
+            ])
+        ;*/
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Sortie::class,
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ]
         ]);
     }
 }

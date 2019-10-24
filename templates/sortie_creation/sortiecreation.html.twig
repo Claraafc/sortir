@@ -4,14 +4,7 @@
 
 {% block body %}
     <main>
-        {# read and display all flash messages #}
-        {% for label, messages in app.flashes(['danger', 'success']) %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+
         <h3>Créer une sortie</h3>
         {{ form_start(sortieForm) }}
 
@@ -22,9 +15,11 @@
                 {{ form_row(sortieForm.dateDebut ) }}
                 {{ form_row(sortieForm.dateCloture) }}
 
+
+
                     <label for="user_ville">Site organisateur :</label>
                     <input class="form-control" id="disabledInput" type="text" name="site_id" placeholder="{{ site.name }}"disabled >
-
+        {#{{ form_row(sortieForm.ville) }}#}
 
                     <label for="ville_nom">Ville :</label>
                     <select name="ville" id="ville" class="form-control">
@@ -32,13 +27,14 @@
                             <option value="{{ ville.name }}">{{ ville.name }}</option>
                         {% endfor %}
                     </select>
+        {{ form_row(sortieForm.lieu) }}
 
-        <label for="lieu_nom">Lieu :</label>
+       {# <label for="lieu_nom">Lieu :</label>
         <select name="lieu" id="lieu" class="form-control">
             {% for lieu in lieux %}
-                <option value="{{ lieu.nom }}">{{ lieu.nom }}</option>
+                <option value="{{ lieu.id }}">{{ lieu.nom }}</option>
             {% endfor %}
-        </select>
+        </select>#}
 
 
 
@@ -49,10 +45,13 @@
              <span aria-hidden="true">+</span>
          </button>#}
 
-
+        <button type="submit"  name="publier" class="btn btn-primary" value="publier">Publier</button>
+        <button type="submit"  name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
+        <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Annuler</a>
 
 
        {#<a class="btn btn-outline-danger" href="{{ path('home') }}">Annuler</a>#}
+
         {{ form_end(sortieForm) }}
 
     </main>
