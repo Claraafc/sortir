@@ -93,7 +93,7 @@ class ProfileModificationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $repo = $manager->getRepository(User::class);
-        $user = $repo->find($id);
+        $user = $this->getUser();
         $id = $user->getId();
         $form = $this->createForm(ChangePasswordType::class, $user);
 
