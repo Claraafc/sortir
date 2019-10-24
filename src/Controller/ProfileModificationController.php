@@ -23,16 +23,11 @@ class ProfileModificationController extends Controller
      * @Route("/user/update/{id}", name="user_update", requirements={"id":"\d+"})
      *
      */
-    public function update(User $user, Request $request, EntityManagerInterface $em, int $id, ObjectManager $manager)
+    public function update(User $user, Request $request, EntityManagerInterface $em, ObjectManager $manager)
     {
 
         $form = $this->createForm(ProfileModificationType::class,$user);
         $form->handleRequest($request);
-
-        $repo = $manager->getRepository(User::class);
-        $user = $repo->find($id);
-        $id = $user->getId();
-        $mdp = $user->getPassword();
 
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($user);
@@ -42,11 +37,9 @@ class ProfileModificationController extends Controller
             return $this->redirectToRoute('affichage_sortie');
         }
 
-
         return $this->render('user/update.html.twig', [
             'userForm' => $form->createView(),
             'user' => $user,
-            'id' => $id,
         ]);
     }
 
@@ -96,13 +89,13 @@ class ProfileModificationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $passwordEncoder = $this->get('security.password_encoder');
-            $oldPassword = $request->request->get($user->getPassword())['oldPassword'];
+            $oldPassword = $request->request->get('change_password')['oldPassword'];
 
             // Si l'ancien mot de passe est bon
             if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($newEncodedPassword);
-
+                $id = $user->getId();
                 $em->persist($user);
                 $em->flush();
 
