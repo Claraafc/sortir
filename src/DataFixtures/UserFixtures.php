@@ -4,10 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
 
     public const USER_ADMIN = 'user-admin';
@@ -32,6 +33,8 @@ class UserFixtures extends Fixture
     {
          $user1 = new User();
          $user1->setUsername('admin');
+         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
+         $user1->setSite($site1);
          $user1->setEmail("admin@mail.fr");
          $user1->setNom('Admin');
          $user1->setPrenom('strateur');
@@ -45,6 +48,8 @@ class UserFixtures extends Fixture
 
         $user2 = new User();
         $user2->setUsername('Toto');
+        $site2 = $this->getReference(SiteFixtures::SITE_RENNES);
+        $user2->setSite($site2);
         $user2->setEmail("toto@mail.fr");
         $user2->setNom('Toto');
         $user2->setPrenom('Guizmo');
@@ -59,5 +64,18 @@ class UserFixtures extends Fixture
          $manager->flush();
         $this->addReference(self::USER_ADMIN, $user1);
         $this->addReference(self::USER_TOTO, $user2);
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return [
+            SiteFixtures::class
+        ];
     }
 }
