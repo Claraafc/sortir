@@ -12,8 +12,8 @@
 <body>
 
 {% block header %}
-<header>
-   <!-- <div class="carousel-navbar">
+    <header>
+        <!-- <div class="carousel-navbar">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -41,39 +41,49 @@
         </a>
     </div> -->
 
-    <!--//////// NAVBAR //////// -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">*Logo ici*</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('affichage_sortie') }}">Accueil <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_update', {'id': app.user.id ?? '5'}) }}">Mon profil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <!--//////// NAVBAR //////// -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">*Logo ici*</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('affichage_sortie') }}">Accueil <span class="sr-only">(current)</span></a>
+                    </li>
 
-</header>
-{% if app.request.hasPreviousSession %}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}">
-                {{ message }}
+                    {% if is_granted("ROLE_USER") %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('user_update', { 'id': app.user.id}) }}">Mon profil</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </li>
+                    <li class="nav-item">
+                        {% if is_granted("ROLE_USER") %}
+                            <p class="nav-link" style=" color: #ececf6"> Bonjour {{ app.user.username }}</p>
+                        {% endif %}
+                    </li>
+
+                </ul>
             </div>
-        {% endfor %}
-    {% endfor %}
+        </nav>
 
-{% endif %}
+
+    </header>
+    {% if app.request.hasPreviousSession %}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    {% endif %}
 
 {% endblock %}
 <div class="panel panel-default container core linear-gradient ">

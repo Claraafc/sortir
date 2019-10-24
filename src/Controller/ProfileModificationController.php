@@ -9,7 +9,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -21,16 +23,19 @@ class ProfileModificationController extends Controller
 {
     /**
      * @Route("/user/update/{id}", name="user_update", requirements={"id":"\d+"})
-     *
+     * @param User $user
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param int $id
+     * @param ObjectManager $manager
+     * @return RedirectResponse|Response
      */
-    public function update(User $user, Request $request, EntityManagerInterface $em, int $id, ObjectManager $manager)
+    public function update(User $user, Request $request, EntityManagerInterface $em, ObjectManager $manager)
     {
 
         $form = $this->createForm(ProfileModificationType::class,$user);
         $form->handleRequest($request);
 
-        $repo = $manager->getRepository(User::class);
-        $user = $repo->find($id);
         $id = $user->getId();
         $mdp = $user->getPassword();
 
@@ -80,15 +85,15 @@ class ProfileModificationController extends Controller
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("/user/update/password/{id}", name="change_password", methods={"POST", "GET"})
+     * @return RedirectResponse|Response
+     * @Route("/user/update/password/{id}", name="change_password")
      */
     public function changePassword(Request $request, int $id, ObjectManager $manager)
     {
         $em = $this->getDoctrine()->getManager();
 
         $repo = $manager->getRepository(User::class);
-        $user = $this->getUser();
+        $user = $repo->find($id);
         $id = $user->getId();
         $form = $this->createForm(ChangePasswordType::class, $user);
 
@@ -108,9 +113,7 @@ class ProfileModificationController extends Controller
 
                 $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
 
-                return $this->redirectToRoute('user_update', [
-                    'id' => $id
-                ]);
+                return $this->redirectToRoute('user_update');
             } else {
                 $form->addError(new FormError('Ancien mot de passe incorrect'));
             }
