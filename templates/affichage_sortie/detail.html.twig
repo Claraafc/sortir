@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container" style="width: 500em">
+    <div class="container" >
         <div class="row col-lg-12 offset-md-0" style="margin-top: 10px">
             <div class="col-md-4 offset-md-0" style="padding-right: 100px">
                 <hgroup>
@@ -45,22 +45,41 @@
             </div>
         </div>
         <div class="row col-md-12 offset-md-0" style="margin-top: 10px;">
-            <table class="table table-striped" style="width:auto; height: 10em; display:block; overflow: scroll;">
-                <thead>
-                <tr>
-                    <th scope="col">Pseudo</th>
-                    <th scope="col">Nom</th>
-                </tr>
-                </thead>
-                {% for user in users %}
-                    <tbody>
+            <div class=" col-md-4 offset-md-0">
+                <table class="table table-striped" style="width:auto; height: 10em; display:block; overflow: scroll;">
+                    <thead>
                     <tr>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.nom }} {{ user.prenom }}</td>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Nom</th>
                     </tr>
-                    </tbody>
-                {% endfor %}
-            </table>
+                    </thead>
+                    {% for user in users %}
+                        <tbody>
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.nom }} {{ user.prenom }}</td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-3 offset-md-3" style="padding-top: 7em">
+
+                    {% set inscrit = 0 %}
+                    {% for user in users %}
+                        {% if user.username == app.user.username %}
+                            {% set inscrit = inscrit+1 %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if inscrit>0 %}
+                        <button class="btn btn-info"><a href="#">Se désinscrire</a></button>
+                    {% endif %}
+                    {% if inscrit==0 %}
+                        <button class="btn btn-info"><a href="#">S'inscrire</a></button
+                    {% endif %}
+
+            </div>
         </div>
     </div>
 
