@@ -6,7 +6,6 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Sortie;
-use App\Entity\User;
 use App\Entity\Ville;
 use App\Form\SortieType;
 use App\Repository\LieuRepository;
@@ -15,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CreationSortieController extends Controller
@@ -51,7 +49,7 @@ class CreationSortieController extends Controller
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('enregistrer')) {
             //etat par defaut 'créée'
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(49);
+            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(61);
             $sortie->setEtat($etat);
 
             //file
@@ -80,7 +78,7 @@ class CreationSortieController extends Controller
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('publier')) {
             //etat par defaut 'ouverte'
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(50);
+            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(62);
 
             $sortie->setEtat($etat);
 
@@ -142,21 +140,4 @@ class CreationSortieController extends Controller
         ];
         return new JsonResponse($tabLieu);
     }
-
-    /*
-     * @Route("/sortir/creation/requeteLieu", name="sortie_requeteLieu")
-     *
-    public function requeteLieu(Request $request, ObjectManager $manager){
-        $infoLieu = $request->request->get('detailLieu');
-        $detail = $manager->getRepository(Lieu::class)->find($infoLieu);
-        $lieu = [
-            'rue' => $detail->getRue(),
-            'latitude' => $detail->getLatitude(),
-            'longitude' => $detail->getLongitude(),
-            'cp'=> $detail->getVille()->getCodePostal(),
-        ];
-        $response = new Response(json_encode($lieu));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-    }*/
 }

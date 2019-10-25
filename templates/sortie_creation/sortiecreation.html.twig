@@ -17,21 +17,19 @@
         {{ form_row(sortieForm.dateCloture) }}
 
 
-        <label for="user_ville">Site organisateur :</label>
+        <label for="user_ville">Site organisateur</label>
         <input class="form-control" id="disabledInput" type="text" name="site_id" placeholder="{{ site.name }}"
                disabled>
 
         {{ form_row(sortieForm.ville) }}
-        {{ form_row(sortieForm.lieu) }} <a href="{{ path('lieu') }}" class="btn btn-success">+</a>
-       {# {{ form_row(sortieForm.rue)}}
+        {{ form_row(sortieForm.lieu) }} <a href="{{ path('lieu') }}" class="btn btn-success">Ajouter un nouveau lieu</a>
 
-        <div id="detail_lieu">
-            <p id="infoLieu">Rue : </p>
-            <p id="infoLatitude"></p>
-            <p id="infoLongitude"></p>
-        </div>#}
-
-        <div id="test_ville" name="test_ville"></div>
+        <div id="hidden_detailLieu">
+            {{ form_row(sortieForm.rue) }}
+            {{ form_row(sortieForm.latitude) }}
+            {{ form_row(sortieForm.longitude) }}
+            {{ form_row(sortieForm.codePostal) }}
+        </div>
 
 
         <button type="submit" name="publier" class="btn btn-primary" value="publier">Publier</button>
@@ -39,7 +37,6 @@
         <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Annuler</a>
 
         {{ form_end(sortieForm) }}
-
 
 
     </main>
@@ -53,11 +50,11 @@
     <script>
         $('#sortie_ville').change(function () {
             $('#sortie_lieu').empty();
-            $.get('creation/ajax/'+$(this).val())
-                .done(function(data) {
+            $.get('creation/ajax/' + $(this).val())
+                .done(function (data) {
                     $.each(data, function (key, lieu) {
                         console.log(lieu);
-                        $('#sortie_lieu').append('<option value="'+lieu.id+'">'+lieu.nom+'</option>');
+                        $('#sortie_lieu').append('<option value="' + lieu.id + '">' + lieu.nom + '</option>');
 
                     });
                 });
@@ -65,57 +62,18 @@
 
     </script>
 
+    {# JavaScript info place (address) #}
     <script>
         $('#sortie_lieu').change(function () {
-            $.get('creation/requeteLieu/'+$(this).val())
+            $.get('creation/requeteLieu/' + $(this).val())
                 .done(function (data) {
                     //console.log(data);
-                    $('#test_ville').append('<label>Rue : <input value=" '+data.rue+'"></label>');
-                    {#$('#infoLieu').text('Adresse : ' + data.rue);#}
-                    $('#infoLatitude').text('Latitude : ' + data.longitude);
-                    $('#infoLongitude').text('Longitude : ' + data.latitude);
-                    $('#infoVille').text('Code Postal : ' + data.codePostal)
+                    $('#sortie_rue').val(data.rue);
+                    $('#sortie_longitude').val(data.longitude);
+                    $('#sortie_latitude').val(data.latitude);
+                    $('#sortie_codePostal').val(data.codePostal)
 
                 });
         });
     </script>
-
-
-   {# <script>
-
-       $('#sortie_lieu').change(function () {
-           $.get('creation/requeteLieu/'+$(this).val())
-               .done(function (data) {
-                   $.each(data, function (key, detailLieu) {
-                       $('#detail_lieu').append('<p>'+rue+'</p>')
-                   });
-               });
-       }) ;
-    </script>#}
-
-
-
-
-
-    {# JavaScript info place (address) #}
-        {#<script>
-            $('#sortie_lieu').change(function (e) {
-                var detailLieu = $(this).val();
-                $.ajax({
-                    url: "{{ path('sortie_requeteLieu') }}",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {'detailLieu': detailLieu},
-                    async: true,
-                    success: function (data) {
-                        //console.log(data);
-                        $('#infoLieu').text('Adresse : ' + data.rue);
-                        $('#infoLatitude').text('Latitude : ' + data.longitude);
-                        $('#infoLongitude').text('Longitude : ' + data.latitude);
-                        $('#infoVille').text('Code Postal : ' + data.cp)
-                    }
-                });
-                e.preventDefault();
-            });
-        </script>#}
 {% endblock %}
