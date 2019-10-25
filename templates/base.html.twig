@@ -43,25 +43,31 @@
 
         <!--//////// NAVBAR //////// -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">*Logo ici*</a>
+            {% if is_granted("ROLE_USER") %}
+                <a class="navbar-brand" href="#">
+                    {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
+                        <img src="{{ asset('images/logoPourSortir.png') }}" alt="logo" style="max-height: 24em; max-width: 24em">
+                    {% endif %}
+                </a>
+            {% endif %}
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    {% if is_granted("ROLE_USER") %}
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('affichage_sortie') }}">Accueil <span class="sr-only">(current)</span></a>
                     </li>
-
-                    {% if is_granted("ROLE_USER") %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('user_update', { 'id': app.user.id}) }}">Mon profil</a>
                         </li>
-                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         {% if is_granted("ROLE_USER") %}
                             <p class="nav-link" style=" color: #ececf6"> Bonjour {{ app.user.username }}</p>

@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
-
+{% block header %}
+    {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
+        <br>
+        <img src="{{ asset('images/logoPourSortir.png') }}" alt="logo" style="max-height: 24em; max-width: 24em; margin-left: 2em">
+    {% endif %}
+{% endblock %}
 {% block body %}
 <form action ="{{ path('app_login') }}"method="post">
     {% if error %}
