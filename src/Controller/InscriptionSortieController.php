@@ -17,23 +17,26 @@ class InscriptionSortieController extends Controller
     public function inscription(ObjectManager $manager, Sortie $sortie)
     {
         $sortie->getId();
+        //Getting the actual user
         $user = $this->getUser();
-        $jourJ = new \DateTime('now');
+        //Getting the participants
+        $users = $sortie->getUsers();
         $nbMaxParticipants = $sortie->getNbInscriptionsMax();
 
         if (!$user == null) {
-            /* Checking if the number of participants is not over the limit of the event*/
-            if (count($sortie->getUsers()) <= $nbMaxParticipants && $sortie->getEtat() === 8)
+            //Checking if the number of participants is not over the limit of the event
+            if (count($sortie->getUsers()) < $nbMaxParticipants && $sortie->getEtat() === 14)
                 $sortie->addUser($user);
-
+                var_dump($sortie);
 
             $manager->persist($sortie);
             $manager->flush();
         }
 
 
-        return $this->render('inscription_sortie/index.html.twig', [
+        return $this->render('affichage_sortie/detail.html.twig', [
             'user' => $user,
+            'users'=> $users,
             'sortie' => $sortie
         ]);
     }
