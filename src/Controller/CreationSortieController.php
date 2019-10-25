@@ -118,27 +118,33 @@ class CreationSortieController extends Controller
     }
 
     /**
-     * @Route("/sortir/creation/ajax/{id}", name="sortie_requeteAjax")
+     * @Route("/sortir/creation/ajax/{id}", name="sortie_ajax")
      */
     public function requeteAjax(Ville $ville, LieuRepository $lieuRepository){
-
         $lieux = $lieuRepository->findBy([
            'ville' => $ville
+
         ]);
         return new JsonResponse($lieux);
-      /*  $select = $request->request->get('choix');
-        $lieux = $manager->getRepository(Lieu::class)->findBy(['ville'=>$select]);
-        $lieuTab = [];
-        foreach ($lieux as $lieu){
-            $lieuTab[$lieu->getId()] = $lieu->getNom();
-        }
-        $response = new Response(json_encode($lieuTab));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;*/
     }
+
     /**
-     * @Route("/sortir/creation/requeteLieu", name="sortie_requeteLieu")
+     * @Route("/sortir/creation/requeteLieu/{id}", name="sortie_requeteLieu")
      */
+    public function requeteLieu(Lieu $lieu, ObjectManager $manager){
+        $detailLieu = $manager->getRepository(Lieu::class)->find($lieu);
+        $tabLieu= [
+            'rue'=> $detailLieu->getRue(),
+            'latitude'=> $detailLieu->getLatitude(),
+            'longitude'=> $detailLieu->getLongitude(),
+            'codePostal'=> $detailLieu->getVille()->getCodePostal(),
+        ];
+        return new JsonResponse($tabLieu);
+    }
+
+    /*
+     * @Route("/sortir/creation/requeteLieu", name="sortie_requeteLieu")
+     *
     public function requeteLieu(Request $request, ObjectManager $manager){
         $infoLieu = $request->request->get('detailLieu');
         $detail = $manager->getRepository(Lieu::class)->find($infoLieu);
@@ -151,5 +157,5 @@ class CreationSortieController extends Controller
         $response = new Response(json_encode($lieu));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
-    }
+    }*/
 }

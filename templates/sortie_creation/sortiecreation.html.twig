@@ -23,7 +23,7 @@
 
         {{ form_row(sortieForm.ville) }}
         {{ form_row(sortieForm.lieu) }} <a href="{{ path('lieu') }}" class="btn btn-success">+</a>
-
+        {{ form_row(sortieForm.rue)}}
 
         {# <label for="lieu_nom">Lieu :</label>
          <select name="lieu" id="lieu" class="form-control">
@@ -47,11 +47,11 @@
         <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Annuler</a>
 
         {{ form_end(sortieForm) }}
-
+    <div id="detail_lieu">
         <p id="infoLieu"></p>
         <p id="infoLatitude"></p>
         <p id="infoLongitude"></p>
-
+    </div>
 
 
     </main>
@@ -60,12 +60,13 @@
 {% endblock %}
 
 {% block javascripts %}
+    {# JavaScript filter places by cities #}
     {{ parent() }}
     <script>
         $('#sortie_ville').change(function () {
             $('#sortie_lieu').empty();
-            $.get('/sortir/creation/ajax/'+$(this).val())
-                .done(function (data) {
+            $.get('creation/ajax/'+$(this).val())
+                .done(function(data) {
                     $.each(data, function (key, lieu) {
                         $('#sortie_lieu').append('<option value="'+lieu.id+'">'+lieu.nom+'<option>')
 
@@ -74,31 +75,21 @@
         });
 
     </script>
-        {#<script>
-            $(document).ready(function () {
-                $('#sortie_ville').change();
-            });
-            $('#sortie_ville').change(function (e) {
-                var choix = $(this).val();
-                $.ajax({
-                    url: '/sortir/creation/requeteAjax',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {'choix': choix},
-                    async: true,
-                    success: function (data) {
-                        $('#sortie_lieu').empty();
-                        $.each(data, function (id, lieu) {
-                            $('#sortie_lieu').append($('<option value="' + id + '">' + lieu + '</option>'))
-                        });
-                        $('#sortie_lieu').change();
-                    }
-                });
-                e.preventDefault();
-            });
-        </script>#}
+    <script>
 
-        <script>
+       $('#sortie_lieu').change(function () {
+           $.get('creation/requeteLieu/'+$(this).val())
+               .done(function (data) {
+                   $.each(data, function (key, detailLieu) {
+                       $('#detail_lieu').append('<p>'+rue+'</p>')
+                   });
+               });
+       }) ;
+    </script>
+
+
+    {# JavaScript info place (address) #}
+        {#<script>
             $('#sortie_lieu').change(function (e) {
                 var detailLieu = $(this).val();
                 $.ajax({
@@ -117,5 +108,5 @@
                 });
                 e.preventDefault();
             });
-        </script>
+        </script>#}
 {% endblock %}

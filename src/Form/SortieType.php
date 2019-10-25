@@ -7,6 +7,7 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use Doctrine\ORM\EntityRepository;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -38,12 +39,12 @@ class SortieType extends AbstractType
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie",
                 'widget' => 'choice',
-                'years' => range(date('Y'), date('Y')+10),
+                'years' => range(date('Y'), date('Y') + 10),
             ])
             ->add('dateCloture', DateType::class, [
                 'label' => "Date limite d'inscription",
                 'widget' => 'choice',
-                'years' => range(date('Y'), date('Y')+10),
+                'years' => range(date('Y'), date('Y') + 10),
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => "Nombre de places",
@@ -62,7 +63,7 @@ class SortieType extends AbstractType
                     '>5h' => '3000',
                 ]
             ])
-        ->add('ville', EntityType::class, [
+            ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'name',
                 //'attr' => ['name' => 'ville', 'id' => "ville"],
@@ -71,34 +72,34 @@ class SortieType extends AbstractType
                 },*/
                 'mapped' => false
             ])
-           /* $formModifier = function (FormInterface $form, Ville $ville = null) {
-                $lieux = null === $ville ? [] : $ville->getLieux();
+            /* $formModifier = function (FormInterface $form, Ville $ville = null) {
+                 $lieux = null === $ville ? [] : $ville->getLieux();
 
-                $form->add('lieu', EntityType::class, [
-                    'class' => Lieu::class,
-                    'choices' => $lieux,
-                ]);
-            };
+                 $form->add('lieu', EntityType::class, [
+                     'class' => Lieu::class,
+                     'choices' => $lieux,
+                 ]);
+             };
 
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) use ($formModifier) {
+             $builder->addEventListener(
+                 FormEvents::PRE_SET_DATA,
+                 function (FormEvent $event) use ($formModifier) {
 
-                    $data = $event->getData();
-                    $formModifier($event->getForm(), $data->getName());
-                }
-            );
-            $builder->get('ville')->addEventListener(
-                FormEvents::POST_SUBMIT,
-                function (FormEvent $event) use ($formModifier) {
-                    $ville = $event->getForm()->getData();
-                    $formModifier($event->getForm()->getParent(), $ville);
-                }
-            )*/
-           ->add('lieu', null, [
+                     $data = $event->getData();
+                     $formModifier($event->getForm(), $data->getName());
+                 }
+             );
+             $builder->get('ville')->addEventListener(
+                 FormEvents::POST_SUBMIT,
+                 function (FormEvent $event) use ($formModifier) {
+                     $ville = $event->getForm()->getData();
+                     $formModifier($event->getForm()->getParent(), $ville);
+                 }
+             )*/
+            ->add('lieu', null, [
                 //'class' => Lieu::class,
                 'choice_label' => 'nom',
-              // 'attr' => ['name' => 'lieu', 'id' => "lieu"],
+                // 'attr' => ['name' => 'lieu', 'id' => "lieu"],
                 /*'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('l')->orderBy('l.nom', 'ASC');
                 }*/
@@ -106,14 +107,20 @@ class SortieType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
             ])
-        ->add('urlPhoto', FileType::class, [
-            'label' => "Photo de l'évènement",
-            'data_class' => null,
-            'required' => false,
-            'attr' => [
-                'accept' => 'image/*'
-            ],
-        ]);
+            ->add('urlPhoto', FileType::class, [
+                'label' => "Photo de l'évènement",
+                'data_class' => null,
+                'required' => false,
+                'attr' => [
+                    'accept' => 'image/*'
+                ],
+            ])
+            ->add('rue', null,[
+                "disabled" => true,
+                'mapped' => false,
+
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

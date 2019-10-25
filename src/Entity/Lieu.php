@@ -187,6 +187,10 @@ class Lieu implements \JsonSerializable
         return [
             'id'=> $this->id,
             'nom'=> $this->nom,
+            'rue'=> $this->rue,
+            'latitude'=> $this->latitude,
+            'longitude'=> $this->longitude,
+            'ville'=> $this->ville,
         ];
     }
 }
