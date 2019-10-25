@@ -43,7 +43,14 @@
 
         <!--//////// NAVBAR //////// -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">*Logo ici*</a>
+            {% if is_granted("ROLE_USER") %}
+                <a class="navbar-brand" href="#">
+                    {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
+                        <img src="{{ asset('images/logoPourSortir.png') }}" alt="logo" style="max-height: 24em; max-width: 24em">
+                    {% endif %}
+                </a>
+            {% endif %}
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
