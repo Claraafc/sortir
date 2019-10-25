@@ -51,11 +51,9 @@ class ProfileModificationType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 }
             ))
-            ->add('password', RepeatedType::class, [
-                'label' => ' ',
-                "type" => PasswordType::class,
-                "first_options" => ['label' => "Mot de passe"],
-                "second_options" => ["label" => "Répéter"],
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe',
+                'mapped' => false
 
             ])
             ->add('fileTemp',FileType::class, array(

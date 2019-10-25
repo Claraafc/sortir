@@ -43,7 +43,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
          $user1->setNom('Admin');
          $user1->setPrenom('strateur');
          $user1->setTelephone('0666547889');
-         $user1->setUrlPhoto('photos/f643d24fb2c8c5ad12e8f46bacebbe53.jpg');
+         $user1->setUrlPhoto('f643d24fb2c8c5ad12e8f46bacebbe53.jpg');
          $user1->setRoles(['ROLE_ADMIN']);
 
          $password = $this->encoder->encodePassword($user1, 'pass_administrateur');
@@ -58,7 +58,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user2->setNom('Toto');
         $user2->setPrenom('Guizmo');
         $user2->setTelephone('0698745632');
-        $user2->setUrlPhoto('photos/guizmo.jpg');
+        $user2->setUrlPhoto('guizmo.jpg');
         $user2->setRoles(['ROLE_USER']);
 
         $password = $this->encoder->encodePassword($user2, 'pass_guizmo');
@@ -73,7 +73,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user3->setNom('nomuser3');
         $user3->setPrenom('prenomuser3');
         $user3->setTelephone('0666547889');
-        $user3->setUrlPhoto('photos/bisounours.jpg');
+        $user3->setUrlPhoto('bisounours.jpg');
         $user3->setRoles(['ROLE_USER']);
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user3->addSorty($sortie2);
@@ -90,7 +90,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user4->setNom('nomuser4');
         $user4->setPrenom('prenomuser4');
         $user4->setTelephone('0698745632');
-        $user4->setUrlPhoto('photos/punk.jpg');
+        $user4->setUrlPhoto('punk.jpg');
         $user4->setRoles(['ROLE_USER']);
       //  $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user4->addSorty($sortie2);
@@ -107,7 +107,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user5->setNom('nomuser5');
         $user5->setPrenom('prenomuser5');
         $user5->setTelephone('0666547889');
-        $user5->setUrlPhoto('photos/espagnol.jpg');
+        $user5->setUrlPhoto('espagnol.jpg');
         $user5->setRoles(['ROLE_USER']);
       //  $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user5->addSorty($sortie2);
@@ -124,7 +124,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user6->setNom('nomuser6');
         $user6->setPrenom('prenomuser6');
         $user6->setTelephone('0698745632');
-        $user6->setUrlPhoto('photos/mexicain.jpg');
+        $user6->setUrlPhoto('mexicain.jpg');
         $user6->setRoles(['ROLE_USER']);
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
        // $user6->addSorty($sortie2);

@@ -76,19 +76,18 @@ class ProfileModificationController extends Controller
                 $form->get('fileTemp')->addError(new FormError("Une erreur est survenue avec le fichier"));
                 $error = true;
             }
-            if ($user->getPassword() !== null) {
+            $passwordEncoder = $this->get('security.password_encoder');
+            $passwordVerif = $form->get('password')->getData();
 
-                //$password = $user->getPassword();
-                $password = $encoder->encodePassword($user, $user->getPassword());
-                $error = $utils->getLastAuthenticationError();
-                $lastUsername = $utils->getLastUsername();
-                $user->setPassword($password);
-            }
-            if (!$error) {
+            if ($passwordEncoder->isPasswordValid($user, $passwordVerif) && !$error) {
+
                 $manager->persist($user);
                 $manager->flush();
 
                 $this->addFlash('success', 'Votre profil est bien modifié!');
+                return $this->redirectToRoute('affichage_sortie');
+            }else{
+                $this->addFlash('warning', 'Modification impossible, mot de passe erroné!');
                 return $this->redirectToRoute('affichage_sortie');
             }
         }
