@@ -79,8 +79,6 @@ class Sortie
      */
     private $urlPhoto;
 
-
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
