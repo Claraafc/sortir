@@ -30,7 +30,7 @@ class ProfileModificationController extends Controller
      * @param ObjectManager $manager
      * @return RedirectResponse|Response
      */
-    public function update(Request $request, ObjectManager $manager, int $id, UserPasswordEncoderInterface $encoder)
+    public function update(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, AuthenticationUtils $utils)
     {
 
         $user = $this->getUser();
@@ -60,7 +60,7 @@ class ProfileModificationController extends Controller
                 $user->setSite($site);
             }
             try {
-                $url = $form->get('urlPhoto')->getData();
+                $url = $form->get('fileTemp')->getData();
                 $error = false;
                 if ($user->getUrlPhoto() !== null) {
                     $extension = strtolower($url->getClientOriginalExtension());
@@ -73,11 +73,13 @@ class ProfileModificationController extends Controller
                 dump($e->getMessage());
 
                 //Ajout d'une erreur depuis le controller
-                $form->get('urlPhoto')->addError(new FormError("Une erreur est survenue avec le fichier"));
+                $form->get('fileTemp')->addError(new FormError("Une erreur est survenue avec le fichier"));
                 $error = true;
             }
             if ($user->getPassword() !== null) {
                 //$password = $user->getPassword();
+                $error = $utils->getLastAuthenticationError();
+                $lastUsername = $utils->getLastUsername();
                 $password = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($password);
             }
