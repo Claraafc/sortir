@@ -12,6 +12,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 class SortieFixtures extends Fixture implements DependentFixtureInterface
 {
 
+    public const SORTIE_2 = 'sortie-2';
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -20,11 +22,11 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
          $sortie1 = new Sortie();
-         $sortie1->setName('tapas');
+         $sortie1->setName('tapas, cree');
          $sortie1->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
          $sortie1->setDuree('120');
          $sortie1->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
-         $sortie1->setNbInscriptionsMax('15');
+         $sortie1->setNbInscriptionsMax('3');
          $sortie1->setDescription('Tapas, tapas, tapas !!!!');
          $sortie1->setUrlPhoto('photos/tapas.jpg');
          $etat1 = $this->getReference(EtatFixtures::ETAT_CREE);
@@ -39,11 +41,11 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
          $manager->persist($sortie1);
 
         $sortie2 = new Sortie();
-        $sortie2->setName('tapas');
+        $sortie2->setName('fête de la bière, ouverte');
         $sortie2->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
         $sortie2->setDuree('120');
         $sortie2->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
-        $sortie2->setNbInscriptionsMax('15');
+        $sortie2->setNbInscriptionsMax('5');
         $sortie2->setDescription('A boire, à boire, à boire !!!!');
         $sortie2->setUrlPhoto('photos/bieres.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_OUVERTE);
@@ -55,14 +57,23 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $user1 = $this->getReference(UserFixtures::USER_TOTO);
         $sortie2->setOrganisateur($user1);
 
+        $user3 = $this->getReference(UserFixtures::USER_3);
+        $sortie2->addUser($user3);
+        $user4 = $this->getReference(UserFixtures::USER_4);
+        $sortie2->addUser($user4);
+        $user5 = $this->getReference(UserFixtures::USER_5);
+        $sortie2->addUser($user5);
+        $user6 = $this->getReference(UserFixtures::USER_6);
+        $sortie2->addUser($user6);
+
         $manager->persist($sortie2);
 
         $sortie3 = new Sortie();
-        $sortie3->setName('tapas');
+        $sortie3->setName('tapas, cloturée');
         $sortie3->setDateDebut(new \DateTime('2019-10-25 05:20:30'));
         $sortie3->setDuree('120');
         $sortie3->setDateCloture(new \DateTime('2019-10-12 05:20:30'));
-        $sortie3->setNbInscriptionsMax('15');
+        $sortie3->setNbInscriptionsMax('10');
         $sortie3->setDescription('Tapas, tapas, tapas !!!!');
         $sortie3->setUrlPhoto('photos/tapas.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_CLOTUREE);
@@ -73,15 +84,21 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie3->setSite($site1);
         $user1 = $this->getReference(UserFixtures::USER_ADMIN);
         $sortie3->setOrganisateur($user1);
+        $user3 = $this->getReference(UserFixtures::USER_3);
+        $sortie3->addUser($user3);
+        $user4 = $this->getReference(UserFixtures::USER_4);
+        $sortie3->addUser($user4);
+        $user5 = $this->getReference(UserFixtures::USER_5);
+        $sortie3->addUser($user5);
 
         $manager->persist($sortie3);
 
         $sortie4 = new Sortie();
-        $sortie4->setName('tapas');
+        $sortie4->setName('tapas, en cours');
         $sortie4->setDateDebut(new \DateTime('2019-10-23 05:20:30'));
         $sortie4->setDuree('12000');
         $sortie4->setDateCloture(new \DateTime('2019-10-12 05:20:30'));
-        $sortie4->setNbInscriptionsMax('15');
+        $sortie4->setNbInscriptionsMax('5');
         $sortie4->setDescription('Tapas, tapas, tapas !!!!');
         $sortie4->setUrlPhoto('photos/tapas.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_EN_COURS);
@@ -92,15 +109,26 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie4->setSite($site1);
         $user1 = $this->getReference(UserFixtures::USER_ADMIN);
         $sortie4->setOrganisateur($user1);
+        $user3 = $this->getReference(UserFixtures::USER_3);
+        $sortie4->addUser($user3);
+        $user4 = $this->getReference(UserFixtures::USER_4);
+        $sortie4->addUser($user4);
+        $user5 = $this->getReference(UserFixtures::USER_5);
+        $sortie4->addUser($user5);
+        $user6 = $this->getReference(UserFixtures::USER_6);
+        $sortie4->addUser($user6);
+        $user1 = $this->getReference(UserFixtures::USER_ADMIN);
+        $sortie4->addUser($user1);
+
 
         $manager->persist($sortie4);
 
         $sortie5 = new Sortie();
-        $sortie5->setName('tapas');
+        $sortie5->setName('tapas, passée');
         $sortie5->setDateDebut(new \DateTime('2018-01-09 05:20:30'));
         $sortie5->setDuree('120');
         $sortie5->setDateCloture(new \DateTime('2018-01-09 05:20:30'));
-        $sortie5->setNbInscriptionsMax('15');
+        $sortie5->setNbInscriptionsMax('18');
         $sortie5->setDescription('Tapas, tapas, tapas !!!!');
         $sortie5->setUrlPhoto('photos/tapas.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_PASSEE);
@@ -115,7 +143,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($sortie5);
 
         $sortie6 = new Sortie();
-        $sortie6->setName('tapas');
+        $sortie6->setName('tapas, annulée');
         $sortie6->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
         $sortie6->setDuree('120');
         $sortie6->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
@@ -133,8 +161,9 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist($sortie6);
 
-
          $manager->flush();
+
+        $this->addReference(self::SORTIE_2, $sortie2);
     }
 
     /**
