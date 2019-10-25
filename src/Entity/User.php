@@ -76,11 +76,6 @@ class User implements UserInterface
      */
     private $site;
 
-    public function __construct()
-    {
-        $this->sorties = new ArrayCollection();
-    }
-
 
     public function getId(): ?int
     {

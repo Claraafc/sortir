@@ -132,3 +132,20 @@ td{
     display: inline-block;
 }
 
+.detail-meta {
+     font-style: italic;
+     margin-bottom: 10px;
+ }
+
+ .detail-intitule {
+      font-weight: bold;
+
+      text-align: left;
+
+  }
+
+
+hgroup {
+    text-align: center;
+}
+
