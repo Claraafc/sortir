@@ -62,14 +62,15 @@ class ProfileModificationController extends Controller
             try {
                 $url = $form->get('fileTemp')->getData();
                 $error = false;
+                if ($url === null){
+                    $user->getUrlPhoto();
+                }else
                 if ($user->getUrlPhoto() !== null) {
                     $extension = strtolower($url->getClientOriginalExtension());
                     $fileDownload = md5(uniqid(mt_rand(), true)) . '.' . $extension;
                     //$url->move($this->getParameter('path_dir').'photos/', $fileDownload);
                     $url->move($this->getParameter('download_dir'), $fileDownload);
                     $user->setUrlPhoto($fileDownload);
-                }else{
-                    $user->getUrlPhoto();
                 }
             } catch (\Exception $e) {
                 dump($e->getMessage());
