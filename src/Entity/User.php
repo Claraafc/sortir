@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="This email is already registered here!")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -61,19 +61,9 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
-     *
      * @ORM\Column(type="string", length=255)
      */
     private $urlPhoto;
-
-    /**
-     * @Assert\File(
-     *     maxSize = "2Mi",
-     *     uploadErrorMessage="Le fichier n'a pas été téléchargé",
-     *     maxSizeMessage ="Le fichier est trop lourd : {{ limit }} {{ suffix }}",
-     * )
-     */
-    private $fileTemp;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="organisateur")
@@ -85,6 +75,11 @@ class User implements UserInterface, \Serializable
      * @ORM\JoinColumn(nullable=false)
      */
     private $site;
+
+    public function __construct()
+    {
+        $this->sorties = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -270,65 +265,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFileTemp()
-    {
-        return $this->fileTemp;
-    }
-
-    /**
-     * @param mixed $fileTemp
-     */
-    public function setFileTemp($fileTemp): void
-    {
-        $this->fileTemp = $fileTemp;
-    }
 
 
-    /**
-     * String representation of object
-     * @link https://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
-     */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->nom,
-            $this->prenom,
-            $this->telephone,
-            $this->email,
-            $this->site,
-            $this->password,
-            $this->urlPhoto
-            ));
-    }
-
-    /**
-     * Constructs the object
-     * @link https://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->nom,
-            $this->prenom,
-            $this->telephone,
-            $this->email,
-            $this->site,
-            $this->password,
-            $this->urlPhoto
-            ) = unserialize($serialized);
-    }
 }
