@@ -1,66 +1,70 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container" style="width: 500em">
+        <div class="row col-lg-12 offset-md-0" style="margin-top: 10px">
+            <div class="col-md-4 offset-md-0" style="padding-right: 100px">
+                <hgroup>
+                    <h1>{{ sortie.name }}</h1>
+                    <div class="col"><img src="{{ app.request.basepath }}/{{ sortie.urlPhoto }}"
+                                          style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
+                    </div>
+                </hgroup>
+            </div>
 
-    <hgroup>
-        <h1>{{ sortie.name}}</h1>
-        <div class="col"> <img src="{{app.request.basepath}}/{{ sortie.urlPhoto }}" style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px"></div>
 
-    </hgroup>
-
-    <div class="container">
-
-    <div class="row" style="margin-top: 10px">
-        <div class="col-md-6 offset-md-0" style="padding-right: 100px">
-            <div class="detail-intitule">Nom de la sortie : </div>
-            <div class="detail-meta">{{ sortie.name}}</div>
-            <div class="detail-intitule">Date et heure : </div>
-            <div class="detail-meta">{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</div>
-            <div class="detail-intitule">Date limite d'inscription : </div>
-            <div class="detail-meta">{{ sortie.dateCloture|date('Y-m-d') }}</div>
-            <div class="detail-intitule">Nombre de places : </div>
-            <div class="detail-meta">{{ sortie.nbInscriptionsMax}}</div>
-            <div class="detail-intitule">Durée : </div>
-            <div class="detail-meta">{{ sortie.duree}}</div>
-            <div class="detail-intitule">Description :</div>
-            <div class="detail-meta">{{ sortie.description|nl2br}}</div>
+            <div class=" row col-md-8 offset-md-0" style="margin-top: 10px">
+                <div class="col-md-6 offset-md-0" style="padding-right: 100px">
+                    <div class="detail-intitule">Nom de la sortie :</div>
+                    <div class="detail-meta">{{ sortie.name }}</div>
+                    <div class="detail-intitule">Date et heure :</div>
+                    <div class="detail-meta">{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</div>
+                    <div class="detail-intitule">Date limite d'inscription :</div>
+                    <div class="detail-meta">{{ sortie.dateCloture|date('Y-m-d') }}</div>
+                    <div class="detail-intitule">Nombre de places :</div>
+                    <div class="detail-meta">{{ sortie.nbInscriptionsMax }}</div>
+                    <div class="detail-intitule">Durée :</div>
+                    <div class="detail-meta">{{ sortie.duree }}</div>
+                    <div class="detail-intitule">Description :</div>
+                    <div class="detail-meta">{{ sortie.description|nl2br }}</div>
+                </div>
+                <div class="col-md-6 offset-md-0" style="padding-right: 100px">
+                    <div class="detail-intitule">École organisatrice :</div>
+                    <div class="detail-meta">{{ sortie.organisateur.site.name }}</div>
+                    <div class="detail-intitule">Lieu :</div>
+                    <div class="detail-meta">{{ sortie.lieu.nom }}</div>
+                    <div class="detail-intitule">Rue :</div>
+                    <div class="detail-meta">{{ sortie.lieu.rue }}</div>
+                    <div class="detail-intitule">Code postal :</div>
+                    <div class="detail-meta">{{ sortie.lieu.ville.codePostal }}</div>
+                    <div class="detail-intitule">Latitude :</div>
+                    <div class="detail-meta">{{ sortie.lieu.latitude }}</div>
+                    <div class="detail-intitule">Longitude :</div>
+                    <div class="detail-meta">{{ sortie.lieu.longitude }}</div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 offset-md-0" style="padding-right: 100px">
-            <div class="detail-intitule">École organisatrice : </div>
-            <div class="detail-meta">{{ sortie.organisateur.site.name}}</div>
-            <div class="detail-intitule">Lieu : </div>
-            <div class="detail-meta">{{ sortie.lieu.nom}}</div>
-            <div class="detail-intitule">Rue : </div>
-            <div class="detail-meta">{{ sortie.lieu.rue}}</div>
-            <div class="detail-intitule">Code postal : </div>
-            <div class="detail-meta">{{ sortie.lieu.ville.codePostal}}</div>
-            <div class="detail-intitule">Latitude : </div>
-            <div class="detail-meta">{{ sortie.lieu.latitude}}</div>
-            <div class="detail-intitule">Longitude : </div>
-            <div class="detail-meta">{{ sortie.lieu.longitude}}</div>
+        <div class="row col-md-12 offset-md-0" style="margin-top: 10px;">
+            <table class="table table-striped" style="width:auto; height: 10em; display:block; overflow: scroll;">
+                <thead>
+                <tr>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Nom</th>
+                </tr>
+                </thead>
+                {% for user in users %}
+                    <tbody>
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.nom }} {{ user.prenom }}</td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
         </div>
     </div>
 
-
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Pseudo</th>
-                <th scope="col">Nom</th>
-            </tr>
-            </thead>
-            {% for user in users %}
-            <tbody>
-            <tr>
-                <td>{{user.username}}</td>
-                <td>{{user.nom}} {{ user.prenom }}</td>
-            </tr>
-            </tbody>
-            {% endfor %}
-        </table>
-    </div>
-
-</main>
+    </main>
 {% endblock %}
 
 {% block title %}{{ sortie.name }} | {{ parent() }}{% endblock %}
