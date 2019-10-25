@@ -23,35 +23,23 @@
 
         {{ form_row(sortieForm.ville) }}
         {{ form_row(sortieForm.lieu) }} <a href="{{ path('lieu') }}" class="btn btn-success">+</a>
-        {{ form_row(sortieForm.rue)}}
+       {# {{ form_row(sortieForm.rue)}}
 
-        {# <label for="lieu_nom">Lieu :</label>
-         <select name="lieu" id="lieu" class="form-control">
-             {% for lieu in lieux %}
-                 <option value="{{ lieu.id }}">{{ lieu.nom }}</option>
-             {% endfor %}
-         </select>#}
+        <div id="detail_lieu">
+            <p id="infoLieu">Rue : </p>
+            <p id="infoLatitude"></p>
+            <p id="infoLongitude"></p>
+        </div>#}
 
+        <div id="test_ville" name="test_ville"></div>
 
-
-
-
-
-        {# <button type="button" class="close red delete-item" aria-label="New" title="new place ?" data-placement="right"
-                 data-link="{{ path('lieu') }}">
-             <span aria-hidden="true">+</span>
-         </button>#}
 
         <button type="submit" name="publier" class="btn btn-primary" value="publier">Publier</button>
         <button type="submit" name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
         <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Annuler</a>
 
         {{ form_end(sortieForm) }}
-    <div id="detail_lieu">
-        <p id="infoLieu"></p>
-        <p id="infoLatitude"></p>
-        <p id="infoLongitude"></p>
-    </div>
+
 
 
     </main>
@@ -75,7 +63,7 @@
         });
 
     </script>
-    <script>
+   {# <script>
 
        $('#sortie_lieu').change(function () {
            $.get('creation/requeteLieu/'+$(this).val())
@@ -85,6 +73,22 @@
                    });
                });
        }) ;
+    </script>#}
+
+
+    <script>
+        $('#sortie_lieu').change(function () {
+            $.get('creation/requeteLieu/'+$(this).val())
+                .done(function (data) {
+                    //console.log(data);
+                    $('#test_ville').append('<label>Rue : <input value="'+data.rue+'"></label>');
+                    {#$('#infoLieu').text('Adresse : ' + data.rue);#}
+                    $('#infoLatitude').text('Latitude : ' + data.longitude);
+                    $('#infoLongitude').text('Longitude : ' + data.latitude);
+                    $('#infoVille').text('Code Postal : ' + data.codePostal)
+
+            });
+        });
     </script>
 
 

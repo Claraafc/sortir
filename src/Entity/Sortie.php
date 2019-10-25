@@ -104,7 +104,7 @@ class Sortie
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties")
-     * @ORM\JoinColumn(nullable=false, referencedColumnName="libelle")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $etat;
 

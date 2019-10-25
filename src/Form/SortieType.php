@@ -115,7 +115,7 @@ class SortieType extends AbstractType
                     'accept' => 'image/*'
                 ],
             ])
-            ->add('rue', null,[
+            ->add('rue', TextType::class,[
                 "disabled" => true,
                 'mapped' => false,
 
