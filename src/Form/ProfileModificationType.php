@@ -57,7 +57,7 @@ class ProfileModificationType extends AbstractType
                 "second_options" => ["label" => "Répéter"],
 
             ])
-            ->add('urlPhoto',FileType::class, array(
+            ->add('fileTemp',FileType::class, array(
                 'data_class'=> null,
                 'label' => 'Ma photo',
                 'required' => false))
