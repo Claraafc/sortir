@@ -63,6 +63,23 @@
         });
 
     </script>
+
+    <script>
+        $('#sortie_lieu').change(function () {
+            $.get('creation/requeteLieu/'+$(this).val())
+                .done(function (data) {
+                    //console.log(data);
+                    $('#test_ville').append('<label>Rue : <input value=" '+data.rue+'"></label>');
+                    {#$('#infoLieu').text('Adresse : ' + data.rue);#}
+                    $('#infoLatitude').text('Latitude : ' + data.longitude);
+                    $('#infoLongitude').text('Longitude : ' + data.latitude);
+                    $('#infoVille').text('Code Postal : ' + data.codePostal)
+
+                });
+        });
+    </script>
+
+
    {# <script>
 
        $('#sortie_lieu').change(function () {
@@ -76,20 +93,7 @@
     </script>#}
 
 
-    <script>
-        $('#sortie_lieu').change(function () {
-            $.get('creation/requeteLieu/'+$(this).val())
-                .done(function (data) {
-                    //console.log(data);
-                    $('#test_ville').append('<label>Rue : <input value="'+data.rue+'"></label>');
-                    {#$('#infoLieu').text('Adresse : ' + data.rue);#}
-                    $('#infoLatitude').text('Latitude : ' + data.longitude);
-                    $('#infoLongitude').text('Longitude : ' + data.latitude);
-                    $('#infoVille').text('Code Postal : ' + data.codePostal)
 
-            });
-        });
-    </script>
 
 
     {# JavaScript info place (address) #}

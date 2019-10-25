@@ -40,6 +40,26 @@ class LieuFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist($lieu2);
 
+        $lieu3 = new Lieu();
+        $lieu3->setNom('dance');
+        $lieu3->setRue('rue de la dance');
+        $lieu3->setLongitude('25.5');
+        $lieu3->setLatitude('15.75');
+        $ville = $this->getReference(VilleFixtures::VILLE_QUIMPER);
+        $lieu3->setVille($ville);
+
+        $manager->persist($lieu3);
+
+        $lieu4 = new Lieu();
+        $lieu4->setNom('hockey');
+        $lieu4->setRue('rue de la hockey');
+        $lieu4->setLongitude('7.154');
+        $lieu4->setLatitude('78.526');
+        $ville = $this->getReference(VilleFixtures::VILLE_RENNES);
+        $lieu4->setVille($ville);
+
+        $manager->persist($lieu4);
+
          $manager->flush();
         $this->addReference(self::LIEU_TAPEO, $lieu1);
         $this->addReference(self::LIEU_BRASSEES, $lieu2);
