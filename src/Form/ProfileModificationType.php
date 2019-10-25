@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,11 +51,9 @@ class ProfileModificationType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 }
             ))
-            ->add('password', RepeatedType::class, [
-                'label' => ' ',
-                "type" => PasswordType::class,
-                "first_options" => ['label' => "Mot de passe"],
-                "second_options" => ["label" => "Répéter"],
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe',
+                'mapped' => false
 
             ])
             ->add('fileTemp',FileType::class, array(
@@ -62,9 +61,6 @@ class ProfileModificationType extends AbstractType
                 'label' => 'Ma photo',
                 'required' => false))
             ->add('Enregistrer', SubmitType::class)
-            ->add('Annuler', SubmitType::class, array(
-                'label' => 'Annuler',
-                'attr' => array('class' => 'btn btn-danger')))
 
         ;
     }
