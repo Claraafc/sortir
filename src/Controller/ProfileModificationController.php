@@ -159,7 +159,7 @@ class ProfileModificationController extends Controller
 
                 $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
 
-                return $this->redirectToRoute('change_password');
+                return $this->redirectToRoute('affichage_sortie');
             } else {
                 $form->addError(new FormError('Ancien mot de passe incorrect'));
             }
