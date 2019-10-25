@@ -55,9 +55,12 @@ class ProfileModificationType extends AbstractType
                 "type" => PasswordType::class,
                 "first_options" => ['label' => "Mot de passe"],
                 "second_options" => ["label" => "Répéter"],
-                "mapped" => false
+
             ])
-            ->add('urlPhoto',FileType::class,array('data_class'=> null, 'label' => 'Ma photo'))
+            ->add('urlPhoto',FileType::class, array(
+                'data_class'=> null,
+                'label' => 'Ma photo',
+                'required' => false))
             ->add('Enregistrer', SubmitType::class)
             ->add('Annuler', SubmitType::class, array(
                 'label' => 'Annuler',
