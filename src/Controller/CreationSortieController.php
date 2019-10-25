@@ -51,7 +51,7 @@ class CreationSortieController extends Controller
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('enregistrer')) {
             //etat par defaut 'créée'
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(31);
+            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(37);
             $sortie->setEtat($etat);
 
             //file
@@ -81,6 +81,7 @@ class CreationSortieController extends Controller
         if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('publier')) {
             //etat par defaut 'ouverte'
             $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(32);
+
             $sortie->setEtat($etat);
 
 
