@@ -68,6 +68,8 @@ class ProfileModificationController extends Controller
                     //$url->move($this->getParameter('path_dir').'photos/', $fileDownload);
                     $url->move($this->getParameter('download_dir'), $fileDownload);
                     $user->setUrlPhoto($fileDownload);
+                }else{
+                    $user->getUrlPhoto();
                 }
             } catch (\Exception $e) {
                 dump($e->getMessage());
