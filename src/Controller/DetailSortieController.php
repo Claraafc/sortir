@@ -17,11 +17,11 @@ class DetailSortieController extends Controller
 {
     $repo = $em->getRepository(Sortie::class);
     $sortie = $repo->find($id);
-
+    $users = $sortie->getUsers();
     //Si on ne trouve pas l'id ou quelle n'est plus publiée
     if(is_null($sortie)){
         throw $this->createNotFoundException("Sortie inconnue !!");
     }
 
-    return $this->render("affichage_sortie/detail.html.twig", ["sortie" => $sortie]);
+    return $this->render("affichage_sortie/detail.html.twig", ["sortie" => $sortie, "users" => $users]);
 }}

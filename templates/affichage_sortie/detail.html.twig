@@ -4,7 +4,7 @@
 
     <hgroup>
         <h1>{{ sortie.name}}</h1>
-        <div class="col"> <img src="{{app.request.basepath}}/{{ sortie.urlPhoto }}" style="float: left; width: 255px; height: 190px"></div>
+        <div class="col"> <img src="{{app.request.basepath}}/{{ sortie.urlPhoto }}" style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px"></div>
 
     </hgroup>
 
@@ -40,6 +40,8 @@
             <div class="detail-meta">{{ sortie.lieu.longitude}}</div>
         </div>
     </div>
+
+
         <table class="table table-striped">
             <thead>
             <tr>

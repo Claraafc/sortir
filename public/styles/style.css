@@ -149,3 +149,9 @@ hgroup {
     text-align: center;
 }
 
+table{
+width: 12em;
+  height: 6em;
+overflow: scroll;
+}
+
