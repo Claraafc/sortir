@@ -30,28 +30,70 @@ class ProfileModificationController extends Controller
      * @param ObjectManager $manager
      * @return RedirectResponse|Response
      */
-    public function update(User $user, Request $request, EntityManagerInterface $em, ObjectManager $manager)
+    public function update(Request $request, ObjectManager $manager, int $id, UserPasswordEncoderInterface $encoder)
     {
 
-        $form = $this->createForm(ProfileModificationType::class,$user);
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileModificationType::class, $user);
         $form->handleRequest($request);
 
-        $id = $user->getId();
-        $mdp = $form->get('password')->getData();
+        if ($form->isSubmitted() & $form->isValid()) {
+            //if inputs=null we get the last value
+            if ($user->getPrenom() !== null) {
+                $prenom = $user->getPrenom();
+                $user->setPrenom($prenom);
+            }
+            if ($user->getNom() !== null) {
+                $nom = $user->getNom();
+                $user->setNom($nom);
+            }
+            if ($user->getTelephone() !== null) {
+                $telephone = $user->getTelephone();
+                $user->setTelephone($telephone);
+            }
+            if ($user->getEmail() !== null) {
+                $email = $user->getEmail();
+                $user->setEmail($email);
+            }
+            if ($user->getSite() !== null) {
+                $site = $user->getSite();
+                $user->setSite($site);
+            }
+            try {
+                $url = $form->get('urlPhoto')->getData();
+                $error = false;
+                if ($user->getUrlPhoto() !== null) {
+                    $extension = strtolower($url->getClientOriginalExtension());
+                    $fileDownload = md5(uniqid(mt_rand(), true)) . '.' . $extension;
+                    //$url->move($this->getParameter('path_dir').'photos/', $fileDownload);
+                    $url->move($this->getParameter('download_dir'), $fileDownload);
+                    $user->setUrlPhoto($fileDownload);
+                }
+            } catch (\Exception $e) {
+                dump($e->getMessage());
 
-        if($form->isSubmitted() && $form->isValid()){
-            $em->persist($user);
-            $em->flush();
+                //Ajout d'une erreur depuis le controller
+                $form->get('urlPhoto')->addError(new FormError("Une erreur est survenue avec le fichier"));
+                $error = true;
+            }
+            if ($user->getPassword() !== null) {
+                //$password = $user->getPassword();
+                $password = $encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($password);
+            }
+            if (!$error) {
+                $manager->persist($user);
+                $manager->flush();
 
-            $this->addFlash('success', 'Votre profil est bien modifié!');
-            return $this->redirectToRoute('affichage_sortie');
+                $this->addFlash('success', 'Votre profil est bien modifié!');
+                return $this->redirectToRoute('affichage_sortie');
+            }
         }
 
 
         return $this->render('user/update.html.twig', [
             'userForm' => $form->createView(),
-            'user' => $user,
-            'id' => $id,
+            'user' => $user
         ]);
     }
 
