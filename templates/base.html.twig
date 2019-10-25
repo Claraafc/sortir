@@ -50,18 +50,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    {% if is_granted("ROLE_USER") %}
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('affichage_sortie') }}">Accueil <span class="sr-only">(current)</span></a>
                     </li>
-
-                    {% if is_granted("ROLE_USER") %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('user_update', { 'id': app.user.id}) }}">Mon profil</a>
                         </li>
-                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         {% if is_granted("ROLE_USER") %}
                             <p class="nav-link" style=" color: #ececf6"> Bonjour {{ app.user.username }}</p>
