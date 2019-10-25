@@ -77,10 +77,11 @@ class ProfileModificationController extends Controller
                 $error = true;
             }
             if ($user->getPassword() !== null) {
+
                 //$password = $user->getPassword();
+                $password = $encoder->encodePassword($user, $user->getPassword());
                 $error = $utils->getLastAuthenticationError();
                 $lastUsername = $utils->getLastUsername();
-                $password = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($password);
             }
             if (!$error) {

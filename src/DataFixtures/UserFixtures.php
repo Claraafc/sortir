@@ -43,7 +43,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
          $user1->setNom('Admin');
          $user1->setPrenom('strateur');
          $user1->setTelephone('0666547889');
-         $user1->setUrlPhoto('photos/conan.jpg');
+         $user1->setUrlPhoto('photos/f643d24fb2c8c5ad12e8f46bacebbe53.jpg');
          $user1->setRoles(['ROLE_ADMIN']);
 
          $password = $this->encoder->encodePassword($user1, 'pass_administrateur');

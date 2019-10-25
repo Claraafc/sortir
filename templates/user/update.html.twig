@@ -48,7 +48,7 @@
         </div>
         <div class="row">
             <div class="col">{{ form_widget(userForm.Enregistrer) }}</div>
-            <div class="col">{{ form_widget(userForm.Annuler) }}</div>
+            <div class="col"><a class="btn btn-danger" href="{{ path('affichage_sortie') }}">Annuler</a></div>
             <div class="col"><button class="btn btn-info"><a href="{{ path('change_password', {'id': user.id}) }}">Changer mot de passe</a></button></div>
         </div>
     </div>
