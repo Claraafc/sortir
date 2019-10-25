@@ -56,7 +56,8 @@
             $.get('creation/ajax/'+$(this).val())
                 .done(function(data) {
                     $.each(data, function (key, lieu) {
-                        $('#sortie_lieu').append('<option value="'+lieu.id+'">'+lieu.nom+'<option>')
+                        console.log(lieu);
+                        $('#sortie_lieu').append('<option value="'+lieu.id+'">'+lieu.nom+'</option>');
 
                     });
                 });
