@@ -110,6 +110,16 @@ class Sortie
      */
     private $etat;
 
+    /**
+     * Sortie constructor.
+     * @param $users
+     */
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

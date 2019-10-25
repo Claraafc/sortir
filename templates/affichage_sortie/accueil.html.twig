@@ -34,6 +34,7 @@
 
              <button type="submit"> Rechercher</button>
     </div>
+
     </form>
 
     <table  style="width: 100%"  border="1">
@@ -50,7 +51,10 @@
 
             {% for sortie in sorties %}
         <tr>
-            <td>{{ sortie.name }}</td>
+
+            <td> <a href="{{ path('detail_sortie', {'id': sortie.id}) }}" title="{{ sortie.name  }}">
+                    <span>{{ sortie.name  }}</span>
+                </a> </td>
             <td>{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</td>
             <td>{{ sortie.dateCloture|date('Y-m-d') }}</td>
             <td>{{ sortie.users.count }}/{{ sortie.nbInscriptionsMax }}</td>
