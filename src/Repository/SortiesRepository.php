@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,19 +22,6 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-
-     /**
-      * @return Sortie[] Returns an array of Sortie objects
-      */
-
-    public function findByInscrits($value)
-    {
-        $qb = $this->createQueryBuilder('s');
-        $qb->select( 's.id, count(u.id)' )
-            ->innerJoin('s.users', 'u');
-        return $qb->getQuery()->getScalarResult();
-
-    }
 
     public function findByInscrit($inscrit)
     {
@@ -56,6 +44,7 @@ class SortiesRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
 
     }
+
 
 /**
     public function findOneBySomeField($check): ?Sortie

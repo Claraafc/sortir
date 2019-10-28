@@ -25,11 +25,11 @@ class AffichageSortieController extends Controller
       //  $sortie = new Sortie();
         //$userID->getId();
         //$repoSite = $manager->getRepository(Site::class);
-
         // Getting the locations
        $repoSite = $this->getDoctrine()->getRepository(Site::class);
         $sites = $repoSite->findAll();
         $orga = $this->getUser();
+
 
         $inscrit = $this->getUser()->getId();
        //dump($orga,  count($inscrit) );
@@ -41,7 +41,6 @@ class AffichageSortieController extends Controller
                 ['organisateur' => $orga]
             );
         }
-
         if (isset($_POST['sortie_inscrit'])) {
                 $sorties = $repoSite->findByInscrit($orga);
         }
@@ -49,8 +48,6 @@ class AffichageSortieController extends Controller
         if (isset($_POST['non_inscrit'])) {
             $sorties = $repoSite->findByNonInscrit($orga);
         }
-
-
 
 
         return $this->render('affichage_sortie/accueil.html.twig', [
