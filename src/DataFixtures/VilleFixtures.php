@@ -10,6 +10,9 @@ class VilleFixtures extends Fixture
 {
     public const VILLE_RENNES = 'ville-rennes';
     public const VILLE_QUIMPER = 'ville-quimper';
+    public const VILLE_CHARTRES = 'ville-chartres';
+    public const VILLE_SAINT_HERBLAIN = 'saint-herblain';
+    public const VILLE_NIORT = 'niort';
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -38,13 +41,16 @@ class VilleFixtures extends Fixture
         $ville4->setCodePostal('44800');
         $manager->persist($ville4);
 
-        $ville4 = new Ville();
-        $ville4->setName('Niort');
-        $ville4->setCodePostal('79000');
-        $manager->persist($ville4);
+        $ville5 = new Ville();
+        $ville5->setName('Niort');
+        $ville5->setCodePostal('79000');
+        $manager->persist($ville5);
 
          $manager->flush();
         $this->addReference(self::VILLE_RENNES, $ville1);
         $this->addReference(self::VILLE_QUIMPER, $ville2);
+        $this->addReference(self::VILLE_CHARTRES, $ville3);
+        $this->addReference(self::VILLE_SAINT_HERBLAIN, $ville4);
+        $this->addReference(self::VILLE_NIORT, $ville5);
     }
 }

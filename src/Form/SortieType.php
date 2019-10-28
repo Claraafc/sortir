@@ -2,28 +2,19 @@
 
 namespace App\Form;
 
-use App\Entity\Lieu;
-use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use function Sodium\add;
 
 class SortieType extends AbstractType
 {
@@ -36,12 +27,12 @@ class SortieType extends AbstractType
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie",
                 'widget' => 'choice',
-                'years' => range(date('Y'), date('Y')+10),
+                'years' => range(date('Y'), date('Y') + 10),
             ])
             ->add('dateCloture', DateType::class, [
                 'label' => "Date limite d'inscription",
                 'widget' => 'choice',
-                'years' => range(date('Y'), date('Y')+10),
+                'years' => range(date('Y'), date('Y') + 10),
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => "Nombre de places",
@@ -60,23 +51,42 @@ class SortieType extends AbstractType
                     '>5h' => '3000',
                 ]
             ])
-        ->add('ville', EntityType::class, [
+            ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'name',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('v')->orderBy('v.name', 'ASC');
-                },
-                'mapped' => false
+                'mapped' => false,
+                'placeholder' => 'Choissisez une ville'
             ])
-            ->add('lieu', EntityType::class, [
-                'class' => Lieu::class,
+            ->add('lieu', null, [
                 'choice_label' => 'nom',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('l')->orderBy('l.nom', 'ASC');
-                }
+                'placeholder' => 'Choissisez un lieu'
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
+            ])
+            ->add('urlPhoto', FileType::class, [
+                'label' => "Photo de l'évènement",
+                'data_class' => null,
+                'required' => false,
+                'attr' => [
+                    'accept' => 'image/*'
+                ],
+            ])
+            ->add('rue', TextType::class, [
+                'disabled' => true,
+                'mapped' => false,
+            ])
+            ->add('latitude', TextType::class, [
+                'disabled' => true,
+                'mapped' => false,
+            ])
+            ->add('longitude', TextType::class, [
+                'disabled' => true,
+                'mapped' => false,
+            ])
+            ->add('codePostal', TextType::class, [
+                'disabled' => true,
+                'mapped' => false,
             ]);
     }
 

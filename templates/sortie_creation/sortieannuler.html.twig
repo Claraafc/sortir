@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        {{ form_start(sortieForm) }}
+
+        {{ form_row(sortieForm.name) }}
+        {{ form_row(sortieForm.motif) }}
+
+        <button type="submit" name="enregistrer" class="btn btn-success" value="supprimer">Annuler sortie</button>
+        <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Retour</a>
+
+        {{ form_end(sortieForm) }}
+    </main>
+{% endblock %}
+
+{% block title %}Annuler une sortie{% endblock %}
+
