@@ -15,10 +15,9 @@ class DesistementController extends Controller
     public function index(ObjectManager $manager, Sortie $sortie)
     {
 
-
         $user = $this->getUser();
 
-        if (!$user == null) {
+        if (isset($user)) {
 
             /* Checking if the event is not passed closed or deleted before removing a user from it*/
             if ($sortie->getEtat() === 8) {

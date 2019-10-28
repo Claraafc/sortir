@@ -20,7 +20,7 @@ class MainController extends Controller
         $id = $user->getId();
         $em->persist($user);
         $em->flush();
-        return $this->render('base.html.twig', [
+        return $this->render('security/login.html.twig', [
             'user' => $user,
             'id' => $id
         ]);

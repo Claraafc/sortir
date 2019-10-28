@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
+use function Sodium\add;
 
 class InscriptionSortieController extends Controller
 {
@@ -16,28 +18,36 @@ class InscriptionSortieController extends Controller
      */
     public function inscription(ObjectManager $manager, Sortie $sortie)
     {
-        $sortie->getId();
-        //Getting the actual user
+        //Setting the parameters used for te conditions
+
+
         $user = $this->getUser();
-        //Getting the participants
-        $users = $sortie->getUsers();
+
+        $dateDuJour = new \DateTime('now');
+
         $nbMaxParticipants = $sortie->getNbInscriptionsMax();
 
-        if (!$user == null) {
-            //Checking if the number of participants is not over the limit of the event
-            if (count($sortie->getUsers()) < $nbMaxParticipants && $sortie->getEtat() === 14)
-                $sortie->addUser($user);
-                var_dump($sortie);
+
+        //Checking if the number of participants is not over the limit of the event
+        if (count($sortie->getUsers()) < $nbMaxParticipants && $sortie->getEtat() === 26) {
+            $sortie->addUser($user);
+            //var_dump($sortie);
 
             $manager->persist($sortie);
             $manager->flush();
+        } else if (!count($sortie->getUsers()) < $nbMaxParticipants) {
+            $this->addFlash('danger', 'Le nombre maximum de participants est déjà atteint');
+        } else if (!$sortie->getEtat() == 26) {
+            $this->addFlash('danger', 'La sortie n\'est pas ouverte à l\'inscription');
+        } else if ($sortie->getDateCloture() < $dateDuJour){
+            $this->addFlash('danger', 'Il n\'est plus possible de s\'inscrire à cette sortie');
         }
 
-
-        return $this->render('affichage_sortie/detail.html.twig', [
-            'user' => $user,
-            'users'=> $users,
-            'sortie' => $sortie
-        ]);
+            return $this->redirectToRoute('affichage_sortie');
+        /* return $this->render('affichage_sortie/accueil.html.twig', [
+             'user' => $user,
+             'users'=> $users,
+             'sortie' => $sortie
+         ]);*/
     }
 }
