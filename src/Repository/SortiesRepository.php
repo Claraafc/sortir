@@ -38,12 +38,24 @@ class SortiesRepository extends ServiceEntityRepository
     public function findByInscrit($inscrit)
     {
         $qb = $this->createQueryBuilder('s');
-        $qb->select( 's.id' , 'u.id')
-            ->innerJoin('s.users', 'u');
+        $qb->select('s')
+            ->andwhere(':inscrit MEMBER OF s.users')
+            ->setParameter('inscrit', $inscrit);
+
         return $qb->getQuery()->getResult();
 
     }
 
+    public function findByNonInscrit($inscrit)
+    {
+        $qb = $this->createQueryBuilder('s');
+        $qb->select('s')
+            ->andwhere(':inscrit NOT MEMBER OF s.users')
+            ->setParameter('inscrit', $inscrit);
+
+        return $qb->getQuery()->getResult();
+
+    }
 
 /**
     public function findOneBySomeField($check): ?Sortie

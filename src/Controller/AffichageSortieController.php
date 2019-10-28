@@ -30,7 +30,9 @@ class AffichageSortieController extends Controller
        $repoSite = $this->getDoctrine()->getRepository(Site::class);
         $sites = $repoSite->findAll();
         $orga = $this->getUser();
-        $inscrit = $this->getUser()->getSorties();
+
+        $inscrit = $this->getUser()->getId();
+       //dump($orga,  count($inscrit) );
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $repoSite->findAll();
 
@@ -41,12 +43,12 @@ class AffichageSortieController extends Controller
         }
 
         if (isset($_POST['sortie_inscrit'])) {
-                $sorties = $repoSite->findBy(
-                    ['users' => $orga]
-                );
+                $sorties = $repoSite->findByInscrit($orga);
         }
 
-
+        if (isset($_POST['non_inscrit'])) {
+            $sorties = $repoSite->findByNonInscrit($orga);
+        }
 
 
 
