@@ -36,6 +36,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Regex(pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{6,15})$/", message="Votre mot de passe doit contenir un minimum de 6 lettres avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial")
      */
     private $password;
 
@@ -51,6 +52,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Regex(pattern="/^[0-9](10)+$/i")
      */
     private $telephone;
 
