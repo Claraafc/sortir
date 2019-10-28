@@ -93,7 +93,7 @@ class Sortie
     private $organisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="sorties")
      */
     private $users;
 

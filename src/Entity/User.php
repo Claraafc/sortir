@@ -236,7 +236,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return Collection|Sortie[]
      */
-    public function getSorties(): Collection
+    public function getSorties()
     {
         return $this->sorties;
     }
