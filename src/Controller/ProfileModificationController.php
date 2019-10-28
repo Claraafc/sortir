@@ -143,24 +143,30 @@ class ProfileModificationController extends Controller
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
             $passwordEncoder = $this->get('security.password_encoder');
             $oldPassword = $request->request->get('change_password')['oldPassword'];
 
-            // Si l'ancien mot de passe est bon
-            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-                $newEncodedPassword = $passwordEncoder->encodePassword($user, $form->get('password')->getData());
-                $user->setPassword($newEncodedPassword);
-                $id = $user->getId();
-                $em->persist($user);
-                $em->flush();
+            if (!$passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                //$this->addFlash('warning', 'Mot de passe erroné !');
+                $form->get('oldPassword')->addError(new FormError('Ancien mot de passe incorrect'));
+            }
 
-                $this->addFlash('success', 'Votre mot de passe à bien été changé !');
+            if ($form->isValid()) {
 
-                return $this->redirectToRoute("user_update", ["id" => $user->getId()]);
-            } else {
-                $form->addError(new FormError('Ancien mot de passe incorrect'));
+                // Si l'ancien mot de passe est bon
+                if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                    $newEncodedPassword = $passwordEncoder->encodePassword($user, $form->get('password')->getData());
+                    $user->setPassword($newEncodedPassword);
+                    $id = $user->getId();
+                    $em->persist($user);
+                    $em->flush();
+
+                    $this->addFlash('success', 'Votre mot de passe à bien été changé !');
+
+                    return $this->redirectToRoute("user_update", ["id" => $user->getId()]);
+                }
             }
         }
 

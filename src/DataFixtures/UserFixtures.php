@@ -46,7 +46,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
          $user1->setUrlPhoto('f643d24fb2c8c5ad12e8f46bacebbe53.jpg');
          $user1->setRoles(['ROLE_ADMIN']);
 
-         $password = $this->encoder->encodePassword($user1, 'pass_administrateur');
+         $password = $this->encoder->encodePassword($user1, 'P@ss_adm1n');
          $user1->setPassword($password);
          $manager->persist($user1);
 
@@ -61,7 +61,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user2->setUrlPhoto('guizmo.jpg');
         $user2->setRoles(['ROLE_USER']);
 
-        $password = $this->encoder->encodePassword($user2, 'pass_guizmo');
+        $password = $this->encoder->encodePassword($user2, 'P@ss_gu1zmo');
         $user2->setPassword($password);
         $manager->persist($user2);
 
@@ -78,7 +78,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user3->addSorty($sortie2);
 
-        $password = $this->encoder->encodePassword($user3, 'pass_3');
+        $password = $this->encoder->encodePassword($user3, 'P@ss_3');
         $user3->setPassword($password);
         $manager->persist($user3);
 
@@ -95,7 +95,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
       //  $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user4->addSorty($sortie2);
 
-        $password = $this->encoder->encodePassword($user4, 'pass_4');
+        $password = $this->encoder->encodePassword($user4, 'P@ss_4');
         $user4->setPassword($password);
         $manager->persist($user4);
 
@@ -112,7 +112,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
       //  $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user5->addSorty($sortie2);
 
-        $password = $this->encoder->encodePassword($user5, 'pass_5');
+        $password = $this->encoder->encodePassword($user5, 'P@ss_5');
         $user5->setPassword($password);
         $manager->persist($user5);
 
@@ -129,7 +129,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
        // $user6->addSorty($sortie2);
 
-        $password = $this->encoder->encodePassword($user6, 'pass_6');
+        $password = $this->encoder->encodePassword($user6, 'P@ss_6');
         $user6->setPassword($password);
         $manager->persist($user6);
 
