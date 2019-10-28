@@ -84,6 +84,12 @@ class Sortie
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(
+     *     maxSize="1000K",
+     *     maxSizeMessage="La taille du fichier dépasse la limite de 1000Ko",
+     *     mimeTypes={"image/png","image/jpeg","image/jpg","image/svg+xml","image/gif"},
+     *     mimeTypesMessage="Le format du fichier séléctionné n'est pas autorisé. Les formats autorisés sont: png, jpeg, jpg, svg, gif"
+     * )
      */
     private $urlPhoto;
 
