@@ -23,27 +23,24 @@ class InscriptionSortieController extends Controller
 
         $user = $this->getUser();
 
-        $dateDuJour = new \DateTime('now');
 
         $nbMaxParticipants = $sortie->getNbInscriptionsMax();
 
 
         //Checking if the number of participants is not over the limit of the event
-        if (count($sortie->getUsers()) < $nbMaxParticipants && $sortie->getEtat() === 26) {
+        if (count($sortie->getUsers()) < $nbMaxParticipants && $sortie->getEtat()->getLibelle() === 'ouverte') {
             $sortie->addUser($user);
-            //var_dump($sortie);
+
 
             $manager->persist($sortie);
             $manager->flush();
-        } else if (!count($sortie->getUsers()) < $nbMaxParticipants) {
+        } else if (count($sortie->getUsers()) == $nbMaxParticipants) {
             $this->addFlash('danger', 'Le nombre maximum de participants est déjà atteint');
-        } else if (!$sortie->getEtat() == 26) {
+        } else if ($sortie->getEtat()->getLibelle() !== 'ouverte') {
             $this->addFlash('danger', 'La sortie n\'est pas ouverte à l\'inscription');
-        } else if ($sortie->getDateCloture() < $dateDuJour){
-            $this->addFlash('danger', 'Il n\'est plus possible de s\'inscrire à cette sortie');
         }
 
-            return $this->redirectToRoute('affichage_sortie');
+        return $this->redirectToRoute('affichage_sortie');
         /* return $this->render('affichage_sortie/accueil.html.twig', [
              'user' => $user,
              'users'=> $users,
