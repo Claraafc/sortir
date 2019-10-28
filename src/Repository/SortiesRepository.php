@@ -7,6 +7,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -55,6 +56,19 @@ class SortiesRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
 
+    }
+
+    public function findByParams($inscrit){
+        $qb = $this->createQueryBuilder('s')->select('s');
+        if (isset($_POST['sortie_inscrit'])){
+            $qb->andwhere(':inscrit MEMBER OF s.users')
+                ->setParameter('inscrit', $inscrit);
+        }
+        if (isset($_POST['non_inscrit'])){
+            $qb->andwhere(':inscrit NOT MEMBER OF s.users')
+                ->setParameter('inscrit', $inscrit);
+        }
+        return $qb->getQuery()->getResult();
     }
 
 /**

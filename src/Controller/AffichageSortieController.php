@@ -42,13 +42,13 @@ class AffichageSortieController extends Controller
             );
         }
 
-        if (isset($_POST['sortie_inscrit'])) {
+        /**if (isset($_POST['sortie_inscrit'])) {
                 $sorties = $repoSite->findByInscrit($orga);
         }
 
         if (isset($_POST['non_inscrit'])) {
             $sorties = $repoSite->findByNonInscrit($orga);
-        }
+        }*/
 
 
 
