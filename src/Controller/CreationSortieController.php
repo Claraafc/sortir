@@ -19,13 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CreationSortieController extends Controller
 {
-    public const ETAT_CREE = 85;
-    public const ETAT_OUVERTE = 86;
-    public const ETAT_CLOTUREE = 87;
-    public const ETAT_EN_COURS = 88;
-    public const ETAT_PASSEE = 89;
-    public const ETAT_ANNULEE = 90;
-
 
     /**
      * @Route("/sortir/creation", name="sortie_creation", methods={"POST", "GET"})
@@ -58,7 +51,10 @@ class CreationSortieController extends Controller
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('enregistrer')) {
             //setting state 'créée'
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(self::ETAT_CREE);
+            //$etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(self::ETAT_CREE);
+
+            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('cree');
+
             $sortie->setEtat($etat);
 
             //file
@@ -87,7 +83,7 @@ class CreationSortieController extends Controller
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('publier')) {
             //etat par defaut 'ouverte'
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(self::ETAT_OUVERTE);
+            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('ouverte');
 
             $sortie->setEtat($etat);
 
@@ -113,7 +109,7 @@ class CreationSortieController extends Controller
             $manager->flush();
 
             $this->addFlash("success", "Sortie créée");
-            return $this->redirectToRoute('sortie_creation');
+            return $this->redirectToRoute('affichage_sortie');
         }
 
 
@@ -189,7 +185,7 @@ class CreationSortieController extends Controller
                 $sortie->setLieu($lieu);
 
                 //setting état
-                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(self::ETAT_CREE);
+                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('cree');
                 $sortie->setEtat($etat);
 
                 $manager->persist($sortie);
@@ -206,7 +202,7 @@ class CreationSortieController extends Controller
                 $sortie->setLieu($lieu);
 
                 //setting état 'ouverte'
-                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(self::ETAT_OUVERTE);
+                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('ouverte');
                 $sortie->setEtat($etat);
 
                 $manager->persist($sortie);
@@ -217,7 +213,7 @@ class CreationSortieController extends Controller
             }
 
             //delete Sortie if state = crée
-            if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getId() == self::ETAT_CREE) {
+            if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() == 'cree') {
                 $manager->remove($sortie);
                 $manager->flush();
 
@@ -226,7 +222,7 @@ class CreationSortieController extends Controller
             }
 
             //cancel Sortie if state != crée
-            if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getId() != self::ETAT_CREE) {
+            if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() != 'cree') {
 
                 return $this->redirectToRoute('annuler_sortie', ["id" => $sortieId]);
             }
@@ -259,7 +255,7 @@ class CreationSortieController extends Controller
 
             if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
                 //Setting state "annulee"
-                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(self::ETAT_ANNULEE);
+                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('annulee');
                 //$etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find($sortie->getEtat()->getId() === self::ETAT_ANNULEE);
                 $sortie->setEtat($etat);
 
