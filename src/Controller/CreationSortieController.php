@@ -33,14 +33,6 @@ class CreationSortieController extends Controller
         //Creation of a form
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
-        // Getting the cities
-        /* $repoVille = $this->getDoctrine()->getRepository(Ville::class);
-         $villes = $repoVille->findAll();*/
-
-        // Getting the locations
-        /* $repoLieux = $this->getDoctrine()->getRepository(Lieu::class);
-         $lieux = $repoLieux->findAll();*/
-
         //Getting the school
         $repoSite = $this->getDoctrine()->getRepository(Site::class);
         $site = $repoSite->find($user->getSite());
@@ -48,68 +40,72 @@ class CreationSortieController extends Controller
         $organisateur = $this->getUser();
 
         $sortieForm->handleRequest($request);
+        if ($request->request->get('enregistrer')) {
+            if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('enregistrer')) {
-            //setting state 'créée'
-            //$etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(self::ETAT_CREE);
+                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('cree');
 
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('cree');
+                $sortie->setEtat($etat);
 
-            $sortie->setEtat($etat);
-
-            //file
-            $file = $sortieForm->get('urlPhoto')->getData();
-            if (!is_null($file)) {
-                // File name
-                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-                // Move the file to the directory
-                try {
-                    $file->move('../public/asset/images/', $fileName);
-                } catch (FileException $e) {
+                //file
+                $file = $sortieForm->get('urlPhoto')->getData();
+                if (!is_null($file)) {
+                    // File name
+                    $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                    // Move the file to the directory
+                    try {
+                        $file->move('../public/asset/images/', $fileName);
+                    } catch (FileException $e) {
+                    }
+                    $sortie->setUrlPhoto($fileName);
                 }
-                $sortie->setUrlPhoto($fileName);
+                //end file
+
+                $sortie->setSite($this->getUser()->getSite());
+                $sortie->setOrganisateur($organisateur);
+
+                $manager->persist($sortie);
+                $manager->flush();
+
+                $this->addFlash("success", "Sortie créée");
+                return $this->redirectToRoute('affichage_sortie');
+            } else {
+                $this->addFlash('danger', 'Erreur lors de l\'enregistrement de la sortie');
             }
-            //end file
-
-            $sortie->setSite($this->getUser()->getSite());
-            $sortie->setOrganisateur($organisateur);
-
-            $manager->persist($sortie);
-            $manager->flush();
-
-            $this->addFlash("success", "Sortie créée");
-            return $this->redirectToRoute('affichage_sortie');
         }
+        if ($request->request->get('publier')) {
+            if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+                //etat par defaut 'ouverte'
+                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('ouverte');
 
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('publier')) {
-            //etat par defaut 'ouverte'
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('ouverte');
-
-            $sortie->setEtat($etat);
+                $sortie->setEtat($etat);
 
 
-            //file
-            $file = $sortieForm->get('urlPhoto')->getData();
-            if (!is_null($file)) {
-                // Création du nom du fichier
-                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-                // Move the file to the directory
-                try {
-                    $file->move('../public/asset/images/', $fileName);
-                } catch (FileException $e) {
+                //file
+                $file = $sortieForm->get('urlPhoto')->getData();
+                if (!is_null($file)) {
+                    // Création du nom du fichier
+                    $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                    // Move the file to the directory
+                    try {
+                        $file->move('../public/asset/images/', $fileName);
+                    } catch (FileException $e) {
+                    }
+                    $sortie->setUrlPhoto($fileName);
                 }
-                $sortie->setUrlPhoto($fileName);
+                //end file
+
+                $sortie->setSite($this->getUser()->getSite());
+                $sortie->setOrganisateur($organisateur);
+
+                $manager->persist($sortie);
+                $manager->flush();
+
+                $this->addFlash("success", "Sortie créée");
+                return $this->redirectToRoute('affichage_sortie');
+            } else {
+                $this->addFlash('danger', 'Erreur lors de la publication de la sortie');
             }
-            //end file
-
-            $sortie->setSite($this->getUser()->getSite());
-            $sortie->setOrganisateur($organisateur);
-
-            $manager->persist($sortie);
-            $manager->flush();
-
-            $this->addFlash("success", "Sortie créée");
-            return $this->redirectToRoute('affichage_sortie');
         }
 
 
@@ -178,47 +174,59 @@ class CreationSortieController extends Controller
             $sortieForm->handleRequest($request);
 
             //save Sortie - not publishing
-            if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('enregistrer')) {
+            if ($request->request->get('enregistrer')) {
+                if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
-                //Lieu field is disabled so it retrieves NULL by default. To avoid the error we make a set...
-                $lieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
-                $sortie->setLieu($lieu);
+                    //Lieu field is disabled so it retrieves NULL by default. To avoid the error we make a set...
+                    $lieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
+                    $sortie->setLieu($lieu);
 
-                //setting état
-                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('cree');
-                $sortie->setEtat($etat);
+                    //setting état
+                    $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('cree');
+                    $sortie->setEtat($etat);
 
-                $manager->persist($sortie);
-                $manager->flush();
+                    $manager->persist($sortie);
+                    $manager->flush();
 
-                $this->addFlash('success', "Les modifications ont été sauvegardées");
-                return $this->redirectToRoute('affichage_sortie');
+                    $this->addFlash('success', "Les modifications ont été sauvegardées");
+                    return $this->redirectToRoute('affichage_sortie');
+                } else {
+                    $this->addFlash('danger', 'Erreur lors de la modification de la sortie');
+                }
             }
 
             //save Sortie and publish
-            if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $request->request->get('publier')) {
-                //Lieu field is disabled so it retrieves NULL by default. To avoid the error we make a set...
-                $lieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
-                $sortie->setLieu($lieu);
+            if ($request->request->get('publier')) {
+                if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+                    //Lieu field is disabled so it retrieves NULL by default. To avoid the error we make a set...
+                    $lieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
+                    $sortie->setLieu($lieu);
 
-                //setting état 'ouverte'
-                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('ouverte');
-                $sortie->setEtat($etat);
+                    //setting état 'ouverte'
+                    $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('ouverte');
+                    $sortie->setEtat($etat);
 
-                $manager->persist($sortie);
-                $manager->flush();
+                    $manager->persist($sortie);
+                    $manager->flush();
 
-                $this->addFlash('success', "La sortie a bien été publiée");
-                return $this->redirectToRoute('affichage_sortie');
+                    $this->addFlash('success', "La sortie a bien été publiée");
+                    return $this->redirectToRoute('affichage_sortie');
+                } else {
+                    $this->addFlash('danger', 'Erreur lors de la publication de la sortie');
+                }
             }
 
             //delete Sortie if state = crée
-            if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() == 'cree') {
-                $manager->remove($sortie);
-                $manager->flush();
+            if ($request->request->get('supprimer')) {
+                if ($sortieForm->isSubmitted() && $sortie->getEtat()->getLibelle() == 'cree') {
+                    $manager->remove($sortie);
+                    $manager->flush();
 
-                $this->addFlash('success', "La sortie a bien été supprimée");
-                return $this->redirectToRoute('affichage_sortie');
+                    $this->addFlash('success', "La sortie a bien été supprimée");
+                    return $this->redirectToRoute('affichage_sortie');
+                } else {
+                    $this->addFlash('danger', 'Erreur lors de la suppression de la sortie');
+                }
             }
 
             //cancel Sortie if state != crée
@@ -276,49 +284,5 @@ class CreationSortieController extends Controller
             'hidden' => $hidden
         ]);
     }
-
-    /*
-     * @Route("/sortir/inscription/{id}", name="inscriptiondos_sortie", requirements={"id": "\d+"})
-     *
-    public function inscription(int $id, ObjectManager $manager)
-    {
-        $date = new \DateTime('now');
-
-        $SortieRepository = $this->getDoctrine()->getRepository(Sortie::class);
-        $sortie = $SortieRepository->find($id);
-        // on inscrit l'utilisateur si il reste de places
-        if (count($sortie->getUsers()) < $sortie->getNbInscriptionsMax()) {
-            // on inscrit l'utilisateur si la date de clôture est ouverte
-            if ($sortie->getDateCloture() > $date) {
-
-                $sortie->addUser($this->getUser());
-                $manager->persist($sortie);
-                $manager->flush();
-
-            } else {
-                $this->addFlash('danger', "Désolé, nous n'acceptons plus d'inscriptions");
-            }
-
-        } else {
-            $this->addFlash('danger', "Il n'y est plus de place pour cette sortie !");
-        }
-        return $this->redirectToRoute('affichage_sortie');
-    }
-
-
-    /*
-     * @Route("/sortir/desister/{id}", name="desister_sortir", requirements={"id": "\d+"})
-     *
-    public function desister(int $id, ObjectManager $manager)
-    {
-        $sortieRepository = $this->getDoctrine()->getRepository(Sortie::class);
-        $sortie = $sortieRepository->find($id);
-
-        // supprime l'utilisateur de la liste des participants
-        $sortie->removeUser($this->getUser());
-        $manager->persist($sortie);
-        $manager->flush();
-        return $this->redirectToRoute('affichage_sortie');
-    }*/
 
 }
