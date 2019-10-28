@@ -19,12 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CreationSortieController extends Controller
 {
-    public const ETAT_CREE = 73;
-    public const ETAT_OUVERTE = 74;
-    public const ETAT_CLOTUREE = 75;
-    public const ETAT_EN_COURS = 76;
-    public const ETAT_PASSEE = 77;
-    public const ETAT_ANNULEE = 78;
+    public const ETAT_CREE = 25;
+    public const ETAT_OUVERTE = 26;
+    public const ETAT_CLOTUREE = 27;
+    public const ETAT_EN_COURS = 28;
+    public const ETAT_PASSEE = 29;
+    public const ETAT_ANNULEE = 30;
 
 
     /**
