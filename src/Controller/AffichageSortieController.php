@@ -33,16 +33,16 @@ class AffichageSortieController extends Controller
         $inscrit = $this->getUser()->getSorties();
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $repoSite->findAll();
+
+        $repoSite = $this->getDoctrine()->getRepository(Etat::class)->find('29');
+        $etats = $repoSite->getLibelle('passee');
+
         if (isset($_POST['sortie_organisateur'])){
             $sorties = $repoSite->findBy(
-                ['organisateur' => $orga]
-            );
+                ['organisateur' => $orga
+                ]);
         }
-        if (isset($_POST['sortie_inscrit'])) {
-                $sorties = $repoSite->findByInscrit(
-                    ['users' => $orga]
-                );
-        }
+
         return $this->render('affichage_sortie/accueil.html.twig', [
             "sorties"=> $sorties,
             "sites" => $sites

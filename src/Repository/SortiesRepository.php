@@ -20,31 +20,14 @@ class SortiesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sortie::class);
     }
-
-
-     /**
-      * @return Sortie[] Returns an array of Sortie objects
-      */
-
-    public function findByInscrits($value)
-    {
-        $qb = $this->createQueryBuilder('s');
-        $qb->select( 's.id, count(u.id)' )
-            ->innerJoin('s.users', 'u');
-        return $qb->getQuery()->getScalarResult();
-
-    }
-
     public function findByInscrit($inscrit)
     {
         $qb = $this->createQueryBuilder('s');
-        $qb->select( 's.id' , 'u.id = :29')
+        $qb->select( 's.id' , 'u.sorties')
             ->innerJoin('s.etat', 'u');
         return $qb->getQuery()->getResult();
 
     }
-
-
 /**
     public function findOneBySomeField($check): ?Sortie
     {
@@ -57,3 +40,15 @@ class SortiesRepository extends ServiceEntityRepository
     }
 */
 }
+/*
+  * @return Sortie[] Returns an array of Sortie objects
+  *
+
+public function findByInscrits($value)
+{
+    $qb = $this->createQueryBuilder('s');
+    $qb->select( 's.id, count(u.id)' )
+        ->innerJoin('s.users', 'u');
+    return $qb->getQuery()->getScalarResult();
+
+}*/
