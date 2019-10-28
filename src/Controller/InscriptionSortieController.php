@@ -20,16 +20,16 @@ class InscriptionSortieController extends Controller
     {
         //Setting the parameters used for te conditions
 
-        //Getting the actual user
+
         $user = $this->getUser();
-        //Getting the participants
-        $users = $sortie->getUsers();
+
         $dateDuJour = new \DateTime('now');
+
         $nbMaxParticipants = $sortie->getNbInscriptionsMax();
 
 
         //Checking if the number of participants is not over the limit of the event
-        if (count($sortie->getUsers()) < $nbMaxParticipants && $sortie->getEtat() === 20) {
+        if (count($sortie->getUsers()) < $nbMaxParticipants && $sortie->getEtat() === 26) {
             $sortie->addUser($user);
             //var_dump($sortie);
 
@@ -37,7 +37,7 @@ class InscriptionSortieController extends Controller
             $manager->flush();
         } else if (!count($sortie->getUsers()) < $nbMaxParticipants) {
             $this->addFlash('danger', 'Le nombre maximum de participants est déjà atteint');
-        } else if (!$sortie->getEtat() === 20) {
+        } else if (!$sortie->getEtat() == 26) {
             $this->addFlash('danger', 'La sortie n\'est pas ouverte à l\'inscription');
         } else if ($sortie->getDateCloture() < $dateDuJour){
             $this->addFlash('danger', 'Il n\'est plus possible de s\'inscrire à cette sortie');
