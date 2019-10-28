@@ -11,6 +11,7 @@ use App\Entity\Ville;
 use App\Form\SortieType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,16 +23,30 @@ class AffichageSortieController extends Controller
     public function afficherSortie(Request $request, ObjectManager $manager)
     {
       //  $sortie = new Sortie();
-        // $siteID = new User();
         //$userID->getId();
         //$repoSite = $manager->getRepository(Site::class);
 
         // Getting the locations
        $repoSite = $this->getDoctrine()->getRepository(Site::class);
         $sites = $repoSite->findAll();
-
+        $orga = $this->getUser();
+        $inscrit = $this->getUser()->getSorties();
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $repoSite->findAll();
+
+        if (isset($_POST['sortie_organisateur'])){
+            $sorties = $repoSite->findBy(
+                ['organisateur' => $orga]
+            );
+        }
+
+        if (isset($_POST['sortie_inscrit'])) {
+                $sorties = $repoSite->findBy(
+                    ['users' => $orga]
+                );
+        }
+
+
 
 
 

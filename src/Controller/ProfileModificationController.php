@@ -88,10 +88,10 @@ class ProfileModificationController extends Controller
                 $manager->flush();
 
                 $this->addFlash('success', 'Votre profil est bien modifié!');
-                return $this->redirectToRoute('affichage_sortie');
+                return $this->redirectToRoute("user_update", ["id" => $user->getId()]);
             }else{
                 $this->addFlash('warning', 'Modification impossible, mot de passe erroné!');
-                return $this->redirectToRoute('affichage_sortie');
+                return $this->redirectToRoute("user_update", ["id" => $user->getId()]);
             }
         }
 
@@ -142,7 +142,6 @@ class ProfileModificationController extends Controller
         $repo = $manager->getRepository(User::class);
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -157,9 +156,9 @@ class ProfileModificationController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+                $this->addFlash('success', 'Votre mot de passe à bien été changé !');
 
-                return $this->redirectToRoute('affichage_sortie');
+                return $this->redirectToRoute("user_update", ["id" => $user->getId()]);
             } else {
                 $form->addError(new FormError('Ancien mot de passe incorrect'));
             }
