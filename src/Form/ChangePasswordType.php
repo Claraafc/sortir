@@ -33,7 +33,8 @@ class ChangePasswordType extends AbstractType
                 "first_options" => ['label' => "Nouveau mot de passe"],
                 "second_options" => ["label" => "Répéter"],
                 "mapped" => false,
-                'required' => true
+                'required' => true,
+                'invalid_message' => 'Le mot de passe ne correspond pas'
             ])
             ->add('submit', SubmitType::class, array(
                 'attr' => array(
