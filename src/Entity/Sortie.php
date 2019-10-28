@@ -28,6 +28,9 @@ class Sortie
      *     minMessage="{{ limit }} caractères minimum !",
      *     maxMessage="{{ limit }} caractères maximum !"
      * )
+     * @Assert\Regex(
+     *     pattern="/([0-9_-]*[a-zA-Z][0-9_-]*){3}/",
+     *     message="3 lettres minimum" )
      */
     private $name;
 
@@ -52,6 +55,7 @@ class Sortie
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Veuillez entrer une date limite pour clôturer les inscriptions")
+     * @Assert\GreaterThanOrEqual("today", message="On ne peut pas clôturer les inscriptions avant la date du jour")
      * @Assert\LessThanOrEqual(propertyPath="dateDebut", message="Les inscriptions doivent se clôturer avant le début de la sortie")
      */
     private $dateCloture;
@@ -71,6 +75,9 @@ class Sortie
      *     min="10",
      *     minMessage="{{ limit }} caractères minimum !"
      * )
+     * @Assert\Regex(
+     *     pattern="/([0-9_-]*[a-zA-Z][0-9_-]*){3}/",
+     *     message="3 lettres minimum" )
      */
     private $description;
 

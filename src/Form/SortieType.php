@@ -54,10 +54,12 @@ class SortieType extends AbstractType
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'name',
-                'mapped' => false
+                'mapped' => false,
+                'placeholder' => 'Choissisez une ville'
             ])
             ->add('lieu', null, [
                 'choice_label' => 'nom',
+                'placeholder' => 'Choissisez un lieu'
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
@@ -71,19 +73,19 @@ class SortieType extends AbstractType
                 ],
             ])
             ->add('rue', TextType::class, [
-                "disabled" => true,
+                'disabled' => true,
                 'mapped' => false,
             ])
             ->add('latitude', TextType::class, [
-                "disabled" => true,
+                'disabled' => true,
                 'mapped' => false,
             ])
             ->add('longitude', TextType::class, [
-                "disabled" => true,
+                'disabled' => true,
                 'mapped' => false,
             ])
             ->add('codePostal', TextType::class, [
-                "disabled" => true,
+                'disabled' => true,
                 'mapped' => false,
             ]);
     }

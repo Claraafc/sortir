@@ -1,29 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CreationSortieController!{% endblock %}
+{% block title %}Ajouter une sortie{% endblock %}
 
 {% block body %}
     <main>
-
         <h3>Créer une sortie</h3>
         {{ form_start(sortieForm) }}
-
-        {{ form_row(sortieForm.name) }}
-        {{ form_row(sortieForm.nbInscriptionsMax ) }}
-        {{ form_row(sortieForm.duree ) }}
-        {{ form_row(sortieForm.description ) }}
-        {{ form_row(sortieForm.urlPhoto) }}
-        {{ form_row(sortieForm.dateDebut ) }}
-        {{ form_row(sortieForm.dateCloture) }}
-
-
         <label for="user_ville">Site organisateur</label>
         <input class="form-control" id="disabledInput" type="text" name="site_id" placeholder="{{ site.name }}"
                disabled>
-
-        {{ form_row(sortieForm.ville) }}
+        {{ form_row(sortieForm.name) }}
+        {{ form_row(sortieForm.ville, { 'value':" " }) }}
         {{ form_row(sortieForm.lieu) }}
-        <a href="{{ path('lieu') }}" class="btn btn-success" data-toggle="modal" data-target="#modalForm">Ajouter un nouveau lieu</a>
+        <a href="{{ path('lieu') }}" class="btn btn-success" >Ajouter un nouveau lieu</a>
 
         <div id="hidden_detailLieu">
             {{ form_row(sortieForm.rue) }}
@@ -32,14 +21,39 @@
             {{ form_row(sortieForm.codePostal) }}
         </div>
 
+        {{ form_row(sortieForm.dateDebut ) }}
+        {{ form_row(sortieForm.dateCloture) }}
+        {{ form_row(sortieForm.duree ) }}
+        {{ form_row(sortieForm.nbInscriptionsMax ) }}
+        {{ form_row(sortieForm.description ) }}
+        {{ form_row(sortieForm.urlPhoto) }}
 
         <button type="submit" name="publier" class="btn btn-primary" value="publier">Publier</button>
         <button type="submit" name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
 
         <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Annuler</a>
 
+        {{ form_end(sortieForm) }}
+
+        {#{% if hidden == true %}
+
+            {% do sortieForm.rue.setRendered() %}
+            {% do sortieForm.latitude.setRendered() %}
+            {% do sortieForm.longitude.setRendered() %}
+            {% do sortieForm.codePostal.setRendered() %}
+
+        {% else %}
+
+            {{ form_row(sortieForm.rue) }}
+            {{ form_row(sortieForm.latitude) }}
+            {{ form_row(sortieForm.longitude) }}
+            {{ form_row(sortieForm.codePostal) }}
+
+
+        {% endif %}#}
+
         <!-- Modal -->
-        <div class="modal fade" id="modalForm" role="dialog">
+        {#<div class="modal fade" id="modalForm" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <!-- Modal Header -->
@@ -82,10 +96,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>#}
 
 
-        {{ form_end(sortieForm) }}
+
 
 
     </main>
@@ -94,15 +108,18 @@
 {% endblock %}
 
 {% block javascripts %}
-    {# JavaScript filter places by cities #}
     {{ parent() }}
+    {# JavaScript filter places by cities #}
+
     <script>
         $('#sortie_ville').change(function () {
             $('#sortie_lieu').empty();
             $.get('creation/ajax/' + $(this).val())
                 .done(function (data) {
+                    $('#sortie_lieu').append('<option>' + "Choissisez un lieu" + '</option>');
                     $.each(data, function (key, lieu) {
-                        console.log(lieu);
+                        // console.log(lieu);
+
                         $('#sortie_lieu').append('<option value="' + lieu.id + '">' + lieu.nom + '</option>');
 
                     });

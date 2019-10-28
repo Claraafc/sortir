@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une sortie{% endblock %}
+
+{% block body %}
+    <main>
+
+        <h3>Modifier une sortie</h3>
+
+        {{ form_start(sortieForm) }}
+
+        {{ form_label(sortieForm.name) }}
+        {{ form_widget(sortieForm.name) }}
+
+        {{ form_label(sortieForm.lieu) }}
+        {{ form_widget(sortieForm.lieu) }}
+
+        <a href="{{ path('lieu_update', { 'id': sortie}) }}" class="btn btn-success">Modifier le lieu</a>
+
+
+        {{ form_label(sortieForm.dateDebut) }}
+        {{ form_widget(sortieForm.dateDebut) }}
+
+        {{ form_label(sortieForm.dateCloture) }}
+        {{ form_widget(sortieForm.dateCloture) }}
+
+        {{ form_label(sortieForm.nbInscriptionsMax) }}
+        {{ form_widget(sortieForm.nbInscriptionsMax) }}
+
+        {{ form_label(sortieForm.duree) }}
+        {{ form_widget(sortieForm.duree) }}
+
+        {{ form_label(sortieForm.description) }}
+        {{ form_widget(sortieForm.description) }}
+
+        {{ form_label(sortieForm.urlPhoto) }}
+        {{ form_widget(sortieForm.urlPhoto) }}
+
+
+        <button type="submit" name="publier" class="btn btn-primary" value="publier">Publier</button>
+        <button type="submit" name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
+        <button type="submit" name="supprimer" class="btn btn-danger" value="supprimer">Supprimer</button>
+
+        {% if hidden == true %}
+
+            {% do sortieForm.rue.setRendered() %}
+            {% do sortieForm.latitude.setRendered() %}
+            {% do sortieForm.longitude.setRendered() %}
+            {% do sortieForm.codePostal.setRendered() %}
+            {% do sortieForm.ville.setRendered() %}
+
+        {% endif %}
+
+        {{ form_end(sortieForm) }}
+
+    </main>
+
+
+{% endblock %}
+
+   {# <script>
+        window.onload=function() {
+            $('#sortie_testVille').val('ville');
+           // $('#sortie_ville').append('<option value="' +  ville  + '">' + ville + '</option>');
+        }
+    </script>#}
+
+{#{% block javascripts %}
+     JavaScript filter places by cities
+    {{ parent() }}
+    <script>
+        $('#sortie_ville').change(function () {
+            $('#sortie_lieu').empty();
+            $.get('creation/ajax/' + $(this).val())
+                .done(function (data) {
+                    $.each(data, function (key, lieu) {
+                        console.log(lieu);
+                        $('#sortie_lieu').append('<option value="' + lieu.id + '">' + lieu.nom + '</option>');
+
+                    });
+                });
+        });
+
+    </script>
+
+    {# JavaScript info place (address)
+    <script>
+        $('#sortie_lieu').change(function () {
+            $.get('creation/requeteLieu/' + $(this).val())
+                .done(function (data) {
+                    //console.log(data);
+                    $('#sortie_rue').val(data.rue);
+                    $('#sortie_longitude').val(data.longitude);
+                    $('#sortie_latitude').val(data.latitude);
+                    $('#sortie_codePostal').val(data.codePostal)
+
+                });
+        });
+    </script>
+
+
+{% endblock %}#}
+
