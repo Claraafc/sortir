@@ -38,7 +38,6 @@ class Etat
         return $this->getLibelle().'';
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
