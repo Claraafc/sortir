@@ -22,7 +22,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
          $sortie1 = new Sortie();
-         $sortie1->setName('tapas, cree');
+         $sortie1->setName('tapas');
          $sortie1->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
          $sortie1->setDuree('120');
          $sortie1->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
@@ -41,7 +41,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
          $manager->persist($sortie1);
 
         $sortie2 = new Sortie();
-        $sortie2->setName('fête de la bière, ouverte');
+        $sortie2->setName('fête de la bière');
         $sortie2->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
         $sortie2->setDuree('120');
         $sortie2->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
@@ -69,13 +69,13 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($sortie2);
 
         $sortie3 = new Sortie();
-        $sortie3->setName('tapas, cloturée');
+        $sortie3->setName('Soirée poker');
         $sortie3->setDateDebut(new \DateTime('2019-10-25 05:20:30'));
         $sortie3->setDuree('120');
         $sortie3->setDateCloture(new \DateTime('2019-10-12 05:20:30'));
         $sortie3->setNbInscriptionsMax('10');
-        $sortie3->setDescription('Tapas, tapas, tapas !!!!');
-        $sortie3->setUrlPhoto('photos/tapas.jpg');
+        $sortie3->setDescription('All in!!!!');
+        $sortie3->setUrlPhoto('photos/poker.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_CLOTUREE);
         $sortie3->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
@@ -94,13 +94,13 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($sortie3);
 
         $sortie4 = new Sortie();
-        $sortie4->setName('tapas, en cours');
+        $sortie4->setName('karting');
         $sortie4->setDateDebut(new \DateTime('2019-10-23 05:20:30'));
         $sortie4->setDuree('12000');
         $sortie4->setDateCloture(new \DateTime('2019-10-12 05:20:30'));
         $sortie4->setNbInscriptionsMax('5');
-        $sortie4->setDescription('Tapas, tapas, tapas !!!!');
-        $sortie4->setUrlPhoto('photos/tapas.jpg');
+        $sortie4->setDescription('Courses de kart dans un décors SuperMario!!! INEDIT!!!!');
+        $sortie4->setUrlPhoto('photos/kart.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_EN_COURS);
         $sortie4->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
@@ -124,13 +124,13 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($sortie4);
 
         $sortie5 = new Sortie();
-        $sortie5->setName('tapas, passée');
+        $sortie5->setName('esclalade');
         $sortie5->setDateDebut(new \DateTime('2018-01-09 05:20:30'));
         $sortie5->setDuree('120');
         $sortie5->setDateCloture(new \DateTime('2018-01-09 05:20:30'));
         $sortie5->setNbInscriptionsMax('18');
-        $sortie5->setDescription('Tapas, tapas, tapas !!!!');
-        $sortie5->setUrlPhoto('photos/tapas.jpg');
+        $sortie5->setDescription('Venez faire une scéance d\'escalade avec notre ami El Jefe!!!!');
+        $sortie5->setUrlPhoto('photos/escalade.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_PASSEE);
         $sortie5->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
@@ -143,13 +143,13 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($sortie5);
 
         $sortie6 = new Sortie();
-        $sortie6->setName('tapas, annulée');
+        $sortie6->setName('noche de cumbia');
         $sortie6->setDateDebut(new \DateTime('2020-01-09 05:20:30'));
         $sortie6->setDuree('120');
         $sortie6->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
         $sortie6->setNbInscriptionsMax('15');
-        $sortie6->setDescription('Tapas, tapas, tapas !!!!');
-        $sortie6->setUrlPhoto('photos/tapas.jpg');
+        $sortie6->setDescription('Venez danser!!!!');
+        $sortie6->setUrlPhoto('photos/cumbia.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_ANNULEE);
         $sortie6->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);

@@ -5,7 +5,6 @@
         "php": "^7.1.8",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/doctrine-fixtures-bundle": "^3.2",
         "pugx/autocompleter-bundle": "^1.4",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "3.4.*",
@@ -29,6 +28,7 @@
       "ext-json": "*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.2",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",

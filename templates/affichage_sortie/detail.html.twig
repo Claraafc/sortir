@@ -16,7 +16,7 @@
             <div class=" row col-md-8 offset-md-0" style="margin-top: 10px">
                 <div class="col-md-6 offset-md-0" style="padding-right: 100px">
                     <div class="detail-intitule">Nom de la sortie :</div>
-                    <div class="detail-meta">{{ sortie.name }}</div>
+                    <div class="detail-meta">{{ sortie.name }}, {{ sortie.etat }}</div>
                     <div class="detail-intitule">Date et heure :</div>
                     <div class="detail-meta">{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</div>
                     <div class="detail-intitule">Date limite d'inscription :</div>
@@ -65,19 +65,19 @@
             </div>
             <div class="col-md-3 offset-md-3" style="padding-top: 7em">
 
-                    {% set inscrit = 0 %}
-                    {% for user in users %}
-                        {% if user.username == app.user.username %}
-                            {% set inscrit = inscrit+1 %}
-                        {% endif %}
-                    {% endfor %}
+                {% set inscrit = 0 %}
+                {% for user in users %}
+                    {% if user.username == app.user.username %}
+                        {% set inscrit = inscrit+1 %}
+                    {% endif %}
+                {% endfor %}
 
-                    {% if inscrit>0 %}
-                        <button class="btn btn-info"><a href="#">Se désinscrire</a></button>
-                    {% endif %}
-                    {% if inscrit==0 %}
-                        <button class="btn btn-info"><a href="#">S'inscrire</a></button
-                    {% endif %}
+                {% if inscrit>0 %}
+                    <button class="btn btn-info"><a href="#">Se désinscrire</a></button>
+                {% endif %}
+                {% if inscrit==0 %}
+                    <button class="btn btn-info"><a href="#">S'inscrire</a></button
+                {% endif %}
 
             </div>
         </div>

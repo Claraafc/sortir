@@ -24,7 +24,7 @@ class UserController extends Controller
             throw $this->createNotFoundException("Cet utilisateur n'existe pas!!");
         }
         return $this->render('user/index.html.twig', [
-           // 'user' => $user,
+            'user' => $user,
         ]);
     }
 }

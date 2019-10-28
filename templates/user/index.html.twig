@@ -3,7 +3,7 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-    <img src="{{app.request.basepath}}/{{ user.urlPhoto }}" style="float: left; width: 185px">
+    <img src="{{app.request.basepath}}/photos/{{ user.urlPhoto }}" style="float: left; width: 185px">
     <div class="container">
         <h1>{{ user.username }}</h1>
         <div class="row">
