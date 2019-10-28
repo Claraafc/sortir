@@ -1,44 +1,97 @@
 {% extends 'base.html.twig' %}
+   {% block stylesheets %}
 
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta name="description"
+             content="Fullscreen Background Image Slideshow with CSS3 - A Css-only fullscreen background image slideshow"/>
+       <meta name="keywords" content="css3, css-only, fullscreen, background, slideshow, images, content"/>
+       <meta name="author" content="Codrops"/>
+
+       <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/demo.css') }}">
+       <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/style1.css') }}">
+       {% block javascripts %}
+           <script src="{{ asset('bootstrap/js/modernizr.custom.86080.js') }}"></script>
+
+           <script type="text/javascript">
+               // Mettre Ton Script Ici
+           </script>
+       {% endblock %}
+
+   {% endblock %}
 {% block title %}Log in!{% endblock %}
-{% block header %}
-    {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
-        <br>
-        <img src="{{ asset('images/logoPourSortir.png') }}" alt="logo" style="max-height: 24em; max-width: 24em; margin-left: 2em">
-    {% endif %}
-{% endblock %}
+
 {% block body %}
-<form action ="{{ path('app_login') }}"method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+    <ul class="cb-slideshow">
+        <li><span>Image 01</span>
+            <div><h3>sport</h3></div>
+        </li>
+        <li><span>Image 02</span>
+            <div><h3>culture</h3></div>
+        </li>
+        <li><span>Image 03</span>
+            <div><h3>évasion</h3></div>
+        </li>
+        <li><span>Image 04</span>
+            <div><h3>concerts</h3></div>
+        </li>
+        <li><span>Image 05</span>
+            <div><h3>jeux</h3></div>
+        </li>
+        <li><span>Image 06</span>
+            <div><h3>cinéma</h3></div>
+        </li>
+    </ul>
+
+    <div class="container" style="position: relative" >
+        <div class="codrops-top" style="position: relative ; margin-top: 0px">
+
+            {% block header %}
+            {% endblock %}
+            {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
+
+                <img src="{{ asset('images/logoSortir.png') }}" alt="logo"
+                     style="max-height: 20em; max-width: 20em; margin-left: 2em">
+            {% endif %}
         </div>
-    {% endif %}
+        </div>
+        <div class="panel panel-default container core linear-gradient " style="width:40em; font-family: Arial, sans-serif">
 
-    <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-    <label for="inputUsername" class="sr-only">Pseudo</label>
-    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Pseudo" required autofocus>
-    <label for="inputPassword" class="sr-only">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+            <form action="{{ path('app_login') }}" method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
 
+                <h1 class="h3 mb-3 font-weight-normal" style="color: white">Login</h1>
+            </br>
+                <label for="inputUsername" style="color: white" class="sr-only">Pseudo</label>
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
+                       placeholder="Pseudo" required autofocus>
+                <label for="inputPassword" style="color: white" class="sr-only">Mot de passe</label>
+                <input type="password"  name="password" id="inputPassword" class="form-control"
+                       placeholder="Mot de passe" required>
 
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}">
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
+                <div class="checkbox mb-3" style="color: white">
+                    </br>
+                    <label>
+                        <input type="checkbox" name="_remember_me" > Remember me
+                    </label>
+                </div>
+                </br>
+                <button class="btn btn-lg btn-primary" type="submit">
+                    Login
+                </button>
+            </form>
         </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Login
-    </button>
-</form>
+
 {% endblock %}
