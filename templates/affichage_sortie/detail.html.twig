@@ -16,7 +16,8 @@
             <div class=" row col-md-8 offset-md-0" style="margin-top: 10px">
                 <div class="col-md-6 offset-md-0" style="padding-right: 100px">
                     <div class="detail-intitule">Nom de la sortie :</div>
-                    <div class="detail-meta">{{ sortie.name }}</div>
+                    {# add directly the state from the database #}
+                    <div class="detail-meta">{{ sortie.name }}, {{ sortie.etat }}</div>
                     <div class="detail-intitule">Date et heure :</div>
                     <div class="detail-meta">{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</div>
                     <div class="detail-intitule">Date limite d'inscription :</div>
@@ -55,7 +56,7 @@
                 {% for user in users %}
                     <tbody>
                     <tr>
-                        <td>{{ user.username }}</td>
+                        <td><a href="{{ path('profile_detail', {'id': user.id}) }}">{{ user.username }}</a></td>
                         <td>{{ user.nom }} {{ user.prenom }}</td>
                     </tr>
                     </tbody>

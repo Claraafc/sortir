@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -33,9 +35,18 @@ class SortiesRepository extends ServiceEntityRepository
 
     }
 
+    public function findByInscrit($inscrit)
+    {
+        $qb = $this->createQueryBuilder('s');
+        $qb->select( 's.id' , 'u.id')
+            ->innerJoin('s.users', 'u');
+        return $qb->getQuery()->getResult();
 
-    /*
-    public function findOneBySomeField($value): ?Sortie
+    }
+
+
+/**
+    public function findOneBySomeField($check): ?Sortie
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')
@@ -44,5 +55,5 @@ class SortiesRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+*/
 }
