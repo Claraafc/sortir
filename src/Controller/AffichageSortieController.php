@@ -22,7 +22,7 @@ class AffichageSortieController extends Controller
      */
     public function afficherSortie(Request $request, ObjectManager $manager)
     {
-      //  $sortie = new Sortie();
+      // $sortie = new Sortie();
         //$userID->getId();
         //$repoSite = $manager->getRepository(Site::class);
 
@@ -33,24 +33,16 @@ class AffichageSortieController extends Controller
         $inscrit = $this->getUser()->getSorties();
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $repoSite->findAll();
-
         if (isset($_POST['sortie_organisateur'])){
             $sorties = $repoSite->findBy(
                 ['organisateur' => $orga]
             );
         }
-
         if (isset($_POST['sortie_inscrit'])) {
-                $sorties = $repoSite->findBy(
+                $sorties = $repoSite->findByInscrit(
                     ['users' => $orga]
                 );
         }
-
-
-
-
-
-
         return $this->render('affichage_sortie/accueil.html.twig', [
             "sorties"=> $sorties,
             "sites" => $sites
