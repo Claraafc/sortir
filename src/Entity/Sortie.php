@@ -71,13 +71,14 @@ class Sortie
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Veuillez préciser une description")
      * @Assert\Length(
      *     min="10",
      *     minMessage="{{ limit }} caractères minimum !"
      * )
      * @Assert\Regex(
-     *     pattern="/([0-9_-]*[a-zA-Z][0-9_-]*){10}/",
-     *     message="10 lettres minimum" )
+     *     pattern="/([0-9_-]*[a-zA-Z][0-9_-]*){4}/",
+     *     message="4 lettres minimum" )
      */
     private $description;
 

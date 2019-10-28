@@ -260,6 +260,7 @@ class CreationSortieController extends Controller
             if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
                 //Setting state "annulee"
                 $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find(self::ETAT_ANNULEE);
+                //$etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find($sortie->getEtat()->getId() === self::ETAT_ANNULEE);
                 $sortie->setEtat($etat);
 
                 $manager->persist($sortie);
