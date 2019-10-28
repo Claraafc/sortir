@@ -38,7 +38,7 @@ class SortiesRepository extends ServiceEntityRepository
     public function findByInscrit($inscrit)
     {
         $qb = $this->createQueryBuilder('s');
-        $qb->select( 's.id' , 'u.libelle = :passee')
+        $qb->select( 's.id' , 'u.id = :29')
             ->innerJoin('s.etat', 'u');
         return $qb->getQuery()->getResult();
 
