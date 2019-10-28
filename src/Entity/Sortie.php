@@ -76,8 +76,8 @@ class Sortie
      *     minMessage="{{ limit }} caractères minimum !"
      * )
      * @Assert\Regex(
-     *     pattern="/([0-9_-]*[a-zA-Z][0-9_-]*){3}/",
-     *     message="3 lettres minimum" )
+     *     pattern="/([0-9_-]*[a-zA-Z][0-9_-]*){10}/",
+     *     message="10 lettres minimum" )
      */
     private $description;
 
