@@ -73,7 +73,7 @@
                 {% endfor %}
 
                 {% if inscrit>0 %}
-                    <button class="btn btn-info"><a href="#">Se désinscrire</a></button>
+                    <button class="btn btn-info"><a href="{{path('desistement',{'id' : sortie.id})}}">Se désinscrire</a></button>
                 {% endif %}
                 {% if inscrit==0 %}
                     <button class="btn btn-info"><a href="#">S'inscrire</a></button

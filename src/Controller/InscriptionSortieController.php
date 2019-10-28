@@ -23,7 +23,7 @@ class InscriptionSortieController extends Controller
 
         $user = $this->getUser();
 
-
+        $dateDuJour = new \DateTime('now');
         $nbMaxParticipants = $sortie->getNbInscriptionsMax();
 
 
@@ -34,10 +34,13 @@ class InscriptionSortieController extends Controller
 
             $manager->persist($sortie);
             $manager->flush();
+            $this->addFlash('success', 'Vous êtes bien inscrit à la sortie');
         } else if (count($sortie->getUsers()) == $nbMaxParticipants) {
             $this->addFlash('danger', 'Le nombre maximum de participants est déjà atteint');
         } else if ($sortie->getEtat()->getLibelle() !== 'ouverte') {
             $this->addFlash('danger', 'La sortie n\'est pas ouverte à l\'inscription');
+        }else if ($sortie->getDateCloture() < $dateDuJour){
+            $this->addFlash('danger', 'Il n\'est plus possible de s\'inscrire à cette sortie');
         }
 
         return $this->redirectToRoute('affichage_sortie');
