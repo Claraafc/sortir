@@ -36,6 +36,7 @@ class SortieType extends AbstractType
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => "Nombre de places",
+                'attr' => ['min' => 1]
             ])
             ->add('duree', ChoiceType::class, [
                 'label' => "Durée",

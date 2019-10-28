@@ -13,9 +13,9 @@ class MainController extends Controller
     /**
      * @Route("/", name="main")
      */
-    public function home(EntityManagerInterface $em, int $id)
+    public function home(EntityManagerInterface $em)
     {
-        $repo = $em->getRepository(User::class);
+        /*$repo = $em->getRepository(User::class);
         $user = $this->getUser();
         $id = $user->getId();
         $em->persist($user);
@@ -23,7 +23,8 @@ class MainController extends Controller
         return $this->render('security/login.html.twig', [
             'user' => $user,
             'id' => $id
-        ]);
+        ]);*/
+        return $this->redirectToRoute('app_login');
     }
 
 
