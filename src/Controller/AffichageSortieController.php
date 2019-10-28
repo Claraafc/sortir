@@ -22,34 +22,28 @@ class AffichageSortieController extends Controller
      */
     public function afficherSortie(Request $request, ObjectManager $manager)
     {
-      //  $sortie = new Sortie();
+        //  $sortie = new Sortie();
         //$userID->getId();
         //$repoSite = $manager->getRepository(Site::class);
 
         // Getting the locations
-       $repoSite = $this->getDoctrine()->getRepository(Site::class);
+        $repoSite = $this->getDoctrine()->getRepository(Site::class);
         $sites = $repoSite->findAll();
-        $orga = $this->getUser();
+        $user = $this->getUser();
 
-        $inscrit = $this->getUser()->getId();
-       //dump($orga,  count($inscrit) );
+        $organisateur = $request->request->getBoolean('sortie_organisateur');
+        $passee = $request->request->getBoolean('sortie_passee');
+        $inscrit = $request->request->getBoolean('sortie_inscrit');
+        $nonInscrit = $request->request->getBoolean('non_inscrit');
+        $nomSortie = $request->request->get('nomSortie');
+        $dateDebutRecherche = $request->get('dateDebutRecherche');
+        $dateFinRecherche = $request->get('dateFinRecherche');
+        $site = $request->request->get('site');
+
+
+        //dump($orga,  count($inscrit) );
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
-        $sorties = $repoSite->findAll();
-
-        if (isset($_POST['sortie_organisateur'])){
-            $sorties = $repoSite->findBy(
-                ['organisateur' => $orga]
-            );
-        }
-
-        /**if (isset($_POST['sortie_inscrit'])) {
-                $sorties = $repoSite->findByInscrit($orga);
-        }
-
-        if (isset($_POST['non_inscrit'])) {
-            $sorties = $repoSite->findByNonInscrit($orga);
-        }*/
-
+        $sorties = $repoSite->findByParams($user, $inscrit, $nonInscrit, $nomSortie,$organisateur,$passee,$dateDebutRecherche,$dateFinRecherche, $site);
 
 
 

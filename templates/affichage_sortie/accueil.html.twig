@@ -14,7 +14,7 @@
                     <label for="site_nom">Site:</label>
                     <select name="site" id="site" class="form-control">
                         {% for site in sites %}
-                            <option value="{{ site.name }}">{{ site.name }}</option>
+                            <option value="{{ site.id }}">{{ site.name }}</option>
                         {% endfor %}
                     </select>
 
@@ -22,12 +22,12 @@
 
                     <label>Le nom de la sortie contient: </label>
 
-                    <input type="search" aria-label="Search through site content"><br>
+                    <input type="search" aria-label="Search through site content" name="nomSortie"><br>
 
                     <label>Entre </label>
-                    <input type="date" value="now">
+                    <input type="date" value="now" name="dateDebutRecherche">
                     <label> et </label>
-                    <input type="date"><br>
+                    <input type="date" name="dateFinRecherche"><br>
                 </div>
 
                 <div class="col-auto" style="margin-left: 70px">
@@ -106,4 +106,6 @@
     </script>
 {% endblock %}
 #}
+
+
 

@@ -7,7 +7,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\HttpFoundation\Request;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,63 +23,96 @@ class SortiesRepository extends ServiceEntityRepository
     }
 
 
-     /**
-      * @return Sortie[] Returns an array of Sortie objects
-      */
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
 
     public function findByInscrits($value)
     {
         $qb = $this->createQueryBuilder('s');
-        $qb->select( 's.id, count(u.id)' )
+        $qb->select('s.id, count(u.id)')
             ->innerJoin('s.users', 'u');
         return $qb->getQuery()->getScalarResult();
 
     }
 
-    public function findByInscrit($inscrit)
+    public function findByParams($user, $inscrit, $nonInscrit, $nomSortie, $organisateur, $passee, $dateDebutRecherche, $dateFinRecherche, $site)
     {
         $qb = $this->createQueryBuilder('s');
-        $qb->select('s')
-            ->andwhere(':inscrit MEMBER OF s.users')
-            ->setParameter('inscrit', $inscrit);
+        $qb->select('s');
 
-        return $qb->getQuery()->getResult();
 
-    }
-
-    public function findByNonInscrit($inscrit)
-    {
-        $qb = $this->createQueryBuilder('s');
-        $qb->select('s')
-            ->andwhere(':inscrit NOT MEMBER OF s.users')
-            ->setParameter('inscrit', $inscrit);
-
-        return $qb->getQuery()->getResult();
-
-    }
-
-    public function findByParams($inscrit){
-        $qb = $this->createQueryBuilder('s')->select('s');
-        if (isset($_POST['sortie_inscrit'])){
-            $qb->andwhere(':inscrit MEMBER OF s.users')
-                ->setParameter('inscrit', $inscrit);
+        if (!empty($nomSortie)) {
+            $qb->andWhere('s.name LIKE :nomSortie');
+            $qb->setParameter('nomSortie', $nomSortie . "%");
         }
-        if (isset($_POST['non_inscrit'])){
-            $qb->andwhere(':inscrit NOT MEMBER OF s.users')
-                ->setParameter('inscrit', $inscrit);
+
+        if (!empty($site)) {
+            $qb->andWhere('s.site = :site');
+            $qb->setParameter('site', $site . "%");
         }
+
+        $paramsDate=[];
+
+        if (!empty($dateDebutRecherche) && !empty($dateFinRecherche)) {
+            $paramsDate["dateDebutRecherche"] = $dateDebutRecherche;
+            $paramsDate["dateFinRecherche"] = $dateFinRecherche;
+            $qb->andWhere('s.dateDebut > :dateDebutRecherche');
+            $qb->andWhere('s.dateDebut < :dateFinRecherche');
+            $qb->setParameters($paramsDate);
+        }
+
+        $req = [];
+        $params = [];
+
+
+        if ($organisateur) {
+            $params["inscrit"] = $user;
+            $req[] = ':inscrit = s.organisateur';
+        }
+        if ($inscrit) {
+            $params["inscrit"] = $user;
+            $req[] = ':inscrit MEMBER OF s.users';
+        }
+        if ($nonInscrit) {
+            $params["inscrit"] = $user;
+            $req[] = ':inscrit NOT MEMBER OF s.users';
+        }
+        if ($passee) {
+            $params["etatPassee"] = 71;
+            $req[] = ':etatPassee = s.etat';
+        }
+
+        if (count($req) > 0) {
+
+            $orX = $qb->expr()->orX();
+            $orX->addMultiple($req);
+
+            $qb->andWhere(
+                $orX
+            );
+
+            if (count($params) > 0) {
+                $qb->setParameters($params);
+            }
+
+        }
+
+
         return $qb->getQuery()->getResult();
+
     }
 
-/**
-    public function findOneBySomeField($check): ?Sortie
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-*/
+
+    /**
+     * public function findOneBySomeField($check): ?Sortie
+     * {
+     * return $this->createQueryBuilder('s')
+     * ->andWhere('s.exampleField = :val')
+     * ->setParameter('val', $value)
+     * ->getQuery()
+     * ->getOneOrNullResult()
+     * ;
+     * }
+     */
 }
