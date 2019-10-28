@@ -76,7 +76,7 @@
                     <button class="btn btn-info"><a href="{{path('desistement',{'id' : sortie.id})}}">Se désinscrire</a></button>
                 {% endif %}
                 {% if inscrit==0 %}
-                    <button class="btn btn-info"><a href="#">S'inscrire</a></button
+                    <button class="btn btn-info"><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a></button
                 {% endif %}
 
             </div>
