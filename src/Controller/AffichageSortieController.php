@@ -22,9 +22,6 @@ class AffichageSortieController extends Controller
      */
     public function afficherSortie(Request $request, ObjectManager $manager)
     {
-        //  $sortie = new Sortie();
-        //$userID->getId();
-        //$repoSite = $manager->getRepository(Site::class);
 
         // Getting the locations
         $repoSite = $this->getDoctrine()->getRepository(Site::class);
@@ -40,12 +37,8 @@ class AffichageSortieController extends Controller
         $dateFinRecherche = $request->get('dateFinRecherche');
         $site = $request->request->get('site');
 
-
-        //dump($orga,  count($inscrit) );
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $repoSite->findByParams($user, $inscrit, $nonInscrit, $nomSortie,$organisateur,$passee,$dateDebutRecherche,$dateFinRecherche, $site);
-
-
 
         return $this->render('affichage_sortie/accueil.html.twig', [
             "sorties"=> $sorties,
