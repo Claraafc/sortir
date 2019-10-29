@@ -40,7 +40,8 @@ class SortiesRepository extends ServiceEntityRepository
     {
         //dump($user, $inscrit, $nonInscrit, $nomSortie, $organisateur, $passee, $dateDebutRecherche, $dateFinRecherche, $site);
 
-        $qb = $this->createQueryBuilder('s');
+        $qb = $this->createQueryBuilder('s')
+                    ->orderBy('s.dateDebut','DESC');
         $qb->select('s');
 
         $params = [];
