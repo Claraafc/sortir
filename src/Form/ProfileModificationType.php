@@ -37,7 +37,7 @@ class ProfileModificationType extends AbstractType
                 "label" => "Votre prenom",
                 "disabled" => false
             ])
-            ->add('telephone', TelType::class, [
+            ->add('telephone', TextType::class, [
                 "label" => "Votre telephone",
                 "disabled" => false,
                 'constraints' => [
