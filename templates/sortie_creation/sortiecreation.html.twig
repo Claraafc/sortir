@@ -116,7 +116,11 @@
             $('#sortie_lieu').empty();
             $.get('creation/ajax/' + $(this).val())
                 .done(function (data) {
-                    $('#sortie_lieu').append('<option>' + "Choissisez un lieu" + '</option>');
+                    if ($('#sortie_ville').isEmptyObject()) {
+                        $('#sortie_lieu').append('<option value="' +test+ '">' + "Choissisez un lieu" + '</option>');
+                    } else {
+                        $('#sortie_lieu').append('<option>' + "Choissisez un lieu" + '</option>');
+                    }
                     $.each(data, function (key, lieu) {
                         // console.log(lieu);
 
