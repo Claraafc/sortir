@@ -52,7 +52,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Regex(pattern="/^[0-9](10)+$/i")
+     * Assert\Regex(pattern="/^[0-9](10)+$/i")
      */
     private $telephone;
 
