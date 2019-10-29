@@ -10,9 +10,9 @@
                 <div class="col-auto">
                     <label for="site_nom">Site:</label>
                     <select name="site" id="site" class="form-control">
-                        {% if siteSelection is null %}
-                            <option> Sélectionnez le site de l'école</option>
-                        {% endif %}
+
+                            <option value=""> Tous les sites</option>
+
                         {% for site in sites %}
                             <option value="{{ site.id }}" {% if site.id == siteSelection %} selected="selected" {% endif %}>{{ site.name }} </option>
                         {% endfor %}
@@ -63,6 +63,7 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
+
                     {% for sortie in sorties %}
                         <tbody>
                         <tr>

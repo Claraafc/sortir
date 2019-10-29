@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,12 +40,13 @@ class SortiesRepository extends ServiceEntityRepository
     public function findByParams($user, $inscrit, $nonInscrit, $nomSortie, $organisateur, $passee, $dateDebutRecherche, $dateFinRecherche, $site)
     {
         //dump($user, $inscrit, $nonInscrit, $nomSortie, $organisateur, $passee, $dateDebutRecherche, $dateFinRecherche, $site);
-
+        $etatPassee = $this->getEntityManager()->getRepository(Etat::class)->findOneBySomeField('passee');
         $qb = $this->createQueryBuilder('s')
             ->orderBy('s.dateDebut', 'DESC');
         $qb->select('s');
 
         $params = [];
+
         if (!empty($nomSortie)) {
             $params["nomSortie"] = $nomSortie . "%";
             $qb->andWhere('s.name LIKE :nomSortie');
@@ -77,7 +79,7 @@ class SortiesRepository extends ServiceEntityRepository
             $req[] = ':inscrit NOT MEMBER OF s.users';
         }
         if ($passee) {
-            $params["etatPassee"] = 68;
+            $params["etatPassee"] = $etatPassee;
             $req[] = ':etatPassee = s.etat';
         }
 
