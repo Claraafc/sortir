@@ -95,6 +95,15 @@ class Sortie
     private $urlPhoto;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *     min="10",
+     *     minMessage="{{ limit }} caractères minimum !"
+     * )
+     */
+    private $motifAnnulation;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -122,6 +131,24 @@ class Sortie
      * @ORM\JoinColumn(nullable=false)
      */
     private $etat;
+
+    /**
+     * @return mixed
+     */
+    public function getMotifAnnulation()
+    {
+        return $this->motifAnnulation;
+    }
+
+    /**
+     * @param mixed $motifAnnulation
+     */
+    public function setMotifAnnulation($motifAnnulation): void
+    {
+        $this->motifAnnulation = $motifAnnulation;
+    }
+
+
 
     /**
      * Sortie constructor.

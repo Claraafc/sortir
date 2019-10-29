@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container" >
+    <div class="container">
         <div class="row col-lg-12 offset-md-0" style="margin-top: 10px">
             <div class="col-md-4 offset-md-0" style="padding-right: 100px">
                 <hgroup>
@@ -27,6 +27,10 @@
                     <div class="detail-meta">{{ sortie.duree }}</div>
                     <div class="detail-intitule">Description :</div>
                     <div class="detail-meta">{{ sortie.description|nl2br }}</div>
+                    {% if sortie.etat.libelle == 'annulee' %}
+                        <div class="detail-intitule">Motif annulation :</div>
+                        <div class="detail-meta">{{ sortie.motifAnnulation }}</div>
+                    {% endif %}
                 </div>
                 <div class="col-md-6 offset-md-0" style="padding-right: 100px">
                     <div class="detail-intitule">École organisatrice :</div>
@@ -42,6 +46,7 @@
                     <div class="detail-intitule">Longitude :</div>
                     <div class="detail-meta">{{ sortie.lieu.longitude }}</div>
                 </div>
+
             </div>
         </div>
         <div class="row col-md-12 offset-md-0" style="margin-top: 10px;">
@@ -73,10 +78,12 @@
                 {% endfor %}
 
                 {% if inscrit>0 %}
-                    <button class="btn btn-info"><a href="{{path('desistement',{'id' : sortie.id})}}">Se désinscrire</a></button>
+                    <button class="btn btn-info"><a href="{{ path('desistement',{'id' : sortie.id}) }}">Se
+                            désinscrire</a></button>
                 {% endif %}
                 {% if inscrit==0 %}
-                    <button class="btn btn-info"><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a></button
+                    <button class="btn btn-info"><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
+                    </button
                 {% endif %}
 
             </div>

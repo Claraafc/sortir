@@ -234,71 +234,75 @@ class CreationSortieController extends Controller
 
             //delete Sortie if state = crée
             if ($request->request->get('supprimer')) {
-                if ($sortieForm->isSubmitted() && $sortie->getEtat()->getLibelle() == 'cree') {
+                if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $sortie->getEtat()->getLibelle() == 'cree') {
                     $manager->remove($sortie);
                     $manager->flush();
 
                     $this->addFlash('success', "La sortie a bien été supprimée");
                     return $this->redirectToRoute('affichage_sortie');
+                } else if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() != 'cree') {
+                    return $this->redirectToRoute('annuler_sortie', ["id" => $sortieId]);
                 } else {
                     $this->addFlash('danger', 'Erreur lors de la suppression de la sortie');
-                }
             }
+        }
 
-            //cancel Sortie if state != crée
-            if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() != 'cree') {
+        //cancel Sortie if state != crée
+        /* if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() != 'cree') {
 
-                return $this->redirectToRoute('annuler_sortie', ["id" => $sortieId]);
-            }
+             return $this->redirectToRoute('annuler_sortie', ["id" => $sortieId]);
+         }*/
 
-        } else {
-            $this->addFlash('danger', "Vous ne pouvez pas modifier cette sortie");
+    } else
+{
+$this->addFlash('danger', "Vous ne pouvez pas modifier cette sortie");
+return $this->redirectToRoute('affichage_sortie');
+}
+
+return $this->render('sortie_creation/sortieupdate.html.twig', [
+    'sortieForm' => $sortieForm->createView(),
+    'user' => $user,
+    'site' => $site,
+    'sortie' => $sortieId,
+    'hidden' => $hidden,
+]);
+}
+
+/**
+ * @Route("/sortir/annuler/{id}", name="annuler_sortie", requirements={"id": "\d+"})
+ */
+public
+function annulerSortie(Sortie $sortie, Request $request, ObjectManager $manager)
+{
+    //variable to hide form fields : rue, latitude, longitude, code postal, ville(<option>)
+    $hidden = true;
+
+    if ($sortie->getOrganisateur() == $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        $sortieForm = $this->createForm(SupprimerSortieType::class, $sortie);
+        $sortieForm->handleRequest($request);
+
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            //Setting state "annulee"
+            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('annulee');
+            //$etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find($sortie->getEtat()->getId() === self::ETAT_ANNULEE);
+            $sortie->setEtat($etat);
+
+            $manager->persist($sortie);
+            $manager->flush();
+
+            $this->addFlash('success', "La sortie a bien été annulée");
             return $this->redirectToRoute('affichage_sortie');
         }
 
-        return $this->render('sortie_creation/sortieupdate.html.twig', [
-            'sortieForm' => $sortieForm->createView(),
-            'user' => $user,
-            'site' => $site,
-            'sortie' => $sortieId,
-            'hidden' => $hidden,
-        ]);
+    } else {
+        $this->addFlash('danger', "Vous ne pouvez pas annuler cette sortie");
+        return $this->redirectToRoute('affichage_sortie');
     }
 
-    /**
-     * @Route("/sortir/annuler/{id}", name="annuler_sortie", requirements={"id": "\d+"})
-     */
-    public function annulerSortie(Sortie $sortie, Request $request, ObjectManager $manager)
-    {
-        //variable to hide form fields : rue, latitude, longitude, code postal, ville(<option>)
-        $hidden = true;
-
-        if ($sortie->getOrganisateur() == $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            $sortieForm = $this->createForm(SupprimerSortieType::class, $sortie);
-            $sortieForm->handleRequest($request);
-
-            if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-                //Setting state "annulee"
-                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('annulee');
-                //$etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find($sortie->getEtat()->getId() === self::ETAT_ANNULEE);
-                $sortie->setEtat($etat);
-
-                $manager->persist($sortie);
-                $manager->flush();
-
-                $this->addFlash('success', "La sortie a bien été annulée");
-                return $this->redirectToRoute('affichage_sortie');
-            }
-
-        } else {
-            $this->addFlash('danger', "Vous ne pouvez pas annuler cette sortie");
-            return $this->redirectToRoute('affichage_sortie');
-        }
-
-        return $this->render('sortie_creation/sortieannuler.html.twig', [
-            'sortieForm' => $sortieForm->createView(),
-            'hidden' => $hidden
-        ]);
-    }
+    return $this->render('sortie_creation/sortieannuler.html.twig', [
+        'sortieForm' => $sortieForm->createView(),
+        'hidden' => $hidden
+    ]);
+}
 
 }
