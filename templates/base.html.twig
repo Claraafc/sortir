@@ -18,9 +18,9 @@
         <!--//////// NAVBAR //////// -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             {% if is_granted("ROLE_USER") %}
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{ path('affichage_sortie') }}">
                     {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
-                        <img src="{{ asset('images/logoPourSortir.png') }}" alt="logo" style="max-height: 24em; max-width: 24em">
+                        <img src="{{ asset('images/logoSortir.png') }}" alt="logo" style="max-height: 6em; max-width: 24em">
                     {% endif %}
                 </a>
             {% endif %}
