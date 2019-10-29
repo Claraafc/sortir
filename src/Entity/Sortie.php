@@ -21,7 +21,7 @@ class Sortie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Veuillez entre un nom pour la sortie")
+     * @Assert\NotBlank(message="Veuillez entrer un nom pour la sortie")
      * @Assert\Length(
      *     min="5",
      *     max="150",
@@ -113,6 +113,7 @@ class Sortie
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="TEST")
      */
     private $lieu;
 

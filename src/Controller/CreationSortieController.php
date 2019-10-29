@@ -10,6 +10,7 @@ use App\Entity\Ville;
 use App\Form\SortieType;
 use App\Form\SupprimerSortieType;
 use App\Repository\LieuRepository;
+use App\Repository\VillesRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -129,6 +130,18 @@ class CreationSortieController extends Controller
 
         ]);
         return new JsonResponse($lieux);
+    }
+
+    /**
+     * @Route("/sortir/creation/ajaxLieu/{id}", name="sortie_ajaxLieu")
+     */
+    public function requeteAjaxLieu(Lieu $lieu, VillesRepository $villesRepository)
+    {
+        $villes = $villesRepository->findBy([
+            'lieux' => $lieu
+
+        ]);
+        return new JsonResponse($villes);
     }
 
     //Javascript - Show the details of the chosen place
