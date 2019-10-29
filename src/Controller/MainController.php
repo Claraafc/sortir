@@ -24,6 +24,10 @@ class MainController extends Controller
             'user' => $user,
             'id' => $id
         ]);*/
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+            return $this->redirectToRoute('affichage_sortie');
+        }
         return $this->redirectToRoute('app_login');
     }
 

@@ -33,7 +33,6 @@ security:
               secret:   '%kernel.secret%'
               lifetime: 604800 # 1 week in seconds
               path:     /
-              remember_me_parameter: _remember_me
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -49,7 +48,6 @@ security:
         ROLE_ADMIN: ROLE_USER
 
     access_control:
-        - { path: ^/sortir/affichage, roles: ROLE_USER, ROLE_ADMIN}
         - { path: ^/sortir, roles: ROLE_USER}
         - { path: ^/user, roles: ROLE_USER}
         - { path: ^/lieu, roles: ROLE_USER}
