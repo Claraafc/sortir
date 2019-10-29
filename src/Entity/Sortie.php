@@ -95,6 +95,15 @@ class Sortie
     private $urlPhoto;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *     min="10",
+     *     minMessage="{{ limit }} caractères minimum !"
+     * )
+     */
+    private $motifAnnulation;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -124,6 +133,24 @@ class Sortie
     private $etat;
 
     /**
+     * @return mixed
+     */
+    public function getMotifAnnulation()
+    {
+        return $this->motifAnnulation;
+    }
+
+    /**
+     * @param mixed $motifAnnulation
+     */
+    public function setMotifAnnulation($motifAnnulation): void
+    {
+        $this->motifAnnulation = $motifAnnulation;
+    }
+
+
+
+    /**
      * Sortie constructor.
      * @param $users
      */
@@ -143,11 +170,10 @@ class Sortie
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name)
     {
         $this->name = $name;
 
-        return $this;
     }
 
     public function getDateDebut(): ?\DateTimeInterface
@@ -203,11 +229,9 @@ class Sortie
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description)
     {
         $this->description = $description;
-
-        return $this;
     }
 
     public function getUrlPhoto(): ?string

@@ -20,16 +20,8 @@ class SupprimerSortieType extends AbstractType
             ->add('name', TextType::class, [
                 'disabled' => true,
             ])
-            ->add('motif', TextareaType::class, [
-                'label' => "Motif de l'annulation",
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => "Veuillez entrer un motif d'annulation de la sortie"
-                    ]),
-                    new Length(['min' => 10, 'minMessage' => "{{ limit }} caractères minimum !"]),
-                    new Regex(['pattern' => '/([0-9_-]*[a-zA-Z][0-9_-]*){3}/', 'message' => "3 lettres minimum"])
-                ]
+            ->add('motifAnnulation', TextType::class, [
+                'label' => "Motif de l'annulation"
             ])
         ;
     }

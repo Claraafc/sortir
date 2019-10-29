@@ -23,11 +23,8 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Nom de la sortie", 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez renseigner un nom'
-                    ]),
-                ]
+                'label' => "Nom de la sortie",
+                'empty_data' => ''
 
             ])
             ->add('dateDebut', DateTimeType::class, [

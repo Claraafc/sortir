@@ -150,6 +150,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie6->setNbInscriptionsMax('15');
         $sortie6->setDescription('Venez danser!!!!');
         $sortie6->setUrlPhoto('cumbia.jpg');
+        $sortie6->setMotifAnnulation('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam');
         $etat1 = $this->getReference(EtatFixtures::ETAT_ANNULEE);
         $sortie6->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);

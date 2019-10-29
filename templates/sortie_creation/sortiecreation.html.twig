@@ -10,7 +10,7 @@
         <input class="form-control" id="disabledInput" type="text" name="site_id" placeholder="{{ site.name }}"
                disabled>
         {{ form_row(sortieForm.name) }}
-        {{ form_row(sortieForm.ville, { 'value':" " }) }}
+        {{ form_row(sortieForm.ville) }}
         {{ form_row(sortieForm.lieu) }}
         <a href="{{ path('lieu') }}" class="btn btn-success" >Ajouter un nouveau lieu</a>
 
@@ -116,7 +116,11 @@
             $('#sortie_lieu').empty();
             $.get('creation/ajax/' + $(this).val())
                 .done(function (data) {
-                    $('#sortie_lieu').append('<option>' + "Choissisez un lieu" + '</option>');
+                    if ($('#sortie_ville').isEmptyObject()) {
+                        $('#sortie_lieu').append('<option value="' +test+ '">' + "Choissisez un lieu" + '</option>');
+                    } else {
+                        $('#sortie_lieu').append('<option>' + "Choissisez un lieu" + '</option>');
+                    }
                     $.each(data, function (key, lieu) {
                         // console.log(lieu);
 
@@ -125,6 +129,25 @@
                     });
                 });
         });
+
+        {#$(document).ready(function(){
+            $('#sortie_lieu').empty()
+        )};
+
+
+        $('#sortie_lieu').change(function () {
+            $('#sortie_ville').empty();
+            $.get('creation/ajaxLieu/' + $(this).val())
+                .done(function (data) {
+                    $('#sortie_ville').append('<option>' + "Choissisez une ville" + '</option>');
+                    $.each(data, function (key, ville) {
+                        // console.log(lieu);
+
+                        $('#sortie_ville').append('<option value="' + ville.id + '">' + ville.name + '</option>');
+
+                    });
+                });
+        });#}
 
     </script>
 
