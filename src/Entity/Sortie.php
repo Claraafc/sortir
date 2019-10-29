@@ -143,11 +143,10 @@ class Sortie
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name)
     {
         $this->name = $name;
 
-        return $this;
     }
 
     public function getDateDebut(): ?\DateTimeInterface
@@ -203,11 +202,9 @@ class Sortie
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description)
     {
         $this->description = $description;
-
-        return $this;
     }
 
     public function getUrlPhoto(): ?string

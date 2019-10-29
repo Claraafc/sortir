@@ -40,6 +40,7 @@ class CreationSortieController extends Controller
 
         $organisateur = $this->getUser();
 
+
         $sortieForm->handleRequest($request);
         if ($request->request->get('enregistrer')) {
             if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
@@ -170,6 +171,8 @@ class CreationSortieController extends Controller
         $hidden = true;
 
         $sortieId = $sortie->getId();
+
+        dump($request->request);
 
         // Getting the locations
         $sortieLieuId = $sortie->getLieu()->getId();
