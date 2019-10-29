@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ProfileModificationType extends AbstractType
 {
@@ -38,7 +39,12 @@ class ProfileModificationType extends AbstractType
             ])
             ->add('telephone', TelType::class, [
                 "label" => "Votre telephone",
-                "disabled" => false
+                "disabled" => false,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/'
+                    ]),
+                ]
             ])
             ->add('email', EmailType::class)
             ->add('site', EntityType::class,  array(
