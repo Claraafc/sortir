@@ -38,33 +38,30 @@ class SortiesRepository extends ServiceEntityRepository
 
     public function findByParams($user, $inscrit, $nonInscrit, $nomSortie, $organisateur, $passee, $dateDebutRecherche, $dateFinRecherche, $site)
     {
+        //dump($user, $inscrit, $nonInscrit, $nomSortie, $organisateur, $passee, $dateDebutRecherche, $dateFinRecherche, $site);
+
         $qb = $this->createQueryBuilder('s');
         $qb->select('s');
 
-
+        $params = [];
         if (!empty($nomSortie)) {
+            $params["nomSortie"] = $nomSortie . "%";
             $qb->andWhere('s.name LIKE :nomSortie');
-            $qb->setParameter('nomSortie', $nomSortie . "%");
         }
 
         if (!empty($site)) {
+            $params["site"] = $site;
             $qb->andWhere('s.site = :site');
-            $qb->setParameter('site', $site . "%");
         }
 
-        $paramsDate=[];
-
         if (!empty($dateDebutRecherche) && !empty($dateFinRecherche)) {
-            $paramsDate["dateDebutRecherche"] = $dateDebutRecherche;
-            $paramsDate["dateFinRecherche"] = $dateFinRecherche;
+            $params["dateDebutRecherche"] = $dateDebutRecherche;
+            $params["dateFinRecherche"] = $dateFinRecherche;
             $qb->andWhere('s.dateDebut > :dateDebutRecherche');
             $qb->andWhere('s.dateDebut < :dateFinRecherche');
-            $qb->setParameters($paramsDate);
         }
 
         $req = [];
-        $params = [];
-
 
         if ($organisateur) {
             $params["inscrit"] = $user;
@@ -92,12 +89,11 @@ class SortiesRepository extends ServiceEntityRepository
                 $orX
             );
 
-            if (count($params) > 0) {
-                $qb->setParameters($params);
-            }
-
         }
 
+        if (count($params) > 0) {
+            $qb->setParameters($params);
+        }
 
         return $qb->getQuery()->getResult();
 
