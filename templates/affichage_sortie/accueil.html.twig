@@ -23,10 +23,14 @@
                            name="nomSortie" {% if nomSortie %} value="{{ nomSortie }}" {% endif %}><br>
                     <label>Entre </label>
                     <input type="date"
-                           name="dateDebutRecherche" {% if dateDebutRecherche %} value="{{ dateDebutRecherche }}" {% endif %}>
+                           name="dateDebutRecherche"
+                            {% if dateFinRecherche %} max="{{ dateFinRecherche }}"{% endif %}
+                            {% if dateDebutRecherche %} value="{{ dateDebutRecherche }}" {% endif %}>
                     <label> et </label>
                     <input type="date"
-                           name="dateFinRecherche" {% if dateFinRecherche %} value="{{ dateFinRecherche }}" {% endif %}><br>
+                           name="dateFinRecherche"
+                            {% if dateDebutRecherche %} min="{{ dateDebutRecherche }}"{% endif %}
+                            {% if dateFinRecherche %} value="{{ dateFinRecherche }}" {% endif %}><br>
                 </div>
                 <div class="col-auto" style="margin-left: 70px">
                     <label> <input type="checkbox"
