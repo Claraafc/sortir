@@ -101,16 +101,19 @@
                                     {% endif %}
                                 {% endfor %}
                                 {% if inscrit>0 %}
-                                    <td><a href="{{ path('desistement', {'id' : sortie.id}) }}">Se désister</a></td>
+                                    <td><a href="{{ path('desistement', {'id' : sortie.id}) }}">Se désister</a>
                                 {% endif %}
                                 {% if inscrit==0 %}
                                     <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
-                                    </td>
+
                                 {% endif %}
-                            {% elseif sortie.etat.libelle == 'cree' %}
-                                <td><a href="{{ path('sortie_update', {'id' : sortie.id}) }}">Modifier, publier</a></td>
+
                             {% else %}
-                                <td></td>
+                                <td>
+                            {% endif %}
+
+                        {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and (sortie.etat.libelle == 'cree' or sortie.etat.libelle == 'ouverte') %}
+                            <a href="{{ path('sortie_update', {'id' : sortie.id}) }}">- Modifier, publier</a></td>
                             {% endif %}
                         </tr>
                         </tbody>

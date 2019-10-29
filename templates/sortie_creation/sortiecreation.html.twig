@@ -116,11 +116,7 @@
             $('#sortie_lieu').empty();
             $.get('creation/ajax/' + $(this).val())
                 .done(function (data) {
-                    if ($('#sortie_ville').isEmptyObject()) {
-                        $('#sortie_lieu').append('<option value="' +test+ '">' + "Choissisez un lieu" + '</option>');
-                    } else {
-                        $('#sortie_lieu').append('<option>' + "Choissisez un lieu" + '</option>');
-                    }
+                    $('#sortie_lieu').append('<option>' + "Choissisez un lieu" + '</option>');
                     $.each(data, function (key, lieu) {
                         // console.log(lieu);
 
@@ -129,25 +125,6 @@
                     });
                 });
         });
-
-        {#$(document).ready(function(){
-            $('#sortie_lieu').empty()
-        )};
-
-
-        $('#sortie_lieu').change(function () {
-            $('#sortie_ville').empty();
-            $.get('creation/ajaxLieu/' + $(this).val())
-                .done(function (data) {
-                    $('#sortie_ville').append('<option>' + "Choissisez une ville" + '</option>');
-                    $.each(data, function (key, ville) {
-                        // console.log(lieu);
-
-                        $('#sortie_ville').append('<option value="' + ville.id + '">' + ville.name + '</option>');
-
-                    });
-                });
-        });#}
 
     </script>
 

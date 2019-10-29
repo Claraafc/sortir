@@ -14,6 +14,7 @@
                         <div class="col"><img src="{{ app.request.basepath }}/asset/images/{{ sortie.urlPhoto }}"
                                               style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
                         </div>
+
                         {% else %}
                     <div class="col"><img src="{{ asset('photos/photoDefaut.png') }}"
                                           style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
@@ -81,17 +82,21 @@
             <div class="col-md-3 offset-md-3" style="padding-top: 7em">
 
                 {% set inscrit = 0 %}
+                {% if sortie.etat.libelle == 'ouverte' %}
+                {% set inscrit = 1 %}
+                {% endif %}
+
                 {% for user in users %}
                     {% if user.username == app.user.username %}
                         {% set inscrit = inscrit+1 %}
                     {% endif %}
                 {% endfor %}
 
-                {% if inscrit>0 %}
+                {% if inscrit>1 %}
                     <button class="btn btn-info"><a href="{{ path('desistement',{'id' : sortie.id}) }}">Se
                             désinscrire</a></button>
                 {% endif %}
-                {% if inscrit==0 %}
+                {% if inscrit==1 %}
                     <button class="btn btn-info"><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
                     </button
                 {% endif %}
