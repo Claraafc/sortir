@@ -22,8 +22,9 @@ class Sortie
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez entrer un nom pour la sortie")
+     *
      * @Assert\Length(
-     *     min="5",
+     *     min="1",
      *     max="150",
      *     minMessage="{{ limit }} caractères minimum !",
      *     maxMessage="{{ limit }} caractères maximum !"

@@ -23,7 +23,12 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Nom de la sortie"
+                'label' => "Nom de la sortie", 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner un nom'
+                    ]),
+                ]
+
             ])
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie",
@@ -58,12 +63,22 @@ class SortieType extends AbstractType
                 'choice_label' => 'name',
                 'mapped' => false,
                 'placeholder' => 'Choissisez une ville',
+                /*'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner une ville'
+                    ])
+                ]*/
 
 
             ])
             ->add('lieu', null, [
                 'choice_label' => 'nom',
                 'placeholder' => 'Choissisez un lieu',
+              /*  'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner un lieu'
+                    ])
+                ]*/
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
