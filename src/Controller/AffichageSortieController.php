@@ -42,7 +42,15 @@ class AffichageSortieController extends Controller
 
         return $this->render('affichage_sortie/accueil.html.twig', [
             "sorties"=> $sorties,
-            "sites" => $sites
+            "sites" => $sites,
+            "siteSelection" => $site,
+            "nomSortie" => $nomSortie,
+            "sortie_organisateur" => $organisateur,
+            "sortie_passee" => $passee,
+            "sortie_inscrit" => $inscrit,
+            "non_inscrit" => $nonInscrit,
+            "dateDebutRecherche" => $dateDebutRecherche,
+            "dateFinRecherche" => $dateFinRecherche
         ]);
     }
 }
