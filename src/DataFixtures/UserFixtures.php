@@ -133,6 +133,21 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user6->setPassword($password);
         $manager->persist($user6);
 
+        $user7 = new User();
+        $user7->setUsername('Albert');
+        $site2 = $this->getReference(SiteFixtures::SITE_RENNES);
+        $user7->setSite($site2);
+        $user7->setEmail("albert@mail.fr");
+        $user7->setNom('Dupont');
+        $user7->setPrenom('Albert');
+        $user7->setTelephone('0698745632');
+        $user7->setUrlPhoto('');
+        $user7->setRoles(['ROLE_USER']);
+
+        $password = $this->encoder->encodePassword($user7, 'albert');
+        $user7->setPassword($password);
+        $manager->persist($user7);
+
          $manager->flush();
         $this->addReference(self::USER_ADMIN, $user1);
         $this->addReference(self::USER_TOTO, $user2);

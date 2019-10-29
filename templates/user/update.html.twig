@@ -10,7 +10,11 @@
 
     <div class="container" >
         <div class="row">
+            {% if user.urlPhoto == null %}
+                <div class="col"> <img src="{{ asset('photos/photoDefaut.png') }}" style="display: block; width: auto; height: auto; max-width: 14em; max-height: 14em; margin-bottom: 1em"></div>
+          {% else %}
             <div class="col"> <img src="{{app.request.basepath}}/photos/{{ user.urlPhoto }}" style="display: block; width: auto; height: auto; max-width: 14em; max-height: 14em; margin-bottom: 1em"></div>
+            {% endif %}
             <div class="col"><h1>{{ user.nom }}</h1></div>
         </div>
 
