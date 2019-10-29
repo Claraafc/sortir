@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}{% endblock %}
+
+{% block body %}
+
+    <main>
+
+        <form style="margin-left: 40px">
+                <h3>Filtrer les sorties</h3>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                   <label for="site_nom">Site:</label>
+                   <select name="site" id="site" class="form-control col-sm-6" >
+                       {% for site in sites %}
+                           <option value="{{ site.name }}">{{ site.name }}</option>
+                       {% endfor %}
+                   </select>
+
+                   <br>
+
+                   <label>Le nom de la sortie contient: </label>
+                   <input type="search" aria-label="Search through site content" ><br><br>
+                   <label>Entre </label>
+                   <input type="date" value="now">
+                   <label> et </label>
+                   <input type="date"><br>
+                </div>
+                 <div class="col-auto" style="margin-left: 70px">
+                    <label> <input type="checkbox" value="1" id="1" name="sortie_organisateur">Sorties dont je suis l'organisateur/trice</label><br>
+                    <label><input type="checkbox" value="2" id="2" name="sortie_inscrit">Sorties auxquelles je suis inscrit/e</label><br>
+                    <label><input type="checkbox" value="3" id="3" name="non_inscrit">Sorties auxquelles je ne suis pas inscrit/e</label><br>
+                    <label><input type="checkbox" value="4" id="4" name="sortie_passee">Sorties passées</label><br>
+                 </div>
+                <div class="col-auto" style="margin-left: 50px">
+                    <button type="submit" class="btn btn-primary"> Rechercher</button>
+                 </div>
+            </div>
+
+       </form>
+        <div class="container" style="width: 500em">
+         <div class="row col-md-12 offset-md-0" style="margin-top: 10px">
+           <table class="table table-striped" border="1" style="width: 100%; height: 10em; display:block; overflow: scroll;">
+                <thead>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th> inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                    {% for sortie in sorties  %}
+
+                <tbody>
+                <tr>
+                    <td > <a href="{{ path('detail_sortie', {'id': sortie.id}) }}" title="{{ sortie.name  }}" >
+                            <span>{{ sortie.name  }}</span>
+                        </a> </td>
+                    <td>{{ sortie.dateDebut|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ sortie.dateCloture|date('Y-m-d') }}</td>
+                    <td>{{ sortie.users.count }}/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etat.libelle }}</td>
+                    <td> inscrit ?</td>
+                    <td>{{ sortie.organisateur.nom}}</td>
+                    <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a></td>
+                </tr>
+                </tbody>
+                    {% endfor %}
+
+            </table>
+            <a href="{{ path('sortie_creation') }}"><button type="submit" class="btn btn-primary">Créer une sortie</button></a>
+       </div>
+   </div>
+
+    </main>
+{% endblock %}
+
+{% block JavaScript %}
+    <script>
+        $("input[type='checkbox']").change(function () {
+            //alert($('#check').val());
+            if($('#1').is(":checked")){
+                var val = 1;
+                alert(val);
+            }else{
+                var val1 = 0;
+                alert(val1);
+            }
+        });
+    </script>
+{% endblock %}
