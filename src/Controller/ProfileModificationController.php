@@ -34,6 +34,7 @@ class ProfileModificationController extends Controller
     {
 
         $user = $this->getUser();
+        dump($user);
         $form = $this->createForm(ProfileModificationType::class, $user);
         $form->handleRequest($request);
 
@@ -49,7 +50,8 @@ class ProfileModificationController extends Controller
             }
             if ($user->getTelephone() !== null) {
                 $telephone = $user->getTelephone();
-                $user->setTelephone($telephone);
+                    $user->setTelephone($telephone);
+
             }
             if ($user->getEmail() !== null) {
                 $email = $user->getEmail();
@@ -70,13 +72,17 @@ class ProfileModificationController extends Controller
                     $fileDownload = md5(uniqid(mt_rand(), true)) . '.' . $extension;
                     //$url->move($this->getParameter('path_dir').'photos/', $fileDownload);
                     $url->move($this->getParameter('download_dir'), $fileDownload);
-                    $user->setUrlPhoto($fileDownload);
+                    if(strtolower($extension) != ‘jpg’ || strtolower($extension) != ‘png’) {{
+                        $this->addFlash('warning', 'format de l\'image non valide');
+                    }
+                    }else $user->setUrlPhoto($fileDownload);
                 }
             } catch (\Exception $e) {
                 dump($e->getMessage());
 
                 //Ajout d'une erreur depuis le controller
-                $form->get('fileTemp')->addError(new FormError("Une erreur est survenue avec le fichier"));
+                //$form->get('fileTemp')->addError(new FormError("Une erreur est survenue avec le fichier"));
+                $this->addFlash('warning', 'fichier non valide');
                 $error = true;
             }
             $passwordEncoder = $this->get('security.password_encoder');
@@ -89,7 +95,7 @@ class ProfileModificationController extends Controller
 
                 $this->addFlash('success', 'Votre profil est bien modifié!');
                 return $this->redirectToRoute("user_update", ["id" => $user->getId()]);
-            }else{
+            }else if (!$passwordEncoder->isPasswordValid($user, $passwordVerif)){
                 $this->addFlash('warning', 'Modification impossible, mot de passe erroné!');
                 return $this->redirectToRoute("user_update", ["id" => $user->getId()]);
             }

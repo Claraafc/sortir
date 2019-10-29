@@ -48,11 +48,17 @@
 
             {% block header %}
             {% endblock %}
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <a href="{{ path('affichage_sortie') }}">
+                    Retournez sur votre session ➔
+                </a>
+            {% endif %}
             {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
 
                 <img src="{{ asset('images/logoSortir.png') }}" alt="logo"
-                     style="max-height: 20em; max-width: 20em; margin-left: 2em">
+                     style="max-height: 20em; max-width: 20em; margin-left: 2em; position: center">
             {% endif %}
+
         </div>
         </div>
         <div class="panel panel-default container core linear-gradient " style="width:40em; font-family: Arial, sans-serif">
