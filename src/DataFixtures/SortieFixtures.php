@@ -28,7 +28,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
          $sortie1->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
          $sortie1->setNbInscriptionsMax('3');
          $sortie1->setDescription('Tapas, tapas, tapas !!!!');
-         $sortie1->setUrlPhoto('photos/tapas.jpg');
+         $sortie1->setUrlPhoto('tapas.jpg');
          $etat1 = $this->getReference(EtatFixtures::ETAT_CREE);
          $sortie1->setEtat($etat1);
          $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
@@ -75,7 +75,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie3->setDateCloture(new \DateTime('2019-10-12 05:20:30'));
         $sortie3->setNbInscriptionsMax('10');
         $sortie3->setDescription('All in!!!!');
-        $sortie3->setUrlPhoto('photos/poker.jpg');
+        $sortie3->setUrlPhoto('poker.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_CLOTUREE);
         $sortie3->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
@@ -100,7 +100,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie4->setDateCloture(new \DateTime('2019-10-12 05:20:30'));
         $sortie4->setNbInscriptionsMax('5');
         $sortie4->setDescription('Courses de kart dans un décors SuperMario!!! INEDIT!!!!');
-        $sortie4->setUrlPhoto('photos/kart.jpg');
+        $sortie4->setUrlPhoto('kart.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_EN_COURS);
         $sortie4->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
@@ -130,7 +130,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie5->setDateCloture(new \DateTime('2018-01-09 05:20:30'));
         $sortie5->setNbInscriptionsMax('18');
         $sortie5->setDescription('Venez faire une scéance d\'escalade avec notre ami El Jefe!!!!');
-        $sortie5->setUrlPhoto('photos/escalade.jpg');
+        $sortie5->setUrlPhoto('escalade.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_PASSEE);
         $sortie5->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
@@ -149,7 +149,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie6->setDateCloture(new \DateTime('2020-01-09 05:20:30'));
         $sortie6->setNbInscriptionsMax('15');
         $sortie6->setDescription('Venez danser!!!!');
-        $sortie6->setUrlPhoto('photos/cumbia.jpg');
+        $sortie6->setUrlPhoto('cumbia.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_ANNULEE);
         $sortie6->setEtat($etat1);
         $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
