@@ -51,8 +51,8 @@ class User implements UserInterface, \Serializable
     private $prenom;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Regex(pattern="/^[0][6][- \.?]?([0-9][0-9][- \.?]?){4}$/")
+     * @ORM\Column(type="string", length=10)
+     * @Assert\Regex(pattern="/^(\+[0-9]{2}\([0-9]\))?[0-9]{10}$/", message="numéro non reconnu")
      */
     private $telephone;
 

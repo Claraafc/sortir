@@ -49,7 +49,8 @@ class ProfileModificationController extends Controller
             }
             if ($user->getTelephone() !== null) {
                 $telephone = $user->getTelephone();
-                $user->setTelephone($telephone);
+                    $user->setTelephone($telephone);
+
             }
             if ($user->getEmail() !== null) {
                 $email = $user->getEmail();
