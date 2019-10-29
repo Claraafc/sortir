@@ -63,22 +63,22 @@ class SortieType extends AbstractType
                 'choice_label' => 'name',
                 'mapped' => false,
                 'placeholder' => 'Choissisez une ville',
-                /*'constraints' => [
+                'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez renseigner une ville'
                     ])
-                ]*/
+                ]
 
 
             ])
             ->add('lieu', null, [
                 'choice_label' => 'nom',
                 'placeholder' => 'Choissisez un lieu',
-              /*  'constraints' => [
+                'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez renseigner un lieu'
                     ])
-                ]*/
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
