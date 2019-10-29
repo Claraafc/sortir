@@ -3,52 +3,54 @@
 {% block title %}{{ parent() }}{% endblock %}
 
 {% block body %}
-
     <main>
-
-
         <form action="{{ path('affichage_sortie') }}" method="post" style="margin-left: 40px">
             <h3>Filtrer les sorties</h3>
             <div class="form-row align-items-center">
                 <div class="col-auto">
                     <label for="site_nom">Site:</label>
                     <select name="site" id="site" class="form-control">
-                            <option> Site de l'école</option>
+                        {% if siteSelection is null %}
+                            <option> Sélectionnez le site de l'école</option>
+                        {% endif %}
                         {% for site in sites %}
                             <option value="{{ site.id }}" {% if site.id == siteSelection %} selected="selected" {% endif %}>{{ site.name }} </option>
-
                         {% endfor %}
-
                     </select>
-
                     <br>
-
                     <label>Le nom de la sortie contient: </label>
-
-                    <input type="search" aria-label="Search through site content" name="nomSortie" {% if nomSortie %} value="{{ nomSortie }}" {% endif %}><br>
-
+                    <input type="search" aria-label="Search through site content"
+                           name="nomSortie" {% if nomSortie %} value="{{ nomSortie }}" {% endif %}><br>
                     <label>Entre </label>
-                    <input type="date" name="dateDebutRecherche" {% if dateDebutRecherche %} value="{{ dateDebutRecherche }}" {% endif %}>
+                    <input type="date"
+                           name="dateDebutRecherche" {% if dateDebutRecherche %} value="{{ dateDebutRecherche }}" {% endif %}>
                     <label> et </label>
-                    <input type="date" name="dateFinRecherche" {% if dateFinRecherche %} value="{{ dateFinRecherche }}" {% endif %}><br>
+                    <input type="date"
+                           name="dateFinRecherche" {% if dateFinRecherche %} value="{{ dateFinRecherche }}" {% endif %}><br>
                 </div>
-
                 <div class="col-auto" style="margin-left: 70px">
-                    <label> <input type="checkbox"  name="sortie_organisateur" {% if sortie_organisateur %} checked="checked" {% endif %}>Sorties dont je suis l'organisateur/trice</label><br>
-                    <label><input type="checkbox"  name="sortie_inscrit"{% if sortie_inscrit %} checked="checked" {% endif %}>Sorties auxquelles je suis inscrit/e</label><br>
-                    <label><input type="checkbox"  name="non_inscrit"{% if non_inscrit %} checked="checked" {% endif %}>Sorties auxquelles je ne suis pas inscrit/e</label><br>
-                    <label><input type="checkbox"  name="sortie_passee"{% if sortie_passee %} checked="checked" {% endif %}>Sorties passées</label><br>
+                    <label> <input type="checkbox"
+                                   name="sortie_organisateur" {% if sortie_organisateur %} checked="checked" {% endif %}>Sorties
+                        dont je suis l'organisateur/trice</label><br>
+                    <label><input type="checkbox"
+                                  name="sortie_inscrit"{% if sortie_inscrit %} checked="checked" {% endif %}>Sorties
+                        auxquelles je suis inscrit/e</label><br>
+                    <label><input type="checkbox" name="non_inscrit"{% if non_inscrit %} checked="checked" {% endif %}>Sorties
+                        auxquelles je ne suis pas inscrit/e</label><br>
+                    <label><input type="checkbox"
+                                  name="sortie_passee"{% if sortie_passee %} checked="checked" {% endif %}>Sorties
+                        passées</label><br>
                 </div>
-                    <div class="col-auto" style="margin-left: 50px">
-                        <button type="submit" class="btn btn-primary"> Rechercher</button>
-                    </div>
+                <div class="col-auto" style="margin-left: 50px">
+                    <button type="submit" class="btn btn-primary"> Rechercher</button>
+                </div>
 
             </div>
         </form>
         <div class="container" style="width: 500em">
             <div class="row col-md-12 offset-md-0" style="margin-top: 10px;">
                 <table class="table table-striped" border="1"
-                       style="width: 100%; height: 10em; display:block; overflow: scroll;">
+                       style="width: 100%; height: 20em; display:block; overflow: scroll;">
                     <thead>
                     <tr>
                         <th>Nom de la sortie</th>
@@ -62,10 +64,8 @@
                     </tr>
                     </thead>
                     {% for sortie in sorties %}
-
                         <tbody>
                         <tr>
-
                             <td><a href="{{ path('detail_sortie', {'id': sortie.id}) }}" title="{{ sortie.name }}">
                                     <span>{{ sortie.name }}</span>
                                 </a></td>
@@ -73,48 +73,52 @@
                             <td>{{ sortie.dateCloture|date('d-m-Y') }}</td>
                             <td>{{ sortie.users.count }}/{{ sortie.nbInscriptionsMax }}</td>
                             <td>{{ sortie.etat.libelle }}</td>
-                            <td> inscrit ?</td>
+                            <td>
+                                {% for user in sortie.users %}
+                                    {% if { 'id': app.user.id} == { 'id': user.id} %}
+                                        &nbsp &nbsp X
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
                             {# goes to the organizer's profile #}
                             <td>
                                 {% if { 'id': app.user.id} == { 'id': sortie.organisateur.id} %}
-                                <a href="{{ path('user_update', { 'id': app.user.id}) }}">{{ sortie.organisateur.nom }}</a>
+                                    <a href="{{ path('user_update', { 'id': app.user.id}) }}">{{ sortie.organisateur.nom }}</a>
                                 {% else %}
-                                <a href="{{ path('profile_detail', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.nom }}</a>
+                                    <a href="{{ path('profile_detail', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.nom }}</a>
                                 {% endif %}
-
                             </td>
-                            <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a></td>
+                            {% if sortie.etat.libelle == 'ouverte' %}
+                                {% set inscrit = 0 %}
+                                {% for user in sortie.users %}
+                                    {% if { 'id': app.user.id} == { 'id': user.id} %}
+                                        {% set inscrit = inscrit+1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if inscrit>0 %}
+                                    <td><a href="{{ path('desistement', {'id' : sortie.id}) }}">Se désister</a></td>
+                                {% endif %}
+                                {% if inscrit==0 %}
+                                    <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
+                                    </td>
+                                {% endif %}
+                            {% elseif sortie.etat.libelle == 'cree' %}
+                                <td><a href="{{ path('sortie_update', {'id' : sortie.id}) }}">Modifier, publier</a></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
                         </tr>
                         </tbody>
                     {% endfor %}
-
                 </table>
-
                 <a href="{{ path('sortie_creation') }}">
-                    <button type="submit" >Créer une sortie</button>
+                    <button type="submit">Créer une sortie</button>
                 </a>
             </div>
         </div>
     </main>
 {% endblock %}
-{#
-{% block JavaScript %}
-    {{ parent() }}
-    <script>
-        $("input[type='checkbox']").change(function () {
-            alert($('#check').val());
-            if($('#1').is(":checked")){
-                var val = 1;
-                alert(val);
-                $('#1').append('<option>'+ sortie.name +'</option>')
-            }else{
-                var val1 = 0;
-                alert(val1);
-            }
-        });
-    </script>
-{% endblock %}
-#}
+
 
 
 

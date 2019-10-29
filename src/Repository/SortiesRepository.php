@@ -41,7 +41,7 @@ class SortiesRepository extends ServiceEntityRepository
         //dump($user, $inscrit, $nonInscrit, $nomSortie, $organisateur, $passee, $dateDebutRecherche, $dateFinRecherche, $site);
 
         $qb = $this->createQueryBuilder('s')
-                    ->orderBy('s.dateDebut','DESC');
+            ->orderBy('s.dateDebut', 'DESC');
         $qb->select('s');
 
         $params = [];
@@ -77,7 +77,7 @@ class SortiesRepository extends ServiceEntityRepository
             $req[] = ':inscrit NOT MEMBER OF s.users';
         }
         if ($passee) {
-            $params["etatPassee"] = 71;
+            $params["etatPassee"] = 68;
             $req[] = ':etatPassee = s.etat';
         }
 
