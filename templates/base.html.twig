@@ -44,10 +44,9 @@
                     {% endif %}
                     <li class="nav-item">
                         {% if is_granted("ROLE_USER") %}
-                            <p class="nav-link" style=" color: #ececf6"> Bonjour {{ app.user.username }}</p>
+                            <span class="nav-link" style=" color: #ececf6"> Bonjour {{ app.user.username }}, nous sommes le {{ "now"|date('d/m/Y')}}.</span>
                         {% endif %}
                     </li>
-
                 </ul>
             </div>
         </nav>
