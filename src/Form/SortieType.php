@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SortieType extends AbstractType
 {
@@ -41,7 +42,7 @@ class SortieType extends AbstractType
             ->add('duree', ChoiceType::class, [
                 'label' => "Durée",
                 'choices' => [
-                    '60 minutes' => '60',
+                    '1h' => '60',
                     '1h30' => '90',
                     '2h' => '120',
                     '2h30' => '150',
@@ -56,11 +57,23 @@ class SortieType extends AbstractType
                 'class' => Ville::class,
                 'choice_label' => 'name',
                 'mapped' => false,
-                'placeholder' => 'Choissisez une ville'
+                'placeholder' => 'Choissisez une ville',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner une ville'
+                    ])
+                ]
+
+
             ])
             ->add('lieu', null, [
                 'choice_label' => 'nom',
-                'placeholder' => 'Choissisez un lieu'
+                'placeholder' => 'Choissisez un lieu',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner un lieu'
+                    ])
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
