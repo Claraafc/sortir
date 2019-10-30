@@ -72,10 +72,7 @@ class ProfileModificationController extends Controller
                     $fileDownload = md5(uniqid(mt_rand(), true)) . '.' . $extension;
                     //$url->move($this->getParameter('path_dir').'photos/', $fileDownload);
                     $url->move($this->getParameter('download_dir'), $fileDownload);
-                    if(strtolower($extension) != ‘jpg’ || strtolower($extension) != ‘png’) {{
-                        $this->addFlash('warning', 'format de l\'image non valide');
-                    }
-                    }else $user->setUrlPhoto($fileDownload);
+                    $user->setUrlPhoto($fileDownload);
                 }
             } catch (\Exception $e) {
                 dump($e->getMessage());
