@@ -49,10 +49,16 @@
                                   name="sortie_passee"{% if sortie_passee %} checked="checked" {% endif %}>Sorties
                         passées</label><br>
                 </div>
+                <div class="btns-accueil">
                 <div class="col-auto col-rechercher">
                     <button type="submit" class="btn btn-primary"> Rechercher</button>
                 </div>
-
+                <div class="div-btn-creer-sortie">
+                <a href="{{ path('sortie_creation') }}">
+                    <input class="btn-primary btn-creer-sortie" type="button" value="Créer une sortie"></button>
+                </a>
+                </div>
+                </div>
             </div>
         </form>
         <div class="container container-table-accueil">
@@ -122,9 +128,6 @@
                         </tbody>
                     {% endfor %}
                 </table>
-                <a href="{{ path('sortie_creation') }}">
-                    <button type="submit">Créer une sortie</button>
-                </a>
             </div>
         </div>
     </main>
