@@ -41,23 +41,27 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotNull(message="Veuillez renseigner un nom")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotNull(message="Veuillez renseigner un prenom")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=10)
      * Assert\Regex(pattern="/^[0-9](10)+$/i")
+     * @Assert\NotNull(message="Veuillez renseigner un numéro de téléphone valide")
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message="Votre email n'est pas valide!")
+     * @Assert\NotNull(message="Veuillez renseigner un mail valide")
      */
     private $email;
 
@@ -110,12 +114,12 @@ class User implements UserInterface, \Serializable
      *
      * @see UserInterface
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return (string) $this->username;
     }
 
-    public function setUsername(string $username): self
+    public function setUsername(?string $username): self
     {
         $this->username = $username;
 
@@ -178,7 +182,7 @@ class User implements UserInterface, \Serializable
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -190,7 +194,7 @@ class User implements UserInterface, \Serializable
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -202,7 +206,7 @@ class User implements UserInterface, \Serializable
         return $this->telephone;
     }
 
-    public function setTelephone(string $telephone): self
+    public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
 
@@ -214,7 +218,7 @@ class User implements UserInterface, \Serializable
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -226,7 +230,7 @@ class User implements UserInterface, \Serializable
         return $this->urlPhoto;
     }
 
-    public function setUrlPhoto(string $urlPhoto): self
+    public function setUrlPhoto(?string $urlPhoto): self
     {
         $this->urlPhoto = $urlPhoto;
 
