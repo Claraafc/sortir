@@ -30,7 +30,7 @@ class ProfileModificationController extends Controller
      * @param ObjectManager $manager
      * @return RedirectResponse|Response
      */
-    public function update(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, AuthenticationUtils $utils)
+    public function update(Request $request, ObjectManager $manager)
     {
 
         $user = $this->getUser();
@@ -38,7 +38,7 @@ class ProfileModificationController extends Controller
         $form = $this->createForm(ProfileModificationType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() & $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             //if inputs=null we get the last value
             if ($user->getPrenom() !== null) {
                 $prenom = $user->getPrenom();
