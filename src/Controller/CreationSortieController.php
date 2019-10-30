@@ -42,6 +42,9 @@ class CreationSortieController extends Controller
 
 
         $sortieForm->handleRequest($request);
+
+        $lieu = $sortie->getLieu();
+
         if ($request->request->get('enregistrer')) {
             if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
@@ -115,6 +118,7 @@ class CreationSortieController extends Controller
             'sortieForm' => $sortieForm->createView(),
             'user' => $user,
             'site' => $site,
+            'lieu' => $lieu
         ]);
     }
 
@@ -133,9 +137,9 @@ class CreationSortieController extends Controller
         return new JsonResponse($lieux);
     }
 
-    /**
+    /*
      * @Route("/sortir/creation/ajaxLieu/{id}", name="sortie_ajaxLieu")
-     */
+     *
     public function requeteAjaxLieu(Lieu $lieu, VillesRepository $villesRepository)
     {
         $villes = $villesRepository->findBy([
@@ -143,7 +147,7 @@ class CreationSortieController extends Controller
 
         ]);
         return new JsonResponse($villes);
-    }
+    }*/
 
     //Javascript - Show the details of the chosen place
 
