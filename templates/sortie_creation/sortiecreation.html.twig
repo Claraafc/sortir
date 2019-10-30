@@ -46,22 +46,6 @@
 
         {{ form_end(sortieForm) }}
 
-        {#{% if hidden == true %}
-
-            {% do sortieForm.rue.setRendered() %}
-            {% do sortieForm.latitude.setRendered() %}
-            {% do sortieForm.longitude.setRendered() %}
-            {% do sortieForm.codePostal.setRendered() %}
-
-        {% else %}
-
-            {{ form_row(sortieForm.rue) }}
-            {{ form_row(sortieForm.latitude) }}
-            {{ form_row(sortieForm.longitude) }}
-            {{ form_row(sortieForm.codePostal) }}
-
-
-        {% endif %}#}
     </main>
 
 {% endblock %}
