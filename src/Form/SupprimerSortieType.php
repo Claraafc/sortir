@@ -21,7 +21,11 @@ class SupprimerSortieType extends AbstractType
                 'disabled' => true,
             ])
             ->add('motifAnnulation', TextType::class, [
-                'label' => "Motif de l'annulation"
+                'label' => "Motif de l'annulation",
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner le motif de '
+                    ])]
             ])
         ;
     }

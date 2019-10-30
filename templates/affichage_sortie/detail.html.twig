@@ -91,19 +91,24 @@
                     {% endfor %}
                     {% if inscrit>0 %}
 
-                        <button class="btn btn-info"><a href="{{ path('desistement',{'id' : sortie.id}) }}">Se
-                                désinscrire</a></button>
+                        <a href="{{ path('desistement',{'id' : sortie.id}) }}"><input class="btn btn-info" type="button" value="Se desinscrire"></a>
                     {% endif %}
                     {% if inscrit==0 %}
-                        <button class="btn btn-info"><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
-                        </button>
+                        <a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}"> <input class="btn btn-info" type="button" value="S'inscrire"></a>
+
                     {% endif %}
-                {% else %}
+
                 {% endif %}
-                {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and (sortie.etat.libelle == 'cree' or sortie.etat.libelle == 'ouverte') %}
-                    <button class="btn btn-info"><a href="{{ path('sortie_update', {'id' : sortie.id}) }}">Modifier,
-                            publier</a>
-                    </button>
+
+
+
+                {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'cree' %}
+                    <a href="{{ path('sortie_update', {'id' : sortie.id}) }}"> <input class="btn btn-info" type="button" value="Modifier"></a>
+
+                {% endif %}
+
+                {% if ({'id' : app.user.id} == {'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'ouverte' %}
+                    <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}"> <input class="btn btn-info" type="button" value="Annuler"></a>
                 {% endif %}
 
             </div>
