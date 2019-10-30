@@ -71,6 +71,9 @@ class User implements UserInterface, \Serializable
      *     maxSize = "2Mi",
      *     uploadErrorMessage="Le fichier n'a pas été téléchargé",
      *     maxSizeMessage ="Le fichier est trop lourd : {{ limit }} {{ suffix }}",
+     *     mimeTypes={ "image/png", "image/jpeg", "image/jpg" },
+     *     mimeTypesMessage="Format non autorisé"
+     * )
      * )
      */
     private $fileTemp;
