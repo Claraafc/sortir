@@ -12,8 +12,8 @@
         {{ form_label(sortieForm.name) }}
         {{ form_widget(sortieForm.name) }}
 
-        {{ form_label(sortieForm.ville) }}
-        {{ form_widget(sortieForm.ville) }}
+        {#{{ form_label(sortieForm.ville) }}
+        {{ form_widget(sortieForm.ville) }}#}
 
         {{ form_label(sortieForm.lieu) }}
         {{ form_widget(sortieForm.lieu) }}
@@ -50,7 +50,7 @@
             {% do sortieForm.latitude.setRendered() %}
             {% do sortieForm.longitude.setRendered() %}
             {% do sortieForm.codePostal.setRendered() %}
-           {# {% do sortieForm.ville.setRendered() %}#}
+            {% do sortieForm.ville.setRendered() %}
 
         {% endif %}
 
@@ -61,46 +61,49 @@
 
 {% endblock %}
 
-   {# <script>
-        window.onload=function() {
-            $('#sortie_testVille').val('ville');
-           // $('#sortie_ville').append('<option value="' +  ville  + '">' + ville + '</option>');
-        }
-    </script>#}
-
-{#{% block javascripts %}
-     JavaScript filter places by cities
+{% block javascripts %}
     {{ parent() }}
-    <script>
-        $('#sortie_ville').change(function () {
-            $('#sortie_lieu').empty();
-            $.get('creation/ajax/' + $(this).val())
-                .done(function (data) {
-                    $.each(data, function (key, lieu) {
-                        console.log(lieu);
-                        $('#sortie_lieu').append('<option value="' + lieu.id + '">' + lieu.nom + '</option>');
+    {# JavaScript filter places by cities #}
 
-                    });
-                });
-        });
+<script>
 
-    </script>
+    window.onload = document.getElementById('sortie_lieu').setAttribute('disabled', 'disabled');
+    $('#sortie_ville').change(function () {
+        $('#sortie_lieu').empty();
+        $.get('creation/ajax/' + $(this).val())
+            .done(function (data) {
+                document.getElementById('sortie_lieu').removeAttribute('disabled', 'disabled');
+                $('#sortie_lieu').append('<option readonly="readonly">' + "Choissisez un lieu" + '</option>');
+                $.each(data, function (key, lieu) {
+                    // console.log(lieu);
 
-    {# JavaScript info place (address)
-    <script>
-        $('#sortie_lieu').change(function () {
-            $.get('creation/requeteLieu/' + $(this).val())
-                .done(function (data) {
-                    //console.log(data);
-                    $('#sortie_rue').val(data.rue);
-                    $('#sortie_longitude').val(data.longitude);
-                    $('#sortie_latitude').val(data.latitude);
-                    $('#sortie_codePostal').val(data.codePostal)
+                    $('#sortie_lieu').append('<option value="' + lieu.id + '">' + lieu.nom + '</option>');
 
                 });
-        });
-    </script>
+            });
+    });
+
+</script>
+
+{# JavaScript info place (address) #}
+<script>
+    $('#sortie_lieu').change(function () {
+        $.get('creation/requeteLieu/' + $(this).val())
+            .done(function (data) {
+                //console.log(data);
+                $('#sortie_rue').val(data.rue);
+                $('#sortie_longitude').val(data.longitude);
+                $('#sortie_latitude').val(data.latitude);
+                $('#sortie_codePostal').val(data.codePostal)
+
+            });
+    });
+
+    $('#form-sortie').submit(function () {
+        $('#sortie_lieu').prop('disabled', false);
+    })
+</script>
 
 
-{% endblock %}#}
+{% endblock %}
 
