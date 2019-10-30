@@ -7,6 +7,9 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('styles/style.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/faviconSortir.ico') }}">
+
+
     {% endblock %}
 </head>
 
@@ -43,11 +46,16 @@
                     </li>
                     {% endif %}
                     <li class="nav-item">
-                        {% if is_granted("ROLE_USER") %}
-                            <span class="nav-link" style=" color: #ececf6"> Bonjour {{ app.user.username }}, nous sommes le {{ "now"|date('d/m/Y')}}.</span>
-                        {% endif %}
+
                     </li>
+
                 </ul>
+
+            </div>
+            <div style="text-align: right">
+                {% if is_granted("ROLE_USER") %}
+                    <span class="nav-link" style=" color: #ececf6"> Bonjour {{ app.user.username }}, nous sommes le {{ "now"|date('d/m/Y')}}.</span>
+                {% endif %}
             </div>
         </nav>
 

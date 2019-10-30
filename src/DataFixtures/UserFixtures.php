@@ -66,14 +66,14 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user2);
 
         $user3 = new User();
-        $user3->setUsername('user3');
+        $user3->setUsername('wade');
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user3->setSite($site1);
-        $user3->setEmail("user3@mail.fr");
-        $user3->setNom('nomuser3');
-        $user3->setPrenom('prenomuser3');
+        $user3->setEmail("deadpool@mail.fr");
+        $user3->setNom('Wilson');
+        $user3->setPrenom('Wade');
         $user3->setTelephone('0666547889');
-        $user3->setUrlPhoto('bisounours.jpg');
+        $user3->setUrlPhoto('deadpool.jpg');
         $user3->setRoles(['ROLE_USER']);
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user3->addSorty($sortie2);
@@ -83,12 +83,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user3);
 
         $user4 = new User();
-        $user4->setUsername('user4');
+        $user4->setUsername('John Lydon');
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user4->setSite($site1);
-        $user4->setEmail("user4@mail.fr");
-        $user4->setNom('nomuser4');
-        $user4->setPrenom('prenomuser4');
+        $user4->setEmail("london@mail.fr");
+        $user4->setNom('Lydon');
+        $user4->setPrenom('John');
         $user4->setTelephone('0698745632');
         $user4->setUrlPhoto('punk.jpg');
         $user4->setRoles(['ROLE_USER']);
@@ -100,12 +100,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user4);
 
         $user5 = new User();
-        $user5->setUsername('user5');
+        $user5->setUsername('Paco');
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user5->setSite($site1);
-        $user5->setEmail("user5@mail.fr");
-        $user5->setNom('nomuser5');
-        $user5->setPrenom('prenomuser5');
+        $user5->setEmail("paquito@mail.fr");
+        $user5->setNom('De Lucia');
+        $user5->setPrenom('Paco');
         $user5->setTelephone('0666547889');
         $user5->setUrlPhoto('espagnol.jpg');
         $user5->setRoles(['ROLE_USER']);
@@ -117,14 +117,14 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user5);
 
         $user6 = new User();
-        $user6->setUsername('user6');
+        $user6->setUsername('chicharito');
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user6->setSite($site1);
-        $user6->setEmail("user6@mail.fr");
-        $user6->setNom('nomuser6');
-        $user6->setPrenom('prenomuser6');
+        $user6->setEmail("chicharito@mail.fr");
+        $user6->setNom('Hernàndez');
+        $user6->setPrenom('Javier');
         $user6->setTelephone('0698745632');
-        $user6->setUrlPhoto('mexicain.jpg');
+        $user6->setUrlPhoto('chicharito.jpg');
         $user6->setRoles(['ROLE_USER']);
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
        // $user6->addSorty($sortie2);

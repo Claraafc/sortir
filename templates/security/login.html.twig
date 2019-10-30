@@ -9,6 +9,14 @@
 
        <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/demo.css') }}">
        <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/style1.css') }}">
+       <link rel="stylesheet" type="text/css" href="{{ asset('styles/login.css') }}">
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+             crossorigin="anonymous">
+       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+             integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+             crossorigin="anonymous">
+
        {% block javascripts %}
            <script src="{{ asset('bootstrap/js/modernizr.custom.86080.js') }}"></script>
 
@@ -43,61 +51,79 @@
         </li>
     </ul>
 
-    <div class="container" style="position: relative" >
+    <div class="container linear-gradient" style="position: relative; width: 5500px">
         <div class="codrops-top" style="position: relative ; margin-top: 0px">
 
             {% block header %}
             {% endblock %}
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <a href="{{ path('affichage_sortie') }}">
-                    Retournez sur votre session ➔
-                </a>
-            {% endif %}
+
             {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
 
                 <img src="{{ asset('images/logoSortir.png') }}" alt="logo"
-                     style="max-height: 20em; max-width: 20em; margin-left: 2em; position: center">
+                     style="max-height: 20em; max-width: 20em; margin-left: auto; margin-right: auto; position: center">
             {% endif %}
 
         </div>
-        </div>
-        <div class="panel panel-default container core linear-gradient " style="width:40em; font-family: Arial, sans-serif">
+        <br>
 
-            <form action="{{ path('app_login') }}" method="post">
+        <form action="{{ path('app_login') }}" method="post">
+            <div class="container">
                 {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
-
-                {% if app.user %}
-                    <div class="mb-3">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    <div class="alert alert-danger" style="color: #AA3333; font-size: 22px"> Mot de passe incorrect
                     </div>
                 {% endif %}
 
-                <h1 class="h3 mb-3 font-weight-normal" style="color: white">Login</h1>
-            </br>
-                <label for="inputUsername" style="color: white" class="sr-only">Pseudo</label>
-                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
-                       placeholder="Pseudo" required autofocus>
-                <label for="inputPassword" style="color: white" class="sr-only">Mot de passe</label>
-                <input type="password"  name="password" id="inputPassword" class="form-control"
-                       placeholder="Mot de passe" required>
+                {% if app.user %}
+                    <div class="mb-3"
+                         style="font-size: 18px; color: #D3D3D3; background-color: #1d2124; border-radius: 8px 8px 8px 8px;">
+                        Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}"
+                                                                                   style="color: #D3D3D3; font-size: 18px"><u>Logout</u></a>
+                    </div>
+                {% endif %}
 
-                <input type="hidden" name="_csrf_token"
-                       value="{{ csrf_token('authenticate') }}">
+                <div class="justify-content-center h-100" style="margin-left: auto; margin-right: auto; width: 298px">
+                    <div class="card" style="width: 20em; height: 17em">
+                        <div class="card-header">
+                            <h3>Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="username"
+                                           value="{{ last_username }}" name="username" id="inputUsername">
 
-                <div class="checkbox mb-3" style="color: white">
-                    </br>
-                    <label>
-                        <input type="checkbox" name="_remember_me" > Remember me
-                    </label>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    </div>
+                                    <input type="password" name="password" id="inputPassword" class="form-control"
+                                           placeholder="password">
+                                </div>
+                                <div class="row align-items-center remember">
+                                    <input type="hidden" name="_csrf_token"
+                                           value="{{ csrf_token('authenticate') }}">
+                                    <input type="checkbox" name="_remember_me">Remember Me
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Login" class="btn login_btn">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                </br>
-                <button class="btn btn-lg btn-primary" type="submit">
-                    Login
-                </button>
-            </form>
-        </div>
+                <br>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <a href="{{ path('affichage_sortie') }}" style="background-color: #1b1e21; color: #c69500; border-radius: 8px 8px 8px 8px; font-size: 20px">
+                        Retournez sur votre session ➔
+                    </a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
 
 
 {% endblock %}
