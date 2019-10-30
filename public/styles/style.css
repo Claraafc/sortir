@@ -25,8 +25,64 @@ a:hover {
  padding: 0.5em;
 }
 
-.btns-accueil{
+.btn-creer-sortie:hover{
+    padding: 0.7em;
+    color:  white;
+    border:1px solid #005cbf;
+    background-color: #222222;
+    filter: opacity(90%);
+}
 
+.btn-ajouter-lieu{
+ background-color: #ff6224;
+    padding: 0.5em;
+    border:none;
+    color:white
+}
+.btn-ajouter-lieu:hover{
+    color:  white;
+    border:1px solid #ff6224;
+    background-color: #222222;
+}
+
+.btn-annuler-sortie{
+    background-color: #ff1708;
+    padding: 0.5em;
+    border:none;
+    color:white;
+    margin-left: 0.5em;
+}
+
+.btn-annuler-sortie:hover{
+    color:  white;
+    border:1px solid #ff1708;
+    background-color: #222222;
+}
+
+.btn-enregistrer-sortie{
+    padding: 0.5em;
+    border:none;
+    color:white;
+    margin-right: 0.5em;
+    background-color: #1c7430;
+}
+
+.btn-enregistrer-sortie:hover{
+    color:  white;
+    border:1px solid #1c7430;
+    background-color: #222222;
+}
+.btn-publier-sortie{
+    padding: 0.5em;
+    border:none;
+    color:white;
+    margin-right: 0.5em;
+}
+
+.btn-publier-sortie:hover{
+    color:  white;
+    border:1px solid #005cbf;
+    background-color: #222222;
 }
 .col-checkbox{
     margin-left: 3em;
