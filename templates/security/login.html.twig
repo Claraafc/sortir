@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_login.html.twig' %}
    {% block stylesheets %}
 
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,8 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-{% block background %}
+    {% block background %}
+        <p></p>
     {% endblock %}
     <ul class="cb-slideshow">
         <li><span>Image 01</span>
@@ -53,8 +54,8 @@
         </li>
     </ul>
 
-    <div class="container linear-gradient" style="position: relative; width: 5500px">
-        <div class="codrops-top" style="position: relative ; margin-top: 0px">
+    <div class="linear-gradient" id="img-login" style="width: 100%; height: 100%">
+        <div class="codrops-top" >
 
             {% block header %}
             {% endblock %}
@@ -69,7 +70,7 @@
         <br>
 
         <form action="{{ path('app_login') }}" method="post">
-            <div class="container">
+            <div class="container container-login">
                 {% if error %}
                     <div class="alert alert-danger" style="color: #AA3333; font-size: 22px"> Mot de passe incorrect
                     </div>
