@@ -56,14 +56,12 @@
                 {% endif %}
             </div>
         </nav>
-
-
     </header>
 
 
 {% endblock %}
 
-<div class="panel panel-default container core linear-gradient " >
+<div class="panel panel-default container core linear-gradient">
     {% if app.request.hasPreviousSession %}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
