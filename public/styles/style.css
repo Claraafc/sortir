@@ -21,13 +21,100 @@ a:hover {
     filter: brightness(80%);
 
 }
+.btn-ajouter-lieu{
+    background-color: #ff6224;
+    padding: 0.5em;
+    border:none;
+    color:white
+}
+.btn-ajouter-lieu:hover{
+    color:  white;
+    border:1px solid #ff6224;
+    background-color: #222222;
+}
+
+
+
+
+.btn-annuler-sortie, .btn-annuler-modif-profil, .btn-annuler-modif-mdp{
+    background-color: #ff1708;
+    padding: 0.6em;
+    border:none;
+    color:white;
+    margin-left: 0.5em;
+}
+
+.btn-annuler-sortie:hover, .btn-annuler-modif-profil:hover, .btn-annuler-modif-mdp:hover{
+    color:  white;
+    border:1px solid #ff1708;
+    background-color: #222222;
+}
+
+.btn-changer-mdp{
+    padding: 0.5em;
+    border:none;
+    color:white;
+    margin-right: 0.5em;
+    background-color: #1c7430;
+    text-align: center;
+}
+
 .btn-creer-sortie{
  padding: 0.5em;
 }
 
-.btns-accueil{
-
+.btn-enregistrer-modif-profil, .btn-enregistrer-modif-mdp{
+    padding: 0.5em;
+    border-radius: 0.4em;
+    color:white;
+    margin-right: 0.5em;
 }
+
+.btn-enregistrer-modif-profil:hover, .btn-enregistrer-modif-mdp:hover, .btn-creer-sortie:hover{
+    color:  white;
+    border:1px solid #005cbf;
+    background-color: #222222;
+    padding: 0.7em;
+    filter: opacity(90%);
+}
+.btn-enregistrer-sortie{
+    padding: 0.5em;
+    border:none;
+    color:white;
+    margin-right: 0.5em;
+    background-color: #1c7430;
+}
+
+.btn-enregistrer-sortie:hover, .btn-changer-mdp:hover{
+    color:  white;
+    border:1px solid #1c7430;
+    background-color: #222222;
+}
+.btn-publier-sortie{
+    padding: 0.5em;
+    border:none;
+    color:white;
+    margin-right: 0.5em;
+}
+
+.btn-publier-sortie:hover{
+    color:  white;
+    border:1px solid #005cbf;
+    background-color: #222222;
+}
+
+.carousel-item img {
+    max-height: 10em;
+}
+
+.categorie {
+    text-align: right;
+}
+
+.categorie, .select {
+    width: 27em;
+}
+
 .col-checkbox{
     margin-left: 3em;
 }
@@ -39,9 +126,20 @@ a:hover {
 .container-login {
    height:100%
 }
+
+.containerFooter {
+
+    padding-bottom: 1em;
+    color: white;
+    margin-top: 3em;
+    width: 50em;
+    margin-bottom: 3em;
+}
+
 .container-table-accueil{
     width: 500em;
 }
+
 .content{
     color: black;
     font-family: "Roboto Light";
@@ -52,48 +150,6 @@ a:hover {
     right: 0;
     z-index: 9999;
 
-}
-
-.div-btn-creer-sortie{
-    border-radius: 0.2em;
-    margin-left: 3.4em;
-    margin-top: 0.6em;
-
-}
-
-/*body {
-    color: black;
-    font-family: "Roboto Light";
-    justify-content: center;
-    z-index: 1;
-    background-image: url("../bootstrap/photosslide/orange_fond3.jpg") ;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-    background-image: radial-gradient(circle, #ff9b00, #e28005, #c56706, #a74f06, #893904);
-}*/
-
-.form-accueil{
-    margin-left: 2em;
-}
-footer {
-    justify-content: center;
-}
-
-.categorie {
-    text-align: right;
-}
-
-.categorie, .select {
-    width: 27em;
-}
-
-div.categoryName, li {
-    list-style: none;
-}
-
-.carousel-item img {
-    max-height: 10em;
 }
 
 .core {
@@ -115,18 +171,34 @@ div.categoryName, li {
     margin-top: 3em;
     margin-bottom: 3em;
 }
-
 .custom-select select {
     display: none;
 }
 
-.containerFooter {
+.div-btn-creer-sortie{
+    border-radius: 0.2em;
+    margin-left: 3.4em;
+    margin-top: 0.6em;
 
-    padding-bottom: 1em;
-    color: white;
-    margin-top: 3em;
-    width: 50em;
-    margin-bottom: 3em;
+}
+
+div.categoryName, li {
+    list-style: none;
+}
+
+.div-table-accueil th{
+    position: sticky;
+    z-index: 3;
+    top:0;
+    filter:opacity(100%);
+}
+
+footer {
+    justify-content: center;
+}
+
+.form-accueil{
+    margin-left: 2em;
 }
 
 .image-nav {
@@ -189,6 +261,10 @@ p {
     padding-top: 1em;
 }
 
+.row-table-accueil{
+    margin-top: 0.5em;
+}
+
 section {
     text-align: justify;
     -webkit-hyphens: auto;
@@ -196,9 +272,6 @@ section {
     hyphens: auto;
 }
 
-.row-table-accueil{
-    margin-top: 0.5em;
-}
 section h1 {
     -webkit-column-span: all;
     -moz-column-span: all;
@@ -210,11 +283,21 @@ section h1 {
     height: 20em;
     display:block;
     overflow: scroll;
-
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
+tbody{
+    height: 10em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 2;
+}
 td {
     padding: 0.6em;
+}
+th{
+    background-color: black;
 }
 /*thead{
     position: fixed;

@@ -10,13 +10,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class ProfileModificationType extends AbstractType
@@ -32,7 +30,7 @@ class ProfileModificationType extends AbstractType
             ->add('nom', null, [
                 "label" => "Votre nom",
                 "disabled" => false
-            ])
+                            ])
             ->add('prenom', null, [
                 "label" => "Votre prenom",
                 "disabled" => false
@@ -68,7 +66,12 @@ class ProfileModificationType extends AbstractType
                 'data_class'=> null,
                 'label' => 'Ma photo',
                 'required' => false))
-            ->add('Enregistrer', SubmitType::class)
+            ->add('Enregistrer', SubmitType::class,
+                ['attr' => [
+                    'class' => 'btn-enregistrer-modif-profil btn-primary'
+
+                    ]
+    ])
 
         ;
     }
@@ -79,6 +82,9 @@ class ProfileModificationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ]
         ]);
     }
 }

@@ -13,7 +13,7 @@
         {{ form_row(sortieForm.ville) }}
 
         {{ form_row(sortieForm.lieu) }}
-        <a href="{{ path('lieu') }}" class="btn btn-success">Ajouter un nouveau lieu</a>
+        <a href="{{ path('lieu') }}" ><input class="btn-ajouter-lieu" type="button" value="Ajouter un nouveau lieu"></a>
 
         <div id="hidden_detailLieu">
 
@@ -39,10 +39,10 @@
         {{ form_row(sortieForm.description ) }}
         {{ form_row(sortieForm.urlPhoto) }}
 
-        <button type="submit" name="publier" class="btn btn-primary" value="publier">Publier</button>
-        <button type="submit" name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
+        <input type="submit" name="publier" class="btn-primary btn-publier-sortie" value="Publier">
+        <input type="submit" name="enregistrer" class="btn-enregistrer-sortie" value="Enregistrer">
 
-        <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Annuler</a>
+        <a href="{{ path('affichage_sortie') }}"><input class="btn-annuler-sortie" type="button" value="Annuler"></a>
 
         {{ form_end(sortieForm) }}
 

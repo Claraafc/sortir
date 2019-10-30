@@ -55,8 +55,8 @@
         <hr>
         <div class="row">
             <div class="col">{{ form_widget(userForm.Enregistrer) }}</div>
-            <div class="col"><a class="btn btn-danger" href="{{ path('affichage_sortie') }}">Annuler</a></div>
-            <div class="col"><a href="{{ path('change_password', {'id': user.id}) }}"><button class="btn btn-info">Changer mot de passe</button></a></div>
+            <div class="col"><a href="{{ path('affichage_sortie') }}"><input class="btn-annuler-modif-profil" type="button" value="Annuler"></a></div>
+            <div class="col"><a href="{{ path('change_password', {'id': user.id}) }}"><input class=" btn-changer-mdp" value="Changer mot de passe" type="button"></a></div>
         </div>
     </div>
     {{ form_end(userForm) }}

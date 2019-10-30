@@ -36,9 +36,9 @@ class ChangePasswordType extends AbstractType
                 'required' => true,
                 'invalid_message' => 'Le mot de passe ne correspond pas'
             ])
-            ->add('submit', SubmitType::class, array(
+            ->add('enregistrer', SubmitType::class, array(
                 'attr' => array(
-                    'class' => 'btn btn-primary btn-block'
+                    'class' => 'btn-primary btn-enregistrer-modif-mdp'
                 )
             ))
         ;
