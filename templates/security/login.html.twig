@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_login.html.twig' %}
    {% block stylesheets %}
 
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,8 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-{% block background %}
+    {% block background %}
+        <p></p>
     {% endblock %}
     <ul class="cb-slideshow">
         <li><span>Image 01</span>
@@ -53,8 +54,8 @@
         </li>
     </ul>
 
-    <div class="container" style="position: relative">
-        <div class="codrops-top" style="position: relative">
+    <div class="linear-gradient" id="img-login" style="width: 100%; height: 100%">
+        <div class="codrops-top" >
 
             {% block header %}
             {% endblock %}
@@ -66,69 +67,66 @@
             {% endif %}
 
         </div>
-    </div>
-    <br>
-    <div class="panel panel-default container core linear-gradient " style="width:40em">
+        <br>
+
         <form action="{{ path('app_login') }}" method="post">
-
-            {% if error %}
-                <div class="alert alert-danger" style="color: #AA3333; font-size: 22px"> Mot de passe incorrect
-                </div>
-            {% endif %}
-
-            {% if app.user %}
-                <div class="mb-3"
-                     style="font-size: 18px; color: #D3D3D3; background-color: #1d2124; border-radius: 8px 8px 8px 8px;">
-                    Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}"
-                                                                               style="color: #D3D3D3; font-size: 18px"><u>Logout</u></a>
-                </div>
-            {% endif %}
-
-            <div class="justify-content-center h-100" style="margin-left: auto; margin-right: auto; width: 298px">
-                <div class="card" style="width: 20em; height: 17em">
-                    <div class="card-header">
-                        <h3>Login</h3>
+            <div class="container container-login">
+                {% if error %}
+                    <div class="alert alert-danger" style="color: #AA3333; font-size: 22px"> Mot de passe incorrect
                     </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="username"
-                                       value="{{ last_username }}" name="username" id="inputUsername">
+                {% endif %}
 
-                            </div>
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                {% if app.user %}
+                    <div class="mb-3"
+                         style="font-size: 18px; color: #D3D3D3; background-color: #1d2124; border-radius: 8px 8px 8px 8px;">
+                        Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}"
+                                                                                   style="color: #D3D3D3; font-size: 18px"><u>Logout</u></a>
+                    </div>
+                {% endif %}
+
+                <div class="justify-content-center h-100" style="margin-left: auto; margin-right: auto; width: 298px">
+                    <div class="card" style="width: 20em; height: 17em">
+                        <div class="card-header">
+                            <h3>Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="username"
+                                           value="{{ last_username }}" name="username" id="inputUsername">
+
                                 </div>
-                                <input type="password" name="password" id="inputPassword" class="form-control"
-                                       placeholder="password">
-                            </div>
-                            <div class="row align-items-center remember">
-                                <input type="hidden" name="_csrf_token"
-                                       value="{{ csrf_token('authenticate') }}">
-                                <input type="checkbox" name="_remember_me">Remember Me
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Login" class="btn login_btn">
-                            </div>
-                        </form>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    </div>
+                                    <input type="password" name="password" id="inputPassword" class="form-control"
+                                           placeholder="password">
+                                </div>
+                                <div class="row align-items-center remember">
+                                    <input type="hidden" name="_csrf_token"
+                                           value="{{ csrf_token('authenticate') }}">
+                                    <input type="checkbox" name="_remember_me">Remember Me
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Login" class="btn login_btn">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <br>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <a href="{{ path('affichage_sortie') }}" style="background-color: #1b1e21; color: #c69500; border-radius: 8px 8px 8px 8px; font-size: 20px">
+                        Retournez sur votre session ➔
+                    </a>
+                {% endif %}
             </div>
-            <br>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <a href="{{ path('affichage_sortie') }}"
-                   style="background-color: #1b1e21; color: #c69500; border-radius: 8px 8px 8px 8px; font-size: 20px">
-                    Retournez sur votre session ➔
-                </a>
-            {% endif %}
-
-    </form>
+        </form>
     </div>
-
 
 
 {% endblock %}
