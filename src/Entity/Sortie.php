@@ -29,9 +29,7 @@ class Sortie
      *     minMessage="{{ limit }} caractères minimum !",
      *     maxMessage="{{ limit }} caractères maximum !"
      * )
-     * @Assert\Regex(
-     *     pattern="/([0-9_-]*[a-zA-Z][0-9_-]*){3}/",
-     *     message="3 lettres minimum" )
+     *
      */
     private $name;
 

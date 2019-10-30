@@ -137,18 +137,6 @@ class CreationSortieController extends Controller
         return new JsonResponse($lieux);
     }
 
-    /*
-     * @Route("/sortir/creation/ajaxLieu/{id}", name="sortie_ajaxLieu")
-     *
-    public function requeteAjaxLieu(Lieu $lieu, VillesRepository $villesRepository)
-    {
-        $villes = $villesRepository->findBy([
-            'lieux' => $lieu
-
-        ]);
-        return new JsonResponse($villes);
-    }*/
-
     //Javascript - Show the details of the chosen place
 
     /**
@@ -175,15 +163,16 @@ class CreationSortieController extends Controller
         $hidden = true;
 
         $sortieId = $sortie->getId();
+        $sortiePhoto = $sortie->getUrlPhoto();
 
-        dump($request->request);
+      // dump($request->request);
 
         // Getting the locations
         $sortieLieuId = $sortie->getLieu()->getId();
         $detailLieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
 
         //Verify that the user is the organizer of the event or is the administrator of the page
-        if ($sortie->getOrganisateur() == $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        if (($sortie->getOrganisateur() == $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) && $sortie->getEtat()->getLibelle() == 'cree') {
             $sortieForm = $this->createForm(SortieType::class, $sortie);
             $user = $this->getUser();
 
@@ -196,6 +185,19 @@ class CreationSortieController extends Controller
             //save Sortie - not publishing
             if ($request->request->get('enregistrer')) {
                 if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+                    $file = $sortieForm->get('urlPhoto')->getData();
+                    if (!is_null($file)) {
+                        // Création du nom du fichier
+                        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                        // Move the file to the directory
+
+                        $file->move('../public/asset/images/', $fileName);
+
+                        $sortie->setUrlPhoto($fileName);
+                    } else {
+                        $sortie->setUrlPhoto($sortiePhoto);
+                    }
 
                     //Lieu field is disabled so it retrieves NULL by default. To avoid the error we make a set...
                     $lieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
@@ -218,6 +220,20 @@ class CreationSortieController extends Controller
             //save Sortie and publish
             if ($request->request->get('publier')) {
                 if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+
+                   $file = $sortieForm->get('urlPhoto')->getData();
+                    if (!is_null($file)) {
+                        // Création du nom du fichier
+                        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                        // Move the file to the directory
+
+                            $file->move('../public/asset/images/', $fileName);
+
+                        $sortie->setUrlPhoto($fileName);
+                    } else {
+                        $sortie->setUrlPhoto($sortiePhoto);
+                    }
                     //Lieu field is disabled so it retrieves NULL by default. To avoid the error we make a set...
                     $lieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
                     $sortie->setLieu($lieu);
@@ -238,75 +254,70 @@ class CreationSortieController extends Controller
 
             //delete Sortie if state = crée
             if ($request->request->get('supprimer')) {
-                if ($sortieForm->isSubmitted() && $sortieForm->isValid() && $sortie->getEtat()->getLibelle() == 'cree') {
+                if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
                     $manager->remove($sortie);
                     $manager->flush();
 
                     $this->addFlash('success', "La sortie a bien été supprimée");
                     return $this->redirectToRoute('affichage_sortie');
-                } else if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() != 'cree') {
-                    return $this->redirectToRoute('annuler_sortie', ["id" => $sortieId]);
+               /* } else if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() != 'cree') {
+                    return $this->redirectToRoute('annuler_sortie', ["id" => $sortieId]);*/
                 } else {
                     $this->addFlash('danger', 'Erreur lors de la suppression de la sortie');
+                }
             }
-        }
 
-        //cancel Sortie if state != crée
-        /* if ($sortieForm->isSubmitted() && $request->request->get('supprimer') && $sortie->getEtat()->getLibelle() != 'cree') {
-
-             return $this->redirectToRoute('annuler_sortie', ["id" => $sortieId]);
-         }*/
-
-    } else
-{
-$this->addFlash('danger', "Vous ne pouvez pas modifier cette sortie");
-return $this->redirectToRoute('affichage_sortie');
-}
-
-return $this->render('sortie_creation/sortieupdate.html.twig', [
-    'sortieForm' => $sortieForm->createView(),
-    'user' => $user,
-    'site' => $site,
-    'sortie' => $sortieId,
-    'hidden' => $hidden,
-]);
-}
-
-/**
- * @Route("/sortir/annuler/{id}", name="annuler_sortie", requirements={"id": "\d+"})
- */
-public
-function annulerSortie(Sortie $sortie, Request $request, ObjectManager $manager)
-{
-    //variable to hide form fields : rue, latitude, longitude, code postal, ville(<option>)
-    $hidden = true;
-
-    if ($sortie->getOrganisateur() == $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-        $sortieForm = $this->createForm(SupprimerSortieType::class, $sortie);
-        $sortieForm->handleRequest($request);
-
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            //Setting state "annulee"
-            $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('annulee');
-            //$etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->find($sortie->getEtat()->getId() === self::ETAT_ANNULEE);
-            $sortie->setEtat($etat);
-
-            $manager->persist($sortie);
-            $manager->flush();
-
-            $this->addFlash('success', "La sortie a bien été annulée");
+        } else {
+            $this->addFlash('danger', "Vous ne pouvez pas modifier cette sortie");
             return $this->redirectToRoute('affichage_sortie');
         }
 
-    } else {
-        $this->addFlash('danger', "Vous ne pouvez pas annuler cette sortie");
-        return $this->redirectToRoute('affichage_sortie');
+        return $this->render('sortie_creation/sortieupdate.html.twig', [
+            'sortieForm' => $sortieForm->createView(),
+            'user' => $user,
+            'site' => $site,
+            'sortie' => $sortieId,
+            'hidden' => $hidden,
+            'detailsSortie' => $sortie
+        ]);
     }
 
-    return $this->render('sortie_creation/sortieannuler.html.twig', [
-        'sortieForm' => $sortieForm->createView(),
-        'hidden' => $hidden
-    ]);
-}
+    /**
+     * @Route("/sortir/annuler/{id}", name="annuler_sortie", requirements={"id": "\d+"})
+     */
+    public
+    function annulerSortie(Sortie $sortie, Request $request, ObjectManager $manager)
+    {
+        //variable to hide form fields : rue, latitude, longitude, code postal, ville(<option>)
+        $hidden = true;
+
+        if (($sortie->getOrganisateur() == $this->getUser() || $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) && $sortie->getEtat()->getLibelle() == 'ouverte') {
+
+            $sortie->setUrlPhoto(null);
+            $sortieForm = $this->createForm(SupprimerSortieType::class, $sortie);
+            $sortieForm->handleRequest($request);
+
+            if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+                //Setting state "annulee"
+                $etat = $this->getDoctrine()->getManager()->getRepository(Etat::class)->findOneBySomeField('annulee');
+                $sortie->setEtat($etat);
+
+                $manager->persist($sortie);
+                $manager->flush();
+
+                $this->addFlash('success', "La sortie a bien été annulée");
+                return $this->redirectToRoute('affichage_sortie');
+            }
+
+        } else {
+            $this->addFlash('danger', "Vous ne pouvez pas annuler cette sortie");
+            return $this->redirectToRoute('affichage_sortie');
+        }
+
+        return $this->render('sortie_creation/sortieannuler.html.twig', [
+            'sortieForm' => $sortieForm->createView(),
+            'hidden' => $hidden
+        ]);
+    }
 
 }
