@@ -11,14 +11,25 @@
                disabled>
         {{ form_row(sortieForm.name) }}
         {{ form_row(sortieForm.ville) }}
+
         {{ form_row(sortieForm.lieu) }}
-        <a href="{{ path('lieu') }}" class="btn btn-success" >Ajouter un nouveau lieu</a>
+        <a href="{{ path('lieu') }}" class="btn btn-success">Ajouter un nouveau lieu</a>
 
         <div id="hidden_detailLieu">
-            {{ form_row(sortieForm.rue) }}
-            {{ form_row(sortieForm.latitude) }}
-            {{ form_row(sortieForm.longitude) }}
-            {{ form_row(sortieForm.codePostal) }}
+
+            {% if lieu is not null %}
+                {{ form_row(sortieForm.rue, {'value' : lieu.rue}) }}
+                {{ form_row(sortieForm.latitude, {'value' : lieu.latitude}) }}
+                {{ form_row(sortieForm.longitude, {'value' : lieu.longitude}) }}
+                {{ form_row(sortieForm.codePostal, {'value' : lieu.ville.codePostal}) }}
+            {{ form_row(sortieForm.lieu, {'value' : lieu.id}) }}
+            {% else %}
+                {{ form_row(sortieForm.rue) }}
+                {{ form_row(sortieForm.latitude) }}
+                {{ form_row(sortieForm.longitude) }}
+                {{ form_row(sortieForm.codePostal) }}
+
+            {% endif %}
         </div>
 
         {{ form_row(sortieForm.dateDebut ) }}
@@ -35,75 +46,7 @@
 
         {{ form_end(sortieForm) }}
 
-        {#{% if hidden == true %}
-
-            {% do sortieForm.rue.setRendered() %}
-            {% do sortieForm.latitude.setRendered() %}
-            {% do sortieForm.longitude.setRendered() %}
-            {% do sortieForm.codePostal.setRendered() %}
-
-        {% else %}
-
-            {{ form_row(sortieForm.rue) }}
-            {{ form_row(sortieForm.latitude) }}
-            {{ form_row(sortieForm.longitude) }}
-            {{ form_row(sortieForm.codePostal) }}
-
-
-        {% endif %}#}
-
-        <!-- Modal -->
-        {#<div class="modal fade" id="modalForm" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">×</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">Ajouter des lieux</h4>
-                    </div>
-
-                    <!-- Modal Body -->
-                    <div class="modal-body">
-                        <p class="statusMsg"></p>
-                        <form role="form">
-                            <div class="form-group">
-                                <label for="inputName">Rue</label>
-                                <input type="text" class="form-control" id="rue"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail">Latitude</label>
-                                <input type="text" class="form-control" id="latitude"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail">Longitude</label>
-                                <input type="text" class="form-control" id="longitude"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail">Code Postale</label>
-                                <input type="text" class="form-control" id="latitude"/>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary submitBtn" onclick="submitContactForm()">SUBMIT
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>#}
-
-
-
-
-
     </main>
-
 
 {% endblock %}
 
@@ -112,15 +55,14 @@
     {# JavaScript filter places by cities #}
 
     <script>
+
+        window.onload = document.getElementById('sortie_lieu').setAttribute('disabled', 'disabled');
         $('#sortie_ville').change(function () {
             $('#sortie_lieu').empty();
             $.get('creation/ajax/' + $(this).val())
                 .done(function (data) {
-                    if ($('#sortie_ville').isEmptyObject()) {
-                        $('#sortie_lieu').append('<option value="' +test+ '">' + "Choissisez un lieu" + '</option>');
-                    } else {
-                        $('#sortie_lieu').append('<option>' + "Choissisez un lieu" + '</option>');
-                    }
+                    document.getElementById('sortie_lieu').removeAttribute('disabled', 'disabled');
+                    $('#sortie_lieu').append('<option readonly="readonly">' + "Choissisez un lieu" + '</option>');
                     $.each(data, function (key, lieu) {
                         // console.log(lieu);
 
@@ -129,25 +71,6 @@
                     });
                 });
         });
-
-        {#$(document).ready(function(){
-            $('#sortie_lieu').empty()
-        )};
-
-
-        $('#sortie_lieu').change(function () {
-            $('#sortie_ville').empty();
-            $.get('creation/ajaxLieu/' + $(this).val())
-                .done(function (data) {
-                    $('#sortie_ville').append('<option>' + "Choissisez une ville" + '</option>');
-                    $.each(data, function (key, ville) {
-                        // console.log(lieu);
-
-                        $('#sortie_ville').append('<option value="' + ville.id + '">' + ville.name + '</option>');
-
-                    });
-                });
-        });#}
 
     </script>
 
@@ -164,6 +87,10 @@
 
                 });
         });
+
+        $('#form-sortie').submit(function () {
+            $('#sortie_lieu').prop('disabled', false);
+        })
     </script>
 
 

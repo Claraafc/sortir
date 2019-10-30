@@ -10,14 +10,15 @@
                         <div class="col"><img src="{{ asset('photos/annule.jpg') }}"
                                               style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
                         </div>
-                    {% elseif sortie.urlPhoto%}
+                    {% elseif sortie.urlPhoto %}
                         <div class="col"><img src="{{ app.request.basepath }}/asset/images/{{ sortie.urlPhoto }}"
                                               style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
                         </div>
-                        {% else %}
-                    <div class="col"><img src="{{ asset('photos/photoDefaut.png') }}"
-                                          style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
-                    </div>
+
+                    {% else %}
+                        <div class="col"><img src="{{ asset('photos/photoDefaut.png') }}"
+                                              style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
+                        </div>
                     {% endif %}
                 </hgroup>
             </div>
@@ -80,20 +81,29 @@
             </div>
             <div class="col-md-3 offset-md-3" style="padding-top: 7em">
 
-                {% set inscrit = 0 %}
-                {% for user in users %}
-                    {% if user.username == app.user.username %}
-                        {% set inscrit = inscrit+1 %}
-                    {% endif %}
-                {% endfor %}
 
-                {% if inscrit>0 %}
-                    <button class="btn btn-info"><a href="{{ path('desistement',{'id' : sortie.id}) }}">Se
-                            désinscrire</a></button>
+                {% if sortie.etat.libelle == 'ouverte' %}
+                    {% set inscrit = 0 %}
+                    {% for user in users %}
+                        {% if user.username == app.user.username %}
+                            {% set inscrit = inscrit+1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if inscrit>0 %}
+
+                        <button class="btn btn-info"><a href="{{ path('desistement',{'id' : sortie.id}) }}">Se
+                                désinscrire</a></button>
+                    {% endif %}
+                    {% if inscrit==0 %}
+                        <button class="btn btn-info"><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
+                        </button>
+                    {% endif %}
+                {% else %}
                 {% endif %}
-                {% if inscrit==0 %}
-                    <button class="btn btn-info"><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
-                    </button
+                {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and (sortie.etat.libelle == 'cree' or sortie.etat.libelle == 'ouverte') %}
+                    <button class="btn btn-info"><a href="{{ path('sortie_update', {'id' : sortie.id}) }}">Modifier,
+                            publier</a>
+                    </button>
                 {% endif %}
 
             </div>
