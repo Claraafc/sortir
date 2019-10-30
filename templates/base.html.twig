@@ -45,12 +45,13 @@
                         <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                     </li>
                     {% endif %}
-                    <li class="nav-item">
-                        {% if is_granted("ROLE_USER") %}
-                            <span class="nav-link" > Bonjour {{ app.user.username }}, nous sommes le {{ "now"|date('d/m/Y')}}.</span>
-                        {% endif %}
-                    </li>
+
                 </ul>
+            </div>
+            <div style="text-align: right">
+                {% if is_granted("ROLE_USER") %}
+                    <span class="nav-link" > Bonjour {{ app.user.username }}, nous sommes le {{ "now"|date('d/m/Y')}}.</span>
+                {% endif %}
             </div>
         </nav>
 
