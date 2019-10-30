@@ -102,7 +102,9 @@
                                     <a href="{{ path('profile_detail', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.nom }}</a>
                                 {% endif %}
                             </td>
-                            {% if sortie.etat.libelle == 'ouverte' %}
+
+
+                            {% if sortie.etat.libelle == 'ouverte' or sortie.etat.libelle == 'cloturee' %}
                             {% set inscrit = 0 %}
                             {% for user in sortie.users %}
                                 {% if { 'id': app.user.id} == { 'id': user.id} %}
@@ -110,10 +112,10 @@
                                 {% endif %}
                             {% endfor %}
                             {% if inscrit>0 %}
-                            <td><a href="{{ path('desistement', {'id' : sortie.id}) }}">Se désister</a>
+                            <td><a href="{{ path('desistement', {'id' : sortie.id}) }}">Se désister</a>-
                             {% endif %}
                             {% if inscrit==0 %}
-                            <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
+                            <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire </a>-
 
                             {% endif %}
 
@@ -121,8 +123,11 @@
                             <td>
                                 {% endif %}
 
-                                {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and (sortie.etat.libelle == 'cree' or sortie.etat.libelle == 'ouverte') %}
-                                <a href="{{ path('sortie_update', {'id' : sortie.id}) }}">- Modifier, publier</a></td>
+                                {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'ouverte' %}
+                                <a href="{{ path('annuler_sortie', {'id' : sortie.id}) }}"> Annuler</a></td>
+                            {% endif %}
+                            {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'cree' %}
+                                <a href="{{ path('sortie_update', {'id' : sortie.id}) }}"> Modifier </a></td>
                             {% endif %}
                         </tr>
                         </tbody>
