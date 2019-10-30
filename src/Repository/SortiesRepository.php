@@ -48,7 +48,7 @@ class SortiesRepository extends ServiceEntityRepository
         $params = [];
 
         if (!empty($nomSortie)) {
-            $params["nomSortie"] = $nomSortie . "%";
+            $params["nomSortie"] ="%" . $nomSortie . "%";
             $qb->andWhere('s.name LIKE :nomSortie');
         }
 
@@ -60,8 +60,8 @@ class SortiesRepository extends ServiceEntityRepository
         if (!empty($dateDebutRecherche) && !empty($dateFinRecherche)) {
             $params["dateDebutRecherche"] = $dateDebutRecherche;
             $params["dateFinRecherche"] = $dateFinRecherche;
-            $qb->andWhere('s.dateDebut > :dateDebutRecherche');
-            $qb->andWhere('s.dateDebut < :dateFinRecherche');
+            $qb->andWhere('s.dateDebut >= :dateDebutRecherche');
+            $qb->andWhere('s.dateDebut <= :dateFinRecherche');
         }
 
         $req = [];

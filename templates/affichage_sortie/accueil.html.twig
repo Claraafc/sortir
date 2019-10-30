@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+{% endblock %}
 {% block title %}{{ parent() }}{% endblock %}
 
 {% block body %}
@@ -11,7 +16,7 @@
                     <label for="site_nom">Site:</label>
                     <select name="site" id="site" class="form-control">
 
-                            <option value=""> Tous les sites</option>
+                        <option value=""> Tous les sites</option>
 
                         {% for site in sites %}
                             <option value="{{ site.id }}" {% if site.id == siteSelection %} selected="selected" {% endif %}>{{ site.name }} </option>
@@ -23,13 +28,11 @@
                            name="nomSortie" {% if nomSortie %} value="{{ nomSortie }}" {% endif %}><br>
                     <label>Entre </label>
                     <input type="date"
-                           name="dateDebutRecherche"
-                            {% if dateFinRecherche %} max="{{ dateFinRecherche }}"{% endif %}
+                           name="dateDebutRecherche" id="dateDebutRecherche"
                             {% if dateDebutRecherche %} value="{{ dateDebutRecherche }}" {% endif %}>
                     <label> et </label>
                     <input type="date"
-                           name="dateFinRecherche"
-                            {% if dateDebutRecherche %} min="{{ dateDebutRecherche }}"{% endif %}
+                           name="dateFinRecherche" id="dateFinRecherche"
                             {% if dateFinRecherche %} value="{{ dateFinRecherche }}" {% endif %}><br>
                 </div>
                 <div class="col-auto" style="margin-left: 70px">
@@ -94,26 +97,26 @@
                                 {% endif %}
                             </td>
                             {% if sortie.etat.libelle == 'ouverte' %}
-                                {% set inscrit = 0 %}
-                                {% for user in sortie.users %}
-                                    {% if { 'id': app.user.id} == { 'id': user.id} %}
-                                        {% set inscrit = inscrit+1 %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if inscrit>0 %}
-                                    <td><a href="{{ path('desistement', {'id' : sortie.id}) }}">Se désister</a>
+                            {% set inscrit = 0 %}
+                            {% for user in sortie.users %}
+                                {% if { 'id': app.user.id} == { 'id': user.id} %}
+                                    {% set inscrit = inscrit+1 %}
                                 {% endif %}
-                                {% if inscrit==0 %}
-                                    <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
+                            {% endfor %}
+                            {% if inscrit>0 %}
+                            <td><a href="{{ path('desistement', {'id' : sortie.id}) }}">Se désister</a>
+                            {% endif %}
+                            {% if inscrit==0 %}
+                            <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire</a>
 
-                                {% endif %}
-
-                            {% else %}
-                                <td>
                             {% endif %}
 
-                        {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and (sortie.etat.libelle == 'cree' or sortie.etat.libelle == 'ouverte') %}
-                            <a href="{{ path('sortie_update', {'id' : sortie.id}) }}">- Modifier, publier</a></td>
+                        {% else %}
+                            <td>
+                                {% endif %}
+
+                                {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and (sortie.etat.libelle == 'cree' or sortie.etat.libelle == 'ouverte') %}
+                                <a href="{{ path('sortie_update', {'id' : sortie.id}) }}">- Modifier, publier</a></td>
                             {% endif %}
                         </tr>
                         </tbody>
@@ -125,8 +128,106 @@
             </div>
         </div>
     </main>
+
+    <script type="text/javascript">
+
+        // filter by dateDebutRecherche
+        document.getElementById("dateDebutRecherche").onchange = function () {
+
+            console.log(document.getElementById("dateDebutRecherche").valueAsDate)
+            console.log(document.getElementById("dateFinRecherche").valueAsDate)
+
+            if (document.getElementById("dateDebutRecherche").valueAsDate != null && document.getElementById("dateFinRecherche").valueAsDate != null) {
+
+                let dateDebut = new Date(document.getElementById('dateDebutRecherche').valueAsDate);
+                let dateFin = new Date(document.getElementById('dateFinRecherche').valueAsDate);
+                console.log(dateDebut)
+                console.log(dateFin)
+
+                let yearsOK = dateFin.getFullYear() > dateDebut.getFullYear();
+                console.log(yearsOK)
+                let monthsOK = dateFin.getMonth() > dateDebut.getMonth();
+                console.log(monthsOK)
+                let daysOK = dateFin.getDay() > dateDebut.getDay();
+                console.log(daysOK)
+
+                let yearsAreEqual = dateFin.getFullYear() === dateDebut.getFullYear();
+                let monthsAreEqual = dateFin.getMonth() === dateDebut.getMonth();
+                let daysAreEqual = dateFin.getDay() === dateDebut.getDay();
+                // test years
+                if (!yearsOK) {
+                    //dateDebutRecherche.setFullYear(dateFinRecherche.getFullYear())
+                    if (yearsAreEqual) {
+                        //test months
+                        if (!monthsOK) {
+                            //dateDebutRecherche.setMonth(dateFinRecherche.getMonth())
+                            if (monthsAreEqual) {
+                                //test days
+                                if (!daysOK) {
+                                    alert("Vous ne pouvez pas saisir deux dates identiques.");
+                                    if (daysAreEqual) {
+                                        // allright
+                                    } else {
+                                        alert("Les dates saisies sont incohérentes.");
+                                    }
+                                }
+                            } else {
+                                alert("Les mois saisis sont incohérentes.");
+                            }
+                        }
+                    } else {
+                        alert("Les années saisies sont incohérentes.");
+                    }
+                }
+            }
+        }
+        document.getElementById("dateFinRecherche").onchange = function () {
+
+            console.log(document.getElementById("dateDebutRecherche").valueAsDate)
+            console.log(document.getElementById("dateFinRecherche").valueAsDate)
+
+            if (document.getElementById("dateDebutRecherche").valueAsDate != null && document.getElementById("dateFinRecherche").valueAsDate != null) {
+
+                let dateDebut2 = new Date(document.getElementById('dateDebutRecherche').valueAsDate);
+                let dateFin2 = new Date(document.getElementById('dateFinRecherche').valueAsDate);
+                console.log(dateDebut2)
+                console.log(dateFin2)
+
+                let yearsOK2 = dateFin2.getFullYear() > dateDebut2.getFullYear();
+                let monthsOK2 = dateFin2.getMonth() > dateDebut2.getMonth();
+                let daysOK2 = dateFin2.getDay() > dateDebut2.getDay();
+
+                let yearsAreEqual = dateFin2.getFullYear() === dateDebut2.getFullYear();
+                let monthsAreEqual = dateFin2.getMonth() === dateDebut2.getMonth();
+                let daysAreEqual = dateFin2.getDay() === dateDebut2.getDay();
+                // test years
+                if (!yearsOK2) {
+                    //dateDebutRecherche.setFullYear(dateFinRecherche.getFullYear())
+                    if (yearsAreEqual) {
+                        //test months
+                        if (!monthsOK2) {
+                            //dateDebutRecherche.setMonth(dateFinRecherche.getMonth())
+                            if (monthsAreEqual) {
+                                //test days
+                                if (!daysOK2) {
+                                    //dateDebutRecherche.setDate(dateFinRecherche.getDay())
+                                    if (daysAreEqual) {
+                                        alert("Vous ne pouvez pas saisir deux dates identiques.");
+                                    } else {
+                                        alert("Les dates saisies sont incohérentes.");
+                                    }
+                                }
+                            } else {
+                                alert("Les mois saisis sont incohérentes.");
+                            }
+                        }
+                    } else {
+                        alert("Les années saisies sont incohérentes.");
+                    }
+                }
+            }
+        }
+    </script>
+
 {% endblock %}
-
-
-
 
