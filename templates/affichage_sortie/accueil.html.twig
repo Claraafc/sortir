@@ -9,7 +9,7 @@
 
 {% block body %}
     <main>
-        <form action="{{ path('affichage_sortie') }}" method="post" style="margin-left: 40px">
+        <form class="form-accueil"action="{{ path('affichage_sortie') }}" method="post">
             <h3>Filtrer les sorties</h3>
             <div class="form-row align-items-center">
                 <div class="col-auto">
@@ -35,7 +35,7 @@
                            name="dateFinRecherche" id="dateFinRecherche"
                             {% if dateFinRecherche %} value="{{ dateFinRecherche }}" {% endif %}><br>
                 </div>
-                <div class="col-auto" style="margin-left: 70px">
+                <div class="col-auto col-checkbox">
                     <label> <input type="checkbox"
                                    name="sortie_organisateur" {% if sortie_organisateur %} checked="checked" {% endif %}>Sorties
                         dont je suis l'organisateur/trice</label><br>
@@ -48,16 +48,15 @@
                                   name="sortie_passee"{% if sortie_passee %} checked="checked" {% endif %}>Sorties
                         passées</label><br>
                 </div>
-                <div class="col-auto" style="margin-left: 50px">
+                <div class="col-auto col-rechercher">
                     <button type="submit" class="btn btn-primary"> Rechercher</button>
                 </div>
 
             </div>
         </form>
-        <div class="container" style="width: 500em">
-            <div class="row col-md-12 offset-md-0" style="margin-top: 10px;">
-                <table class="table table-striped" border="1"
-                       style="width: 100%; height: 20em; display:block; overflow: scroll;">
+        <div class="container container-table-accueil">
+            <div class="row col-md-12 offset-md-0 row-table-accueil">
+                <table class="table table-striped table-accueil" border="1">
                     <thead>
                     <tr>
                         <th>Nom de la sortie</th>
