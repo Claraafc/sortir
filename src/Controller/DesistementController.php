@@ -21,7 +21,7 @@ class DesistementController extends Controller
         if (isset($user)) {
 
             /* Checking if the event is not passed closed or deleted before removing a user from it*/
-            if ($sortie->getEtat()->getLibelle() === 'ouverte' && $sortie->getDateDebut() > $dateDuJour) {
+            if ($sortie->getEtat()->getLibelle() === 'ouverte' || $sortie->getEtat()->getLibelle() === 'cloturee') {
                 $sortie->removeUser($user);
 
                 $manager->persist($sortie);

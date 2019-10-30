@@ -163,6 +163,7 @@ class CreationSortieController extends Controller
         $hidden = true;
 
         $sortieId = $sortie->getId();
+        $sortiePhoto = $sortie->getUrlPhoto();
 
       // dump($request->request);
 
@@ -185,6 +186,19 @@ class CreationSortieController extends Controller
             if ($request->request->get('enregistrer')) {
                 if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
+                    $file = $sortieForm->get('urlPhoto')->getData();
+                    if (!is_null($file)) {
+                        // Création du nom du fichier
+                        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                        // Move the file to the directory
+
+                        $file->move('../public/asset/images/', $fileName);
+
+                        $sortie->setUrlPhoto($fileName);
+                    } else {
+                        $sortie->setUrlPhoto($sortiePhoto);
+                    }
+
                     //Lieu field is disabled so it retrieves NULL by default. To avoid the error we make a set...
                     $lieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
                     $sortie->setLieu($lieu);
@@ -206,6 +220,20 @@ class CreationSortieController extends Controller
             //save Sortie and publish
             if ($request->request->get('publier')) {
                 if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+
+                   $file = $sortieForm->get('urlPhoto')->getData();
+                    if (!is_null($file)) {
+                        // Création du nom du fichier
+                        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                        // Move the file to the directory
+
+                            $file->move('../public/asset/images/', $fileName);
+
+                        $sortie->setUrlPhoto($fileName);
+                    } else {
+                        $sortie->setUrlPhoto($sortiePhoto);
+                    }
                     //Lieu field is disabled so it retrieves NULL by default. To avoid the error we make a set...
                     $lieu = $manager->getRepository(Lieu::class)->find($sortieLieuId);
                     $sortie->setLieu($lieu);
@@ -263,7 +291,9 @@ class CreationSortieController extends Controller
         //variable to hide form fields : rue, latitude, longitude, code postal, ville(<option>)
         $hidden = true;
 
-        if (($sortie->getOrganisateur() == $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) && $sortie->getEtat()->getLibelle() == 'ouverte') {
+        if (($sortie->getOrganisateur() == $this->getUser() || $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) && $sortie->getEtat()->getLibelle() == 'ouverte') {
+
+            $sortie->setUrlPhoto(null);
             $sortieForm = $this->createForm(SupprimerSortieType::class, $sortie);
             $sortieForm->handleRequest($request);
 

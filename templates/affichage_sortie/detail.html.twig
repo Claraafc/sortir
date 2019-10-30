@@ -39,7 +39,7 @@
                     <div class="detail-intitule">Description :</div>
                     <div class="detail-meta">{{ sortie.description|nl2br }}</div>
                     {% if sortie.etat.libelle == 'annulee' %}
-                        <div class="detail-intitule">Motif annulation :</div>
+                        <div class="detail-intitule">Motif de l'annulation :</div>
                         <div class="detail-meta">{{ sortie.motifAnnulation }}</div>
                     {% endif %}
                 </div>
@@ -82,7 +82,7 @@
             <div class="col-md-3 offset-md-3" style="padding-top: 7em">
 
 
-                {% if sortie.etat.libelle == 'ouverte' %}
+                {% if sortie.etat.libelle == 'ouverte' or sortie.etat.libelle == 'cloturee' %}
                     {% set inscrit = 0 %}
                     {% for user in users %}
                         {% if user.username == app.user.username %}
@@ -91,10 +91,13 @@
                     {% endfor %}
                     {% if inscrit>0 %}
 
-                        <a href="{{ path('desistement',{'id' : sortie.id}) }}"><input class="btn btn-info" type="button" value="Se desinscrire"></a>
+                        <a href="{{ path('desistement',{'id' : sortie.id}) }}"><input class="btn btn-info" type="button"
+                                                                                      value="Se desinscrire"></a>
                     {% endif %}
-                    {% if inscrit==0 %}
-                        <a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}"> <input class="btn btn-info" type="button" value="S'inscrire"></a>
+                    {% if inscrit==0 and sortie.etat.libelle == 'ouverte' %}
+                        <a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}"> <input class="btn btn-info"
+                                                                                               type="button"
+                                                                                               value="S'inscrire"></a>
 
                     {% endif %}
 
@@ -103,12 +106,18 @@
 
 
                 {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'cree' %}
-                    <a href="{{ path('sortie_update', {'id' : sortie.id}) }}"> <input class="btn btn-info" type="button" value="Modifier"></a>
+                    <a href="{{ path('sortie_update', {'id' : sortie.id}) }}"> <input class="btn btn-info" type="button"
+                                                                                      value="Modifier"></a>
 
                 {% endif %}
 
                 {% if ({'id' : app.user.id} == {'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'ouverte' %}
-                    <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}"> <input class="btn btn-info" type="button" value="Annuler"></a>
+                    <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}"> <input class="btn btn-info" type="button"
+                                                                                      value="Annuler la Sortie"></a>
+                {% endif %}
+
+                {% if sortie.etat.libelle == 'annulee' %}
+                    <a href="{{ path('affichage_sortie') }}"> <input class="btn btn-outline-danger" type="button" value="Retour"></a>
                 {% endif %}
 
             </div>
