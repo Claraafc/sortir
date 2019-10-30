@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class SortieType extends AbstractType
 {
@@ -71,11 +72,11 @@ class SortieType extends AbstractType
             ->add('lieu', null, [
                 'choice_label' => 'nom',
                 'placeholder' => 'Choissisez un lieu',
-              /*  'constraints' => [
-                    new NotBlank([
+               'constraints' => [
+                    new NotNull([
                         'message' => 'Veuillez renseigner un lieu'
                     ])
-                ]*/
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
