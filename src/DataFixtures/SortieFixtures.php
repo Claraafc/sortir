@@ -186,7 +186,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie7->setName('noche de cumbia');
         $sortie7->setDateDebut(new \DateTime('2020-01-01 05:20:30'));
         $sortie7->setDuree('120');
-        $sortie7->setDateCloture(new \DateTime('2019-10-10 05:20:30'));
+        $sortie7->setDateCloture(new \DateTime('2019-12-10 05:20:30'));
         $sortie7->setNbInscriptionsMax('40');
         $sortie7->setDescription('PARTY NEW YEAR!!!!');
         $sortie7->setUrlPhoto('cumbia.jpg');
