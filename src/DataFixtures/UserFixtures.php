@@ -62,7 +62,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user2->setNom('Auboisdormant');
         $user2->setPrenom('Abel');
         $user2->setTelephone('0698745632');
-        $user2->setUrlPhoto('jordan.jpg');
+        $user2->setUrlPhoto('Michael.jpg');
         $user2->setRoles(['ROLE_USER']);
 
         $password = $this->encoder->encodePassword($user2, 'P@ss_1');
