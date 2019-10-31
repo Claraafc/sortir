@@ -2,30 +2,27 @@
 
 {% block body %}
     <div class="container">
-        <div class="row col-lg-12 offset-md-0" style="margin-top: 10px">
-            <div class="col-md-4 offset-md-0" style="padding-right: 100px">
+        <div class="row col-lg-12 offset-md-0 div-container-detail" >
+            <div class="col-md-4 offset-md-0 div-container-detail-child" >
                 <hgroup>
                     <h1>{{ sortie.name }} </h1>
                     {% if sortie.etat.libelle == 'annulee' %}
-                        <div class="col"><img src="{{ asset('photos/annule.jpg') }}"
-                                              style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
+                        <div class="col"><img class="image-detail-sortie" src="{{ asset('photos/annule.jpg') }}">
                         </div>
                     {% elseif sortie.urlPhoto %}
-                        <div class="col"><img src="{{ app.request.basepath }}/asset/images/{{ sortie.urlPhoto }}"
-                                              style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
+                        <div class="col"><img class="image-detail-annule" src="{{ app.request.basepath }}/asset/images/{{ sortie.urlPhoto }}">
                         </div>
 
                     {% else %}
-                        <div class="col"><img src="{{ asset('photos/photoDefaut.png') }}"
-                                              style="display:block; width: auto; height: auto; max-width: 250px; max-height: 250px">
+                        <div class="col"><img class="image-detail-default" src="{{ asset('photos/photoDefaut.png') }}">
                         </div>
                     {% endif %}
                 </hgroup>
             </div>
 
 
-            <div class=" row col-md-8 offset-md-0" style="margin-top: 10px">
-                <div class="col-md-6 offset-md-0" style="padding-right: 100px">
+            <div class=" row col-md-8 offset-md-0 div-container-detail" >
+                <div class="col-md-6 offset-md-0 div-container-detail-child">
                     <div class="detail-intitule">Nom de la sortie :</div>
                     <div class="detail-meta">{{ sortie.name }}, {{ sortie.etat }}</div>
                     <div class="detail-intitule">Date et heure :</div>
@@ -43,7 +40,7 @@
                         <div class="detail-meta">{{ sortie.motifAnnulation }}</div>
                     {% endif %}
                 </div>
-                <div class="col-md-6 offset-md-0" style="padding-right: 100px">
+                <div class="col-md-6 offset-md-0 div-container-detail-child" >
                     <div class="detail-intitule">École organisatrice :</div>
                     <div class="detail-meta">{{ sortie.organisateur.site.name }}</div>
                     <div class="detail-intitule">Lieu :</div>
@@ -60,9 +57,9 @@
 
             </div>
         </div>
-        <div class="row col-md-12 offset-md-0" style="margin-top: 10px;">
+        <div class="row col-md-12 offset-md-0 div-container-detail" >
             <div class=" col-md-4 offset-md-0">
-                <table class="table table-striped" style="width:auto; height: 10em; display:block; overflow: scroll;">
+                <table class="table table-striped table-detail-sortie" >
                     <thead>
                     <tr>
                         <th scope="col">Pseudo</th>
@@ -79,7 +76,7 @@
                     {% endfor %}
                 </table>
             </div>
-            <div class="col-md-3 offset-md-3" style="padding-top: 7em">
+            <div class="col-md-3 offset-md-3 div-btn-detail-sortie" >
 
 
                 {% if sortie.etat.libelle == 'ouverte' or sortie.etat.libelle == 'cloturee' %}
@@ -91,11 +88,11 @@
                     {% endfor %}
                     {% if inscrit>0 %}
 
-                        <a href="{{ path('desistement',{'id' : sortie.id}) }}"><input class="btn btn-info" type="button"
+                        <a href="{{ path('desistement',{'id' : sortie.id}) }}"><input class="btn-desinscrire-sinscrire-detail-sortie btn-primary" type="button"
                                                                                       value="Se desinscrire"></a>
                     {% endif %}
                     {% if inscrit==0 and sortie.etat.libelle == 'ouverte' %}
-                        <a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}"> <input class="btn btn-info"
+                        <a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}"> <input class="btn-desinscrire-sinscrire-detail-sortie btn-desinscrire-sinscrire-detail-sortie-placement btn-primary"
                                                                                                type="button"
                                                                                                value="S'inscrire"></a>
 
@@ -103,21 +100,19 @@
 
                 {% endif %}
 
-
-
                 {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'cree' %}
-                    <a href="{{ path('sortie_update', {'id' : sortie.id}) }}"> <input class="btn btn-info" type="button"
+                    <a href="{{ path('sortie_update', {'id' : sortie.id}) }}"> <input class="btn-modifier-detail-sortie" type="button"
                                                                                       value="Modifier"></a>
 
                 {% endif %}
 
                 {% if ({'id' : app.user.id} == {'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'ouverte' %}
-                    <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}"> <input class="btn btn-info" type="button"
+                    <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}"> <input class="btn-annuler-sortie btn-annuler-sortie-detail" type="button"
                                                                                       value="Annuler la Sortie"></a>
                 {% endif %}
 
                 {% if sortie.etat.libelle == 'annulee' %}
-                    <a href="{{ path('affichage_sortie') }}"> <input class="btn btn-outline-danger" type="button" value="Retour"></a>
+                    <a href="{{ path('affichage_sortie') }}"> <input class="btn-annuler-sortie btn-annuler-sortie-detail" type="button" value="Retour"></a>
                 {% endif %}
 
             </div>
