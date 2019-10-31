@@ -35,13 +35,15 @@ class AffichageSortieController extends Controller
         $nomSortie = $request->request->get('nomSortie');
         $dateDebutRecherche = $request->get('dateDebutRecherche');
         $dateFinRecherche = $request->get('dateFinRecherche');
+        if ($dateDebutRecherche>=$dateFinRecherche && $dateDebutRecherche!=null && $dateFinRecherche!=null){
+            $this->addFlash('warning', 'Dates de recherche incohérentes');
+        }
         $site = $request->request->get('site');
 
-        /** if ($dateDebutRecherche>=$dateFinRecherche){
-        $this->addFlash('warning', 'Dates de recherche incohérentes');
-        }*/
+
 
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
+
         $sorties = $repoSite->findByParams($user, $inscrit, $nonInscrit, $nomSortie,$organisateur,$passee,$dateDebutRecherche,$dateFinRecherche, $site);
 
         return $this->render('affichage_sortie/accueil.html.twig', [
