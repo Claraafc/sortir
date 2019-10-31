@@ -35,9 +35,6 @@ class AffichageSortieController extends Controller
         $nomSortie = $request->request->get('nomSortie');
         $dateDebutRecherche = $request->get('dateDebutRecherche');
         $dateFinRecherche = $request->get('dateFinRecherche');
-        if ($dateDebutRecherche>=$dateFinRecherche && $dateDebutRecherche!=null && $dateFinRecherche!=null){
-            $this->addFlash('warning', 'Dates de recherche incohérentes');
-        }
         $site = $request->request->get('site');
 
 
