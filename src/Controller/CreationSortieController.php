@@ -7,6 +7,7 @@ use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Form\SupprimerSortieType;
 use App\Repository\LieuRepository;
@@ -44,6 +45,7 @@ class CreationSortieController extends Controller
         $sortieForm->handleRequest($request);
 
         $lieu = $sortie->getLieu();
+        $nameSortie = $sortie->getName();
 
         if ($request->request->get('enregistrer')) {
             if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
@@ -118,7 +120,8 @@ class CreationSortieController extends Controller
             'sortieForm' => $sortieForm->createView(),
             'user' => $user,
             'site' => $site,
-            'lieu' => $lieu
+            'lieu' => $lieu,
+            'nameSortie' => $nameSortie
         ]);
     }
 

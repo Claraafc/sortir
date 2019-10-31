@@ -9,6 +9,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class LieuType extends AbstractType
 {
@@ -25,7 +27,12 @@ class LieuType extends AbstractType
                 'placeholder' => 'Choissisez une ville',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('v')->orderBy('v.name', 'ASC');
-                }
+                },
+                'constraints' => [
+                    new NotNull([
+                        'message' => 'Veuillez renseigner une ville'
+                    ])
+                ]
             ])
         ;
     }
@@ -34,6 +41,9 @@ class LieuType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Lieu::class,
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ]
         ]);
     }
 }
