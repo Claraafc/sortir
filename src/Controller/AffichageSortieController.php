@@ -37,8 +37,8 @@ class AffichageSortieController extends Controller
         $dateFinRecherche = $request->get('dateFinRecherche');
         $site = $request->request->get('site');
 
-       /** if ($dateDebutRecherche>=$dateFinRecherche){
-            $this->addFlash('warning', 'Dates de recherche incohérentes');
+        /** if ($dateDebutRecherche>=$dateFinRecherche){
+        $this->addFlash('warning', 'Dates de recherche incohérentes');
         }*/
 
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);

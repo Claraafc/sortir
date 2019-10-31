@@ -12,6 +12,16 @@ class LieuFixtures extends Fixture implements DependentFixtureInterface
 {
     public const LIEU_TAPEO = 'Resto Tapeo';
     public const LIEU_BRASSEES = 'lieu-brassees';
+    public const LIEU_MAJESTIC = 'lieu-majestic';
+    public const LIEU_CINE_ARVOR = 'lieu-cine-arvor';
+    public const LIEU_STADE_RG = 'lieu-stade-rg';
+    public const LIEU_CHAMBOULTOU = 'lieu-chamboultou';
+    public const LIEU_CLASSCROUTE = 'lieu-classcroute';
+    public const LIEU_SOPRASTERIA = 'lieu-soprasteria';
+    public const LIEU_BILLOT = 'lieu-billot';
+    public const LIEU_RB = 'lieu-rb';
+    public const LIEU_BOWLING = 'lieu-bowlin';
+    public const LIEU_IKEA = 'lieu-ikea';
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -173,6 +183,16 @@ class LieuFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
         $this->addReference(self::LIEU_TAPEO, $lieu1);
         $this->addReference(self::LIEU_BRASSEES, $lieu2);
+        $this->addReference(self::LIEU_MAJESTIC , $lieu3);
+        $this->addReference(self::LIEU_CINE_ARVOR , $lieu4);
+        $this->addReference(self::LIEU_STADE_RG , $lieu5);
+        $this->addReference(self::LIEU_CHAMBOULTOU , $lieu6);
+        $this->addReference(self::LIEU_CLASSCROUTE , $lieu7);
+        $this->addReference(self::LIEU_SOPRASTERIA , $lieu8);
+        $this->addReference(self::LIEU_BILLOT , $lieu9);
+        $this->addReference(self::LIEU_RB , $lieu10);
+        $this->addReference(self::LIEU_BOWLING  , $lieu11);
+        $this->addReference(self::LIEU_IKEA  , $lieu12);
     }
 
     /**

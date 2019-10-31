@@ -17,6 +17,10 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     public const USER_4 = 'user-4';
     public const USER_5 = 'user-5';
     public const USER_6 = 'user-6';
+    public const USER_7 = 'user-7';
+    public const USER_8 = 'user-8';
+    public const USER_9 = 'user-9';
+    public const USER_10 = 'user-10';
     private $encoder;
 
     /**
@@ -51,29 +55,29 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
          $manager->persist($user1);
 
         $user2 = new User();
-        $user2->setUsername('Toto');
+        $user2->setUsername('abel');
         $site2 = $this->getReference(SiteFixtures::SITE_RENNES);
         $user2->setSite($site2);
-        $user2->setEmail("toto@mail.fr");
-        $user2->setNom('Toto');
-        $user2->setPrenom('Guizmo');
+        $user2->setEmail("abel@mail.fr");
+        $user2->setNom('Auboisdormant');
+        $user2->setPrenom('Abel');
         $user2->setTelephone('0698745632');
-        $user2->setUrlPhoto('guizmo.jpg');
+        $user2->setUrlPhoto('jordan.jpg');
         $user2->setRoles(['ROLE_USER']);
 
-        $password = $this->encoder->encodePassword($user2, 'P@ss_gu1zmo');
+        $password = $this->encoder->encodePassword($user2, 'P@ss_1');
         $user2->setPassword($password);
         $manager->persist($user2);
 
         $user3 = new User();
-        $user3->setUsername('wade');
+        $user3->setUsername('adam');
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user3->setSite($site1);
-        $user3->setEmail("deadpool@mail.fr");
-        $user3->setNom('Wilson');
-        $user3->setPrenom('Wade');
+        $user3->setEmail("adam@mail.fr");
+        $user3->setNom('Labrosse');
+        $user3->setPrenom('Adam');
         $user3->setTelephone('0666547889');
-        $user3->setUrlPhoto('deadpool.jpg');
+        $user3->setUrlPhoto('david bisbal.jpg');
         $user3->setRoles(['ROLE_USER']);
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user3->addSorty($sortie2);
@@ -83,14 +87,14 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user3);
 
         $user4 = new User();
-        $user4->setUsername('John Lydon');
+        $user4->setUsername('geoffroy');
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user4->setSite($site1);
-        $user4->setEmail("london@mail.fr");
-        $user4->setNom('Lydon');
-        $user4->setPrenom('John');
+        $user4->setEmail("geoffroy@mail.fr");
+        $user4->setNom('Danledo');
+        $user4->setPrenom('Geoffroy');
         $user4->setTelephone('0698745632');
-        $user4->setUrlPhoto('punk.jpg');
+        $user4->setUrlPhoto('wade.jpg');
         $user4->setRoles(['ROLE_USER']);
       //  $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user4->addSorty($sortie2);
@@ -100,14 +104,14 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user4);
 
         $user5 = new User();
-        $user5->setUsername('Paco');
+        $user5->setUsername('maggy');
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user5->setSite($site1);
-        $user5->setEmail("paquito@mail.fr");
-        $user5->setNom('De Lucia');
-        $user5->setPrenom('Paco');
+        $user5->setEmail("maggy@mail.fr");
+        $user5->setNom('Tarestcassée');
+        $user5->setPrenom('Maggy');
         $user5->setTelephone('0666547889');
-        $user5->setUrlPhoto('espagnol.jpg');
+        $user5->setUrlPhoto('katialenormand.jpg');
         $user5->setRoles(['ROLE_USER']);
       //  $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user5->addSorty($sortie2);
@@ -117,14 +121,14 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user5);
 
         $user6 = new User();
-        $user6->setUsername('chicharito');
+        $user6->setUsername('cecile');
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user6->setSite($site1);
-        $user6->setEmail("chicharito@mail.fr");
-        $user6->setNom('Hernàndez');
-        $user6->setPrenom('Javier');
+        $user6->setEmail("cecile@mail.fr");
+        $user6->setNom('Encieu');
+        $user6->setPrenom('Cécile');
         $user6->setTelephone('0698745632');
-        $user6->setUrlPhoto('chicharito.jpg');
+        $user6->setUrlPhoto('learenard.jpg');
         $user6->setRoles(['ROLE_USER']);
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
        // $user6->addSorty($sortie2);
@@ -134,27 +138,83 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user6);
 
         $user7 = new User();
-        $user7->setUsername('Albert');
+        $user7->setUsername('gerard');
         $site2 = $this->getReference(SiteFixtures::SITE_RENNES);
         $user7->setSite($site2);
-        $user7->setEmail("albert@mail.fr");
-        $user7->setNom('Dupont');
-        $user7->setPrenom('Albert');
+        $user7->setEmail("gerard@mail.fr");
+        $user7->setNom('Menvussa');
+        $user7->setPrenom('Gérard');
         $user7->setTelephone('0698745632');
         $user7->setUrlPhoto('');
         $user7->setRoles(['ROLE_USER']);
 
-        $password = $this->encoder->encodePassword($user7, 'albert');
+        $password = $this->encoder->encodePassword($user7, 'P@ss_7');
         $user7->setPassword($password);
         $manager->persist($user7);
 
-         $manager->flush();
+        $user8 = new User();
+        $user8->setUsername('hassan');
+        $site1 = $this->getReference(SiteFixtures::SITE_RENNES);
+        $user8->setSite($site1);
+        $user8->setEmail("hasan@mail.fr");
+        $user8->setNom('Cehef');
+        $user8->setPrenom('Hassan');
+        $user8->setTelephone('0698745632');
+        $user8->setUrlPhoto('cliffordsmith.jpg');
+        $user8->setRoles(['ROLE_USER']);
+        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
+        // $user6->addSorty($sortie2);
+
+        $password = $this->encoder->encodePassword($user8, 'P@ss_6');
+        $user8->setPassword($password);
+        $manager->persist($user8);
+
+        $user9 = new User();
+        $user9->setUsername('tom');
+        $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
+        $user9->setSite($site1);
+        $user9->setEmail("tom@mail.fr");
+        $user9->setNom('Egerie');
+        $user9->setPrenom('Tom');
+        $user9->setTelephone('0698745632');
+        $user9->setUrlPhoto('romainleduc.jpg');
+        $user9->setRoles(['ROLE_USER']);
+        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
+        // $user6->addSorty($sortie2);
+
+        $password = $this->encoder->encodePassword($user9, 'P@ss_6');
+        $user9->setPassword($password);
+        $manager->persist($user9);
+
+        $user10 = new User();
+        $user10->setUsername('pacome');
+        $site1 = $this->getReference(SiteFixtures::SITE_ST_HERBLAIN);
+        $user10->setSite($site1);
+        $user10->setEmail("pacome@mail.fr");
+        $user10->setNom('Toutlemonde');
+        $user10->setPrenom('Pacome');
+        $user10->setTelephone('0698745632');
+        $user10->setUrlPhoto('totolarmoire.jpg');
+        $user10->setRoles(['ROLE_USER']);
+        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
+        // $user6->addSorty($sortie2);
+
+        $password = $this->encoder->encodePassword($user10, 'P@ss_6');
+        $user10->setPassword($password);
+        $manager->persist($user10);
+
+
+        $manager->flush();
         $this->addReference(self::USER_ADMIN, $user1);
         $this->addReference(self::USER_TOTO, $user2);
         $this->addReference(self::USER_3, $user3);
         $this->addReference(self::USER_4, $user4);
         $this->addReference(self::USER_5, $user5);
         $this->addReference(self::USER_6, $user6);
+        $this->addReference(self::USER_7, $user7);
+        $this->addReference(self::USER_8, $user8);
+        $this->addReference(self::USER_9, $user9);
+        $this->addReference(self::USER_10, $user10);
     }
 
     /**
