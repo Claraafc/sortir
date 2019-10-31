@@ -11,8 +11,14 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class SortieFixtures extends Fixture implements DependentFixtureInterface
 {
-
+    public const SORTIE_1 = 'sortie-1';
     public const SORTIE_2 = 'sortie-2';
+    public const SORTIE_3 = 'sortie-3';
+    public const SORTIE_4 = 'sortie-4';
+    public const SORTIE_5 = 'sortie-5';
+    public const SORTIE_6 = 'sortie-6';
+    public const SORTIE_7 = 'sortie-7';
+    public const SORTIE_8 = 'sortie-8';
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -90,6 +96,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie3->addUser($user4);
         $user5 = $this->getReference(UserFixtures::USER_5);
         $sortie3->addUser($user5);
+        $user6 = $this->getReference(UserFixtures::USER_6);
+        $sortie3->addUser($user6);
 
         $manager->persist($sortie3);
 
@@ -119,6 +127,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie4->addUser($user6);
         $user1 = $this->getReference(UserFixtures::USER_ADMIN);
         $sortie4->addUser($user1);
+        $user10 = $this->getReference(UserFixtures::USER_10);
+        $sortie4->addUser($user10);
 
 
         $manager->persist($sortie4);
@@ -133,12 +143,22 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie5->setUrlPhoto('escalade.jpg');
         $etat1 = $this->getReference(EtatFixtures::ETAT_PASSEE);
         $sortie5->setEtat($etat1);
-        $lieu1 = $this->getReference(LieuFixtures::LIEU_TAPEO);
+        $lieu1 = $this->getReference(LieuFixtures::LIEU_IKEA);
         $sortie5->setLieu($lieu1);
-        $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
+        $site1 = $this->getReference(SiteFixtures::SITE_ST_HERBLAIN);
         $sortie5->setSite($site1);
-        $user1 = $this->getReference(UserFixtures::USER_ADMIN);
-        $sortie5->setOrganisateur($user1);
+        $user2 = $this->getReference(UserFixtures::USER_TOTO);
+        $sortie5->setOrganisateur($user2);
+        $user8 = $this->getReference(UserFixtures::USER_8);
+        $sortie5->addUser($user8);
+        $user4 = $this->getReference(UserFixtures::USER_4);
+        $sortie5->addUser($user4);
+        $user5 = $this->getReference(UserFixtures::USER_5);
+        $sortie5->addUser($user5);
+        $user6 = $this->getReference(UserFixtures::USER_6);
+        $sortie5->addUser($user6);
+        $user9 = $this->getReference(UserFixtures::USER_9);
+        $sortie5->addUser($user9);
 
         $manager->persist($sortie5);
 
@@ -157,14 +177,85 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie6->setLieu($lieu1);
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $sortie6->setSite($site1);
-        $user1 = $this->getReference(UserFixtures::USER_ADMIN);
+        $user1 = $this->getReference(UserFixtures::USER_4);
         $sortie6->setOrganisateur($user1);
 
         $manager->persist($sortie6);
 
+        $sortie7 = new Sortie();
+        $sortie7->setName('noche de cumbia');
+        $sortie7->setDateDebut(new \DateTime('2020-01-01 05:20:30'));
+        $sortie7->setDuree('120');
+        $sortie7->setDateCloture(new \DateTime('2019-10-10 05:20:30'));
+        $sortie7->setNbInscriptionsMax('40');
+        $sortie7->setDescription('PARTY NEW YEAR!!!!');
+        $sortie7->setUrlPhoto('cumbia.jpg');
+        $etat1 = $this->getReference(EtatFixtures::ETAT_OUVERTE);
+        $sortie7->setEtat($etat1);
+        $lieu1 = $this->getReference(LieuFixtures::LIEU_CHAMBOULTOU);
+        $sortie7->setLieu($lieu1);
+        $site1 = $this->getReference(SiteFixtures::SITE_NIORT);
+        $sortie7->setSite($site1);
+        $user2 = $this->getReference(UserFixtures::USER_TOTO);
+        $sortie7->setOrganisateur($user2);
+        $user5 = $this->getReference(UserFixtures::USER_5);
+        $sortie7->addUser($user5);
+        $user6 = $this->getReference(UserFixtures::USER_6);
+        $sortie7->addUser($user6);
+        $user9 = $this->getReference(UserFixtures::USER_9);
+        $sortie7->addUser($user9);
+        $user4 = $this->getReference(UserFixtures::USER_4);
+        $sortie7->addUser($user4);
+        $user3 = $this->getReference(UserFixtures::USER_3);
+        $sortie7->addUser($user3);
+        $user8 = $this->getReference(UserFixtures::USER_8);
+        $sortie7->addUser($user8);
+        $user10 = $this->getReference(UserFixtures::USER_10);
+        $sortie7->addUser($user10);
+
+        $manager->persist($sortie7);
+
+        $sortie8 = new Sortie();
+        $sortie8->setName('Paintball');
+        $sortie8->setDateDebut(new \DateTime('2019-01-12 20:20:30'));
+        $sortie8->setDuree('120');
+        $sortie8->setDateCloture(new \DateTime('2019-11-09 15:20:30'));
+        $sortie8->setNbInscriptionsMax('18');
+        $sortie8->setDescription('Soot dem up!!!!');
+        $sortie8->setUrlPhoto('paintball2.jpg');
+        $etat1 = $this->getReference(EtatFixtures::ETAT_OUVERTE);
+        $sortie8->setEtat($etat1);
+        $lieu1 = $this->getReference(LieuFixtures::LIEU_RB);
+        $sortie8->setLieu($lieu1);
+        $site1 = $this->getReference(SiteFixtures::SITE_CHARTRES);
+        $sortie8->setSite($site1);
+        $user8 = $this->getReference(UserFixtures::USER_6);
+        $sortie8->setOrganisateur($user8);
+        $user8 = $this->getReference(UserFixtures::USER_8);
+        $sortie8->addUser($user8);
+        $user4 = $this->getReference(UserFixtures::USER_4);
+        $sortie8->addUser($user4);
+        $user10 = $this->getReference(UserFixtures::USER_10);
+        $sortie8->addUser($user10);
+        $user5 = $this->getReference(UserFixtures::USER_5);
+        $sortie8->addUser($user5);
+        $user6 = $this->getReference(UserFixtures::USER_6);
+        $sortie8->addUser($user6);
+        $user9 = $this->getReference(UserFixtures::USER_9);
+        $sortie8->addUser($user9);
+
+        $manager->persist($sortie8);
+
          $manager->flush();
 
+        $this->addReference(self::SORTIE_1, $sortie1);
         $this->addReference(self::SORTIE_2, $sortie2);
+        $this->addReference(self::SORTIE_3, $sortie3);
+        $this->addReference(self::SORTIE_4, $sortie4);
+        $this->addReference(self::SORTIE_5, $sortie5);
+        $this->addReference(self::SORTIE_6, $sortie6);
+        $this->addReference(self::SORTIE_7, $sortie7);
+        $this->addReference(self::SORTIE_8, $sortie8);
     }
 
     /**
