@@ -59,7 +59,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site2 = $this->getReference(SiteFixtures::SITE_RENNES);
         $user2->setSite($site2);
         $user2->setEmail("abel@mail.fr");
-        $user2->setNom('Auboisdormant');
+        $user2->setNom('Bezier');
         $user2->setPrenom('Abel');
         $user2->setTelephone('0698745632');
         $user2->setUrlPhoto('Michael.jpg');
@@ -74,7 +74,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user3->setSite($site1);
         $user3->setEmail("adam@mail.fr");
-        $user3->setNom('Labrosse');
+        $user3->setNom('Corsqueric');
         $user3->setPrenom('Adam');
         $user3->setTelephone('0666547889');
         $user3->setUrlPhoto('david bisbal.jpg');
@@ -91,7 +91,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user4->setSite($site1);
         $user4->setEmail("geoffroy@mail.fr");
-        $user4->setNom('Danledo');
+        $user4->setNom('Chen');
         $user4->setPrenom('Geoffroy');
         $user4->setTelephone('0698745632');
         $user4->setUrlPhoto('wade.jpg');
@@ -108,7 +108,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user5->setSite($site1);
         $user5->setEmail("maggy@mail.fr");
-        $user5->setNom('Tarestcassée');
+        $user5->setNom('Eon');
         $user5->setPrenom('Maggy');
         $user5->setTelephone('0666547889');
         $user5->setUrlPhoto('katialenormand.jpg');
@@ -125,7 +125,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user6->setSite($site1);
         $user6->setEmail("cecile@mail.fr");
-        $user6->setNom('Encieu');
+        $user6->setNom('Audrain');
         $user6->setPrenom('Cécile');
         $user6->setTelephone('0698745632');
         $user6->setUrlPhoto('learenard.jpg');
@@ -142,7 +142,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site2 = $this->getReference(SiteFixtures::SITE_RENNES);
         $user7->setSite($site2);
         $user7->setEmail("gerard@mail.fr");
-        $user7->setNom('Menvussa');
+        $user7->setNom('Palop');
         $user7->setPrenom('Gérard');
         $user7->setTelephone('0698745632');
         $user7->setUrlPhoto('');
@@ -157,7 +157,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site1 = $this->getReference(SiteFixtures::SITE_RENNES);
         $user8->setSite($site1);
         $user8->setEmail("hasan@mail.fr");
-        $user8->setNom('Cehef');
+        $user8->setNom('Majid');
         $user8->setPrenom('Hassan');
         $user8->setTelephone('0698745632');
         $user8->setUrlPhoto('cliffordsmith.jpg');
@@ -174,7 +174,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site1 = $this->getReference(SiteFixtures::SITE_QUIMPER);
         $user9->setSite($site1);
         $user9->setEmail("tom@mail.fr");
-        $user9->setNom('Egerie');
+        $user9->setNom('Martin');
         $user9->setPrenom('Tom');
         $user9->setTelephone('0698745632');
         $user9->setUrlPhoto('romainleduc.jpg');
@@ -191,7 +191,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $site1 = $this->getReference(SiteFixtures::SITE_ST_HERBLAIN);
         $user10->setSite($site1);
         $user10->setEmail("pacome@mail.fr");
-        $user10->setNom('Toutlemonde');
+        $user10->setNom('Fortun');
         $user10->setPrenom('Pacome');
         $user10->setTelephone('0698745632');
         $user10->setUrlPhoto('totolarmoire.jpg');
