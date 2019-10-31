@@ -15,7 +15,7 @@
         {{ form_label(sortieForm.lieu) }}
         {{ form_widget(sortieForm.lieu) }}
 
-        <a href="{{ path('lieu_update', { 'id': sortie}) }}" class="btn btn-success">Modifier le lieu</a>
+        <a href="{{ path('lieu_update', { 'id': sortie}) }}"><input  class="btn-modifier-lieu" type="button" value="Modifier le lieu"></a>
 
 
         {{ form_label(sortieForm.dateDebut) }}
@@ -37,9 +37,9 @@
         {{ form_widget(sortieForm.urlPhoto) }}
 
 
-        <button type="submit" name="publier" class="btn btn-primary" value="publier">Publier</button>
-        <button type="submit" name="enregistrer" class="btn btn-success" value="enregistrer">Enregistrer</button>
-        <button type="submit" name="supprimer" class="btn btn-danger" value="supprimer">Supprimer</button>
+        <input type="submit" name="publier" class="btn-publier-modif-sortie btn-primary" value="Publier">
+        <input type="submit" name="enregistrer" class="btn-enregistrer-modif-sortie" value="Enregistrer">
+        <input type="submit" name="supprimer" class="btn-supprimer-modif-sortie" value="Supprimer">
 
         {% if hidden == true %}
 

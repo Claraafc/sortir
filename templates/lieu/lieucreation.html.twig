@@ -14,9 +14,10 @@
         {{ form_row(lieuForm.ville) }}
 
         {{ form_widget(lieuForm) }}
-        <button type="submit" class="btn btn-primary">Ajouter</button>
-        {{ form_end(lieuForm) }}<br>
-        <a href="{{ path('sortie_creation') }}" class="btn btn-outline-secondary">Retour</a>
+        <input type="submit" class="btn-ajouter-lieu-detail btn-primary" value="Ajouter le lieu">
+        <a href="{{ path('sortie_creation') }}"><input type="button" class="btn-annuler-ajout-lieu-detail" value="Annuler"></a>
+        {{ form_end(lieuForm) }}
+
 
     </main>
 {% endblock %}
