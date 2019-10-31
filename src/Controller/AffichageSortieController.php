@@ -26,8 +26,11 @@ class AffichageSortieController extends Controller
         // Getting the locations
         $repoSite = $this->getDoctrine()->getRepository(Site::class);
         $sites = $repoSite->findAll();
+
+        //we get the user's id for the requests
         $user = $this->getUser();
 
+        //we get the requests from the repository by the HTML tag name
         $organisateur = $request->request->getBoolean('sortie_organisateur');
         $passee = $request->request->getBoolean('sortie_passee');
         $inscrit = $request->request->getBoolean('sortie_inscrit');
@@ -41,6 +44,7 @@ class AffichageSortieController extends Controller
 
         $repoSite = $this->getDoctrine()->getRepository(Sortie::class);
 
+        //we get the parameters for any field fulfilled or checkbox checked
         $sorties = $repoSite->findByParams($user, $inscrit, $nonInscrit, $nomSortie,$organisateur,$passee,$dateDebutRecherche,$dateFinRecherche, $site);
 
         return $this->render('affichage_sortie/accueil.html.twig', [
