@@ -76,7 +76,7 @@
                     {% endfor %}
                 </table>
             </div>
-            <div class="col-md-3 offset-md-3 div-btn-detail-sortie" >
+            <div class="col-md-4 offset-md-2 div-btn-detail-sortie" >
 
 
                 {% if sortie.etat.libelle == 'ouverte' or sortie.etat.libelle == 'cloturee' %}
@@ -111,7 +111,7 @@
                                                                                       value="Annuler la Sortie"></a>
                 {% endif %}
 
-                {% if sortie.etat.libelle == 'annulee' %}
+                {% if sortie.etat.libelle == 'annulee' or sortie.etat.libelle == 'passee' %}
                     <a href="{{ path('affichage_sortie') }}"> <input class="btn-annuler-sortie btn-annuler-sortie-detail" type="button" value="Retour"></a>
                 {% endif %}
 
