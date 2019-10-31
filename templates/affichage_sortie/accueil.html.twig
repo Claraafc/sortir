@@ -8,25 +8,27 @@
 {% block title %}{{ parent() }}{% endblock %}
 
 {% block body %}
-
+    <!-- accueil : form -->
     <main>
-        <form class="form-accueil"action="{{ path('affichage_sortie') }}" method="post">
+        <form class="form-accueil" action="{{ path('affichage_sortie') }}" method="post">
             <h3>Filtrer les sorties</h3>
             <div class="form-row align-items-center">
+                <!-- Parameters managed by select, text field and dates are exclusive. -->
                 <div class="col-auto">
                     <label for="site_nom">Site:</label>
+                    <!-- recovery of the list of sites -->
                     <select name="site" id="site" class="form-control">
-
                         <option value=""> Tous les sites</option>
-
                         {% for site in sites %}
                             <option value="{{ site.id }}" {% if site.id == siteSelection %} selected="selected" {% endif %}>{{ site.name }} </option>
                         {% endfor %}
                     </select>
                     <br>
+                    <!-- Name input field -->
                     <label>Le nom de la sortie contient: </label>
                     <input type="search" aria-label="Search through site content"
                            name="nomSortie" {% if nomSortie %} value="{{ nomSortie }}" {% endif %}><br>
+                    <!-- the selection between two dates is secured by the javascript at the bottom of the page -->
                     <label>Entre </label>
                     <input type="date"
                            name="dateDebutRecherche" id="dateDebutRecherche"
@@ -36,6 +38,7 @@
                            name="dateFinRecherche" id="dateFinRecherche"
                             {% if dateFinRecherche %} value="{{ dateFinRecherche }}" {% endif %}><br>
                 </div>
+                <!-- Settings managed by checkboxes are inclusive -->
                 <div class="col-auto col-checkbox">
                     <label> <input type="checkbox"
                                    name="sortie_organisateur" {% if sortie_organisateur %} checked="checked" {% endif %}>Sorties
@@ -50,17 +53,20 @@
                         passées</label><br>
                 </div>
                 <div class="btns-accueil">
-                <div class="col-auto col-rechercher">
-                    <input type="submit" class=" btn-primary btn-creer-sortie" value="Rechercher">
-                </div>
-                <div class="div-btn-creer-sortie">
-                <a href="{{ path('sortie_creation') }}">
-                    <input class=" btn-primary btn-creer-sortie" type="button" value="Créer une sortie">
-                </a>
-                </div>
+                    <!-- The search button launches the search -->
+                    <div class="col-auto col-rechercher">
+                        <input type="submit" class=" btn-primary btn-creer-sortie" value="Rechercher">
+                    </div>
+                    <!--  The "creer sortie" button sends to another page. -->
+                    <div class="div-btn-creer-sortie">
+                        <a href="{{ path('sortie_creation') }}">
+                            <input class=" btn-primary btn-creer-sortie" type="button" value="Créer une sortie">
+                        </a>
+                    </div>
                 </div>
             </div>
         </form>
+        <!-- The table displays the outputs according to the parameters. -->
         <div class="container container-table-accueil">
             <div class="row col-md-12 offset-md-0 row-table-accueil div-table-accueil">
                 <table class="table table-accueil" border="1">
@@ -76,7 +82,6 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-
                     {% for sortie in sorties %}
                         <tbody>
                         <tr>
@@ -102,8 +107,6 @@
                                     <a href="{{ path('profile_detail', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.nom }}</a>
                                 {% endif %}
                             </td>
-
-
                             {% if sortie.etat.libelle == 'ouverte' or sortie.etat.libelle == 'cloturee' %}
                             {% set inscrit = 0 %}
                             {% for user in sortie.users %}
@@ -116,13 +119,10 @@
                             {% endif %}
                             {% if inscrit==0 and sortie.etat.libelle == 'ouverte' %}
                             <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire </a>&nbsp
-
                             {% endif %}
-
                         {% else %}
                             <td>
                                 {% endif %}
-
                                 {% if ({'id': app.user.id} == { 'id': sortie.organisateur.id} or is_granted('ROLE_ADMIN')) and sortie.etat.libelle == 'ouverte' %}
                                 <a href="{{ path('annuler_sortie', {'id' : sortie.id}) }}"> Annuler</a></td>
                             {% endif %}
@@ -138,41 +138,33 @@
     </main>
 
     <script type="text/javascript">
-
+        // The javascript is used to control the search by dates.
         // filter by dateDebutRecherche
         document.getElementById("dateDebutRecherche").onchange = function () {
-
             console.log(document.getElementById("dateDebutRecherche").valueAsDate)
             console.log(document.getElementById("dateFinRecherche").valueAsDate)
-
             if (document.getElementById("dateDebutRecherche").valueAsDate != null && document.getElementById("dateFinRecherche").valueAsDate != null) {
-
                 let dateDebut = new Date(document.getElementById('dateDebutRecherche').valueAsDate);
                 let dateFin = new Date(document.getElementById('dateFinRecherche').valueAsDate);
                 console.log(dateDebut)
                 console.log(dateFin)
-
                 let yearsOK = dateFin.getFullYear() > dateDebut.getFullYear();
                 console.log(yearsOK)
                 let monthsOK = dateFin.getMonth() > dateDebut.getMonth();
                 console.log(monthsOK)
                 let daysOK = dateFin.getDay() > dateDebut.getDay();
                 console.log(daysOK)
-
                 let yearsAreEqual = dateFin.getFullYear() === dateDebut.getFullYear();
                 let monthsAreEqual = dateFin.getMonth() === dateDebut.getMonth();
                 let daysAreEqual = dateFin.getDay() === dateDebut.getDay();
                 // test years
                 if (!yearsOK) {
-                    //dateDebutRecherche.setFullYear(dateFinRecherche.getFullYear())
                     if (yearsAreEqual) {
                         //test months
                         if (!monthsOK) {
-                            //dateDebutRecherche.setMonth(dateFinRecherche.getMonth())
                             if (monthsAreEqual) {
                                 //test days
                                 if (!daysOK) {
-
                                     if (daysAreEqual) {
                                         alert("Vous ne pouvez pas saisir deux dates identiques.");
                                     } else {
@@ -190,35 +182,27 @@
             }
         }
         document.getElementById("dateFinRecherche").onchange = function () {
-
             console.log(document.getElementById("dateDebutRecherche").valueAsDate)
             console.log(document.getElementById("dateFinRecherche").valueAsDate)
-
             if (document.getElementById("dateDebutRecherche").valueAsDate != null && document.getElementById("dateFinRecherche").valueAsDate != null) {
-
                 let dateDebut2 = new Date(document.getElementById('dateDebutRecherche').valueAsDate);
                 let dateFin2 = new Date(document.getElementById('dateFinRecherche').valueAsDate);
                 console.log(dateDebut2)
                 console.log(dateFin2)
-
                 let yearsOK2 = dateFin2.getFullYear() > dateDebut2.getFullYear();
                 let monthsOK2 = dateFin2.getMonth() > dateDebut2.getMonth();
                 let daysOK2 = dateFin2.getDay() > dateDebut2.getDay();
-
                 let yearsAreEqual = dateFin2.getFullYear() === dateDebut2.getFullYear();
                 let monthsAreEqual = dateFin2.getMonth() === dateDebut2.getMonth();
                 let daysAreEqual = dateFin2.getDay() === dateDebut2.getDay();
                 // test years
                 if (!yearsOK2) {
-                    //dateDebutRecherche.setFullYear(dateFinRecherche.getFullYear())
                     if (yearsAreEqual) {
                         //test months
                         if (!monthsOK2) {
-                            //dateDebutRecherche.setMonth(dateFinRecherche.getMonth())
                             if (monthsAreEqual) {
                                 //test days
                                 if (!daysOK2) {
-                                    //dateDebutRecherche.setDate(dateFinRecherche.getDay())
                                     if (daysAreEqual) {
                                         alert("Vous ne pouvez pas saisir deux dates identiques.");
                                     } else {
@@ -236,6 +220,5 @@
             }
         }
     </script>
-
 {% endblock %}
 
