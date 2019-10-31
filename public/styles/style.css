@@ -252,6 +252,14 @@ footer {
    padding-right: 2em;
 }
 
+.image-photo-profil-user{
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 14em;
+    max-height: 14em;
+    margin-bottom: 1em
+}
 .image-nav {
     max-height: 5em;
     max-width: 24em
@@ -332,7 +340,7 @@ section h1 {
 }
 
 .table-accueil {
-    width: 100%;
+    width: auto;
     height: 20em;
     display: block;
     overflow: scroll;
