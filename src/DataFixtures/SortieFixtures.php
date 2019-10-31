@@ -18,7 +18,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
     public const SORTIE_5 = 'sortie-5';
     public const SORTIE_6 = 'sortie-6';
     public const SORTIE_7 = 'sortie-7';
-    public const SORTIE_8 = 'sortie-8';
+
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -215,36 +215,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist($sortie7);
 
-        $sortie8 = new Sortie();
-        $sortie8->setName('Paintball');
-        $sortie8->setDateDebut(new \DateTime('2019-01-12 20:20:30'));
-        $sortie8->setDuree('120');
-        $sortie8->setDateCloture(new \DateTime('2019-11-09 15:20:30'));
-        $sortie8->setNbInscriptionsMax('18');
-        $sortie8->setDescription('Soot dem up!!!!');
-        $sortie8->setUrlPhoto('paintball2.jpg');
-        $etat1 = $this->getReference(EtatFixtures::ETAT_OUVERTE);
-        $sortie8->setEtat($etat1);
-        $lieu1 = $this->getReference(LieuFixtures::LIEU_RB);
-        $sortie8->setLieu($lieu1);
-        $site1 = $this->getReference(SiteFixtures::SITE_CHARTRES);
-        $sortie8->setSite($site1);
-        $user8 = $this->getReference(UserFixtures::USER_6);
-        $sortie8->setOrganisateur($user8);
-        $user8 = $this->getReference(UserFixtures::USER_8);
-        $sortie8->addUser($user8);
-        $user4 = $this->getReference(UserFixtures::USER_4);
-        $sortie8->addUser($user4);
-        $user10 = $this->getReference(UserFixtures::USER_10);
-        $sortie8->addUser($user10);
-        $user5 = $this->getReference(UserFixtures::USER_5);
-        $sortie8->addUser($user5);
-        $user6 = $this->getReference(UserFixtures::USER_6);
-        $sortie8->addUser($user6);
-        $user9 = $this->getReference(UserFixtures::USER_9);
-        $sortie8->addUser($user9);
 
-        $manager->persist($sortie8);
 
          $manager->flush();
 
@@ -255,7 +226,6 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $this->addReference(self::SORTIE_5, $sortie5);
         $this->addReference(self::SORTIE_6, $sortie6);
         $this->addReference(self::SORTIE_7, $sortie7);
-        $this->addReference(self::SORTIE_8, $sortie8);
     }
 
     /**

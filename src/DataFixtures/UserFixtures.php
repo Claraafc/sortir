@@ -77,7 +77,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user3->setNom('Labrosse');
         $user3->setPrenom('Adam');
         $user3->setTelephone('0666547889');
-        $user3->setUrlPhoto('davidbisbal.jpg');
+        $user3->setUrlPhoto('david bisbal.jpg');
         $user3->setRoles(['ROLE_USER']);
        // $sortie2 = $this->getReference(SortieFixtures::SORTIE_2);
       //  $user3->addSorty($sortie2);
