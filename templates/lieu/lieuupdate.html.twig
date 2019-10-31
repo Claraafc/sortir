@@ -15,7 +15,7 @@
 
         {{ form_widget(lieuForm) }}
         <button type="submit" class="btn btn-primary">Modifier</button>
-        {{ form_end(lieuForm) }}<br>
+        {{ form_end(lieuForm) }}
         <a href="{{ path('sortie_update', { 'id': sortieID}) }}" class="btn btn-outline-secondary">Retour</a>
     </main>
 {% endblock %}

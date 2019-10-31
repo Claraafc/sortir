@@ -7,8 +7,8 @@
         {{ form_row(sortieForm.name) }}
         {{ form_row(sortieForm.motifAnnulation) }}
 
-        <button type="submit" name="enregistrer" class="btn btn-success" value="supprimer">Annuler sortie</button>
-        <a class="btn btn-outline-danger" href="{{ path('affichage_sortie') }}">Retour</a>
+        <input type="submit" name="enregistrer" class="btn-annuler-la-sortie-motif btn-primary" value="Annuler la sortie">
+        <a href="{{ path('affichage_sortie') }}"><input type="button" class="btn-retour-sortie-motif" value="Retour"></a>
 
         {{ form_end(sortieForm) }}
     </main>

@@ -72,6 +72,7 @@ class SortieType extends AbstractType
             ->add('lieu', null, [
                 'choice_label' => 'nom',
                 'placeholder' => 'Choissisez un lieu',
+
                'constraints' => [
                     new NotNull([
                         'message' => 'Veuillez renseigner un lieu'
