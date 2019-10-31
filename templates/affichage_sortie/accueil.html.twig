@@ -114,7 +114,7 @@
                             {% if inscrit>0 %}
                             <td><a href="{{ path('desistement', {'id' : sortie.id}) }}">Se désister</a>&nbsp
                             {% endif %}
-                            {% if inscrit==0 %}
+                            {% if inscrit==0 and sortie.etat.libelle == 'ouverte' %}
                             <td><a href="{{ path('inscription_sortie', {'id' : sortie.id}) }}">S'inscrire </a>&nbsp
 
                             {% endif %}

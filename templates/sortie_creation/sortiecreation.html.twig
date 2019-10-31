@@ -15,7 +15,6 @@
         {{ form_row(sortieForm.lieu) }}
         <a href="{{ path('lieu') }}" ><input class="btn-ajouter-lieu" type="button" value="Ajouter un nouveau lieu"></a>
 
-        <div id="hidden_detailLieu">
 
             {% if lieu is not null %}
                 {{ form_row(sortieForm.rue, {'value' : lieu.rue}) }}
@@ -62,9 +61,8 @@
             $.get('creation/ajax/' + $(this).val())
                 .done(function (data) {
                     document.getElementById('sortie_lieu').removeAttribute('disabled', 'disabled');
-                    $('#sortie_lieu').append('<option readonly="readonly">' + "Choissisez un lieu" + '</option>');
+                    $('#sortie_lieu').append('<option readonly="readonly">' + " " + '</option>');
                     $.each(data, function (key, lieu) {
-                        // console.log(lieu);
 
                         $('#sortie_lieu').append('<option value="' + lieu.id + '">' + lieu.nom + '</option>');
 
